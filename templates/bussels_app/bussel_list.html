@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="main-contents">
+    <div class="section-header">
+	    <p class=section-title>All Bussels <span class="badge bussel-count">0</span></p>
+	    <input class=search-box type="text" name="search" placeholder="Search...">
+	    <input class=search-btn type="button" name="search-btn" value=Search>
+	    <div class="section-item">
+	         <a href="#">
+		     <span class="fa fa-sort"></span>
+		     Sort
+		 </a>
+	    </div>
+	    <div class="section-item dropdown">
+	         <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+		     <span class="fa fa-upload"></span>
+		     Export
+		 </a>
+		 <ul class="dropdown-menu">
+			 <li><a href=""><span class="fa fa-file-excel-o"></span> Microsoft Excel</a></li>
+			 <li><a href="{% url 'bussel:all-bussel-export'%}?export_type=pdf"><span class="fa fa-file-pdf-o"></span> PDF Document</a></li>
+		 </ul>
+	    </div>
+    </div>
+    <div class="data-container" id=bussel_list>
+	    <table class="table table-hover" 
+		    id=bussel_table
+		    data-toggle="table"
+		    data-search="true">
+                <thead>
+	         <th>Bussel Name</th>
+	         <th>Bussel Leader</th>
+	         <th>Bussel Location</th>
+		</thead>	    
+		<tbody>
+	        	
+		</tbody>
+	    </table>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+	<script>
+$(document).ready(function(){
+	$("#bussel-all-link").addClass("active");
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'ajax:all-bussels-json' %}",
+	    data: {get_param: 'value'},
+	    dataType: 'json',
+	    success: function(data) {
+		    $.each(data, function(i, bussel) {
+			    var detail_link = "/bussels/details/"+bussel.pk + "/"
+			    $(".table > tbody").append('<tr> \
+			          <td><a href="" class=' + bussel.pk + '>' + bussel.name + '</a></td> \
+				  <td><a href="" class=' + bussel.pk + '>' + bussel.leader + '</a></td> \
+			          <td><a href="" class=' + bussel.pk + '>' + bussel.location + '</a></td></tr>'
+				  );
+		            $("."+bussel.pk).attr('href', detail_link);
+                    $(".badge.bussel-count").html(data.length);
+		    })
+	    }
+        })
+	$(".search-box").keyup(function () {
+	    var searchTerm = $(".search-box").val();
+	    var listItem = $('.table tbody').children('tr');
+	    var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+		        
+		      $.extend($.expr[':'], {'containsi': function(elem, i, match, array){
+		              return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		          }
+		        });
+	        
+	      $(".table tbody tr").not(":containsi('" + searchSplit + "')").each(function(e){
+	          $(this).attr('visible','false');
+	        });
+	      
+	        $(".table tbody tr:containsi('" + searchSplit + "')").each(function(e){
+		    $(this).attr('visible','true');
+		  })
+        })
+})
+	</script>
+{% endblock %}

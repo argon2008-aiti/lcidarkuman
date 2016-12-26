@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block contents %}
+<div class="main-contents">
+    <div class="section-header">
+	    <p class=section-title>{{bussel_name}}</p>
+    </div>
+    <div class="data-container" id=bussel_report_details>
+	    <div class="data-section">
+	           <div class="data-section-header">
+			   <p class="subsection-title">Bussel Report Detail</p>
+		   </div>
+		   <div class="data-section-data">
+			   <form action="#" role="form" method="post">
+			      {% csrf_token %} 
+			      <div class="row">
+				      <div class="form-group col-sm-6">
+					 <label class="control-label" for="{{form.topic.auto_id}}">
+					 {{form.topic.label}} 
+					 </label>
+					 {% render_field form.topic class+="form-control" %}
+				      </div>
+				      <div class="form-group col-sm-3">
+					 <label class="control-label" for="{{form.bussel_attendance.auto_id}}">
+					 {{form.bussel_attendance.label}} 
+					 </label>
+					 {% render_field form.bussel_attendance class+="form-control" %}
+				      </div>
+				      <div class="form-group col-sm-3">
+					 <label class="control-label" for="{{form.church_attendance.auto_id}}">
+					 {{form.church_attendance.label}} 
+					 </label>
+					 {% render_field form.church_attendance class+="form-control" %}
+				      </div>
+			      </div>
+			      <div class="row">
+				      <div class="form-group col-sm-6">
+					 <label class="control-label" for="{{form.time_started.auto_id}}">
+					 {{form.time_started.label}} 
+					 </label>
+					 {% render_field form.time_started class+="form-control" %}
+				      </div>
+				      <div class="form-group col-sm-6">
+					 <label class="control-label" for="{{form.time_ended.auto_id}}">
+					 {{form.time_ended.label}} 
+					 </label>
+					 {% render_field form.time_ended class+="form-control" %}
+				      </div>
+			      </div>
+			      <div class="row">
+				      <div class="form-group col-sm-4">
+					 <label class="control-label" for="{{form.num_first_timers.auto_id}}">
+					 {{form.num_first_timers.label}} 
+					 </label>
+					 {% render_field form.num_first_timers class+="form-control" %}
+				      </div>
+				      <div class="form-group col-sm-4">
+					 <label class="control-label" for="{{form.num_souls_won.auto_id}}">
+					 {{form.num_souls_won.label}} 
+					 </label>
+					 {% render_field form.num_souls_won class+="form-control" %}
+				      </div>
+				      <div class="form-group col-sm-4">
+					 <label class="control-label" for="{{form.offertory_given.auto_id}}">
+					 {{form.offertory_given.label}} 
+					 </label>
+					 {% render_field form.offertory_given class+="form-control" %}
+				      </div>
+			      </div>
+			      <div class="row">
+				      <div class="form-group col-sm-6">
+					 <label class="control-label" for="{{form.date.auto_id}}">
+					 {{form.date.label}} 
+					 </label>
+					 {% render_field form.date class+="form-control" %}
+				      </div>
+				      <div class="form-group col-sm-6">
+					 <label class="control-label" for="{{form.time.auto_id}}">
+					 {{form.time.label}} 
+					 </label>
+					 {% render_field form.time class+="form-control" %}
+				      </div>
+			      </div>
+
+			      <div>
+			          <button type=submit class="btn btn-primary" id="bussel_save_btn">
+					  Save Changes 
+				  </button>
+			      </div>
+			   </form>
+		     </div>
+		 </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+
+<script>
+$(document).ready(function(){
+    $("#bussel-report-link").addClass("active");
+})
+</script>
+{% endblock %}

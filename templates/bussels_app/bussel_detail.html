@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="main-contents">
+    <div class="section-header">
+	    <p class=section-title>{{object.name}}</p>
+    </div>
+    <div class="data-container" id=bussel_details>
+	    <div class="data-section bussel-general-info">
+	           <div class="data-section-header">
+			   <p class="subsection-title">General Information</p>
+		   </div>
+		   <div class="data-section-data">
+			   <div class="row">
+			       <div class="col-sm-4">
+				       <p>Bussel Name: <b>{{object.name}}</b></p>
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Bussel Code: <b>{{object.code}}</b></p>
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Bussel Zone: <b>{{object.zone}}</b></p>
+			       </div>
+			   </div>
+			   <div class="row">
+			       <div class="col-sm-4">
+				       <p>Meeting Day: <b>{{object.get_meeting_day_display}}</b></p>
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Meeting Time: <b>{{object.meeting_time}}</b></p>
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Bussel Leader:<a href="#"> <b>{{object.leader.first_name}} {{object.leader.middle_name}} {{object.leader.last_name}} <i class="fa fa-link"></i> 
+				       </a></b></p>
+			       </div>
+			   </div>
+		   </div>
+	    </div>
+	    <div class="data-section bussel-location-info">
+	           <div class="data-section-header">
+			   <p class="subsection-title">Location Information</p>
+		   </div>
+		   <div class="data-section-data">
+			   <div class="row">
+			       <div class="col-sm-4">
+				       <p>Suburb: <b>{{object.suburb}}</b> </p>
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Street: <b>{{object.street_name}}</b></p>
+			       </div>
+			       <div class="col-sm-4">
+				       <p>House Number: <b>{{object.house_number}}</b></p>
+			       </div>
+			   </div>
+			   <div class="map-view" id=bussel-location-map>
+			   
+			   </div>
+		   </div>
+	    </div>
+	    <div class="data-section bussel-attendance-info">
+	           <div class="data-section-header">
+			   <p class="subsection-title">Attendance Information</p>
+		   </div>
+		   <div class="data-section-data">
+			   <div class="row">
+			       <div class="col-sm-4">
+				       <p>Bussel Attendance(AVG): 
+				       {% if average_bussel_attendance == 0 %}
+				       <b> 0</b>
+				       {% else %}
+				       <b>{{average_bussel_attendance.bussel_attendance__avg|floatformat:2}}</b></p>
+				       {% endif  %}
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Church Attendance(AVG):
+				       {% if average_church_attendance == 0 %}
+				       <b> 0</b>
+				       {% else %}
+				       <b>{{average_church_attendance.church_attendance__avg|floatformat:2}}</b></p>
+				       {% endif  %}
+			       </div>
+			       <div class="col-sm-4">
+				       <p>Souls Won(AVG): 
+				       {% if average_souls_won == 0 %}
+				       <b> 0</b>
+				       {% else %}
+				       <b>{{average_souls_won.num_souls_won__avg|floatformat:2}}</b></p>
+				       {% endif  %}
+			       </div>
+			   </div>
+			   <canvas id=bussel-attendance-chart>
+			   
+			   </canvas>
+		   </div>
+	    </div>
+	    <div class="data-section bussel-offertory-info">
+	           <div class="data-section-header">
+			   <p class="subsection-title">Offertory Information</p>
+		   </div>
+		   <div class="data-section-data">
+			   <div class="row">
+			       <div class="col-sm-6">
+				       <p>Offertory (AVG): {% if average_offertory == 0 %} <b>GHC 0.00</b>
+				       {% else %}
+				       <b>GHC {{average_offertory.offertory_given__avg|floatformat:2}}</b></p>
+				       {% endif  %}
+			       </div>
+			       <div class="col-sm-6">
+				       <p>Offertory Per Head (AVG): {% if average_offertory_per_head == 0 %} <b>GHC 0.00</b>
+				       {% else %}
+				       <b>GHC {{average_offertory_per_head|floatformat:2}}</b></p>
+				       {% endif  %}
+			       </div>
+			   </div>
+			   <canvas id=bussel-offertory-chart>
+			   
+			   </canvas>
+		   </div>
+	    </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+	<script>
+		function initMap(){
+			var loc = {lat: 5.602078, lng: -0.254704};
+			var map = new google.maps.Map(document.getElementById('bussel-location-map'), {
+			        zoom: 16,
+			        center: loc,
+			});
+			var marker = new google.maps.Marker({
+			position: loc,
+			map: map
+			});
+		}
+$(document).ready(function(){
+        $("#bussel-all-link").addClass("active");
+	var ctx = document.getElementById("bussel-attendance-chart").getContext("2d");
+	var data = {
+		labels : {{chart_label|safe}},
+		datasets: [
+	        {
+			label: "bussel attendance",
+		        borderColor: "#bce0ba",
+			backgroundColor: "#bce0ba",
+			data: {{attendance_data.bussel}} 
+		},	
+	        {
+			label: "church attendance",
+		        borderColor: "#e6b795",
+			backgroundColor: "#e6b795",
+			data: {{attendance_data.church}} 
+		},	
+	        {
+			label: "souls won",
+		        borderColor: "#635470",
+			backgroundColor: "#635470",
+			data: {{attendance_data.souls}}
+		},	
+		]
+	}
+	var attendanceBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+	            scales: {
+			  yAxes: [{
+			      ticks: {
+				 max: 20,
+				 min: 0,
+				 stepSize: 1
+			      },
+			      scaleLabel: {
+				 display: true,
+				 labelString: 'Attendance'
+			      }
+			  }]
+		    }
+	    }	    
+	});
+	var ctx_line = document.getElementById("bussel-offertory-chart").getContext("2d");
+	var plot_data = {
+	    labels :  {{chart_label|safe}},
+	    datasets: [
+	          {
+		    label: "Offertory",
+		    fill: false,
+		    lineTension: 0.2,
+		    borderColor: "#bce0ba",
+		    borderWidth: 2,
+		    backgroundColor: "#bce0ba",
+		    pointBorderColor: "#635470",
+	            pointBackgroundColor: "#635470",
+		    data: {{attendance_data.offertory}} 
+		  },
+	          {
+		    label: "Offertory Per Head",
+		    fill: false,
+		    lineTension: 0.2,
+	            borderColor: "#e6b795",
+		    borderWidth: 2,
+		    backgroundColor: "#e6b795",
+		    pointBorderColor: "#635470",
+	            pointBackgroundColor: "#635470",
+		    data: {{attendance_data.offertory_per_head}} 
+		  }
+	    
+	    ]	
+	};
+
+	var offertoryLineChart = new Chart(ctx_line, {
+	type: 'line',
+	data: plot_data,
+            options: {
+	            scales: {
+			  yAxes: [{
+			      ticks: {
+				 max: 20,
+				 min: 0,
+				 stepSize: 1
+			      },
+			      scaleLabel: {
+				 display: true,
+				 labelString: 'GH Cedis'
+			      }
+			  }]
+		    }
+	    }	    
+	});
+})
+	</script>
+	<script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDS8X0LKzdOHcxwolQc4ivkcLjXSUqXkO8&callback=initMap">
+	</script>
+{% endblock %}

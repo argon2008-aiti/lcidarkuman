@@ -1,0 +1,16 @@
+from django.conf.urls import url
+from django.contrib.auth import views
+from django.views.generic import TemplateView
+from views import *
+
+urlpatterns = [
+    url(r'^all/$', BusselListView.as_view(), name="all-bussels"),
+    url(r'^reports/all$', BusselReportListView.as_view(), name="all-bussel-reports"),
+    url(r'^reports/all/export$', export_bussels_list, name="all-bussel-export"),
+    url(r'^reports/details/(?P<pk>\d+)/$', BusselReportEditView.as_view(), name="bussel-report-detail"),
+    url(r'^bussels/all/$', json_bussel_list, name="all-bussels-json"),
+    url(r'^bussel_reports/all/$', json_bussel_reports_list, name="all-bussel-reports-json"),
+    url(r'^bussel_reports/all/export$', export_bussel_reports, name="bussel-reports-export"),
+    url(r'^details/(?P<pk>\d+)/$', BusselDetailView.as_view(), name="bussel-detail"),
+    url(r'^report/save/$', save_bussel_report, name="bussel-report-save"),
+]
