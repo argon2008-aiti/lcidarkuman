@@ -93,6 +93,7 @@ class BusselDetailView(DetailView):
         context["chart_label"]  = [rev for rev in reversed([saturday.strftime('%d-%m-%Y') \
                                                             for saturday in past_saturdays(12)])]
         context["average_offertory"] = bussel_reports.aggregate(Avg("offertory_given"))
+        print bussel_password
         context["average_offertory_per_head"] = bussel_reports.aggregate(Avg("offertory_given")).values()[0]\
                               /bussel_reports.aggregate(Avg("bussel_attendance")).values()[0]
 
@@ -105,9 +106,13 @@ def authenticate_bussel(bussel_code, bussel_password):
     # let's see if a bussel exists with this code
     try:
         bussel = Bussel.objects.get(code=bussel_code)
+        print bussel
+        print bussel_password
+        print hashers.check_password(bussel_password, bussel.password) 
         return hashers.check_password(bussel_password, bussel.password) 
 
     except Bussel.DoesNotExist:
+        "No bussel found"
         return False
 
 def json_bussel_list(request):
@@ -477,17 +482,22 @@ def get_reports_for_bussel(request):
     bussel_password = request.GET["password"]
 
     if authenticate_bussel(bussel_code, bussel_password):
-        reports_for_bussel = BusselReport.objects.filter(bussel=Bussel.objects.get(code=bussel_code))
-        object_list = []
-        for report in reports_for_bussel:
-            object_dict = {}
-            object_dict['pk'] = report.pk
-            object_dict['b_attendance'] = report.bussel_attendance
-            object_dict['c_attendance'] = report.church_attendance
-            object_dict['start_time'] = report.time_started.strftime('%H:%M:%S')
-            object_dict['end_time'] = report.time_ended.strftime('%H:%M:%S')
-            object_dict['topic'] = report.topic
-            object_list.append(object_dict)
+        try:
+            reports_for_bussel = BusselReport.objects.filter(bussel=Bussel.objects.get(code=bussel_code))
+            object_list = []
+            for report in reports_for_bussel:
+                object_dict = {}
+                object_dict['pk'] = report.pk
+                object_dict['b_attendance'] = report.bussel_attendance
+                object_dict['c_attendance'] = report.church_attendance
+                object_dict['start_time'] = report.time_started.strftime('%H:%M:%S')
+                object_dict['end_time'] = report.time_ended.strftime('%H:%M:%S')
+                object_dict['topic'] = report.topic
+                object_dict['date'] = report.date.strftime('%d-%b-%Y')
+                object_list.append(object_dict)
+
+        except BusselReport.DoesNotExist:
+            return HttpResponse(status=403)
 
         return JsonResponse(object_list, safe=False)
 
