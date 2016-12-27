@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^reports/details/(?P<pk>\d+)/$', BusselReportEditView.as_view(), name="bussel-report-detail"),
     url(r'^bussels/all/$', json_bussel_list, name="all-bussels-json"),
     url(r'^bussel_reports/all/$', json_bussel_reports_list, name="all-bussel-reports-json"),
+    url(r'^reports_for_bussel/all/$', get_reports_for_bussel, name="reports-for-bussel"),
     url(r'^bussel_reports/all/export$', export_bussel_reports, name="bussel-reports-export"),
     url(r'^details/(?P<pk>\d+)/$', BusselDetailView.as_view(), name="bussel-detail"),
     url(r'^report/save/$', save_bussel_report, name="bussel-report-save"),
