@@ -104,7 +104,7 @@ class BusselDetailView(DetailView):
 def authenticate_bussel(bussel_code, bussel_password):
     # let's see if a bussel exists with this code
     try:
-        bussel = Bussel.objects.get(bussel_code=bussel_code)
+        bussel = Bussel.objects.get(code=bussel_code)
         return hashers.check_password(bussel_password, bussel.password) 
 
     except Bussel.DoesNotExist:
