@@ -493,7 +493,8 @@ def get_reports_for_bussel(request):
 
     if authenticate_bussel(bussel_code, bussel_password):
         try:
-            reports_for_bussel = BusselReport.objects.filter(bussel=Bussel.objects.get(code=bussel_code))
+            reports_for_bussel = BusselReport.objects.filter(bussel=Bussel.objects.get(code=bussel_code)) \
+                .order_by('date')
             object_list = []
             for report in reports_for_bussel:
                 object_dict = {}
