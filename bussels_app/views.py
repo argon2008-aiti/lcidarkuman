@@ -115,6 +115,15 @@ def authenticate_bussel(bussel_code, bussel_password):
         "No bussel found"
         return False
 
+def authenticate_bussel_request(request):
+    code = request.GET["code"]
+    password = request.GET["password"]
+
+    if authenticate_bussel(code, password):
+        return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=401)
+
 def json_bussel_list(request):
     
     if request.method == "GET":
@@ -242,7 +251,7 @@ def save_bussel_report(request):
         report_date = datetime.date(int(yr), int(mn), int(day))
         if (report_date,) in bussel_report_dates:
             print "report available for this date"
-            return
+            return HttpResponse(status=409)
         report = BusselReport.objects.create(
                  topic=request.POST['topic'],
                  date = request.POST['date'],
@@ -254,6 +263,7 @@ def save_bussel_report(request):
                  offertory_given=request.POST['offertory'],
                  bussel=bussel
         )
+        return HttpResponse(status=200)
     # Unsuccessful authentication
     else:
         return HttpResponse(status=401)
