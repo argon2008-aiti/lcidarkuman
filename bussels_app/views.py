@@ -124,6 +124,26 @@ def authenticate_bussel_request(request):
     else:
         return HttpResponse(status=401)
 
+@csrf_exempt
+def change_bussel_password(request):
+    code = request.POST["code"]
+    old_password = request.POST["old_password"]
+
+    if not authenticate_bussel(code, old_password):
+        return HttpResponse(status=401)
+    else:
+        new_password_one = request.POST["new_password_one"]
+        new_password_two = request.POST["new_password_two"]
+
+        if new_password_one == new_password_two:
+            bussel = Bussel.objects.get(code=code)
+            bussel.password = new_password_one
+            bussel.save()
+            return HttpResponse(status=200)
+
+        else:
+            return HttpResponse(status=400)
+
 def json_bussel_list(request):
     
     if request.method == "GET":
