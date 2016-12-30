@@ -144,6 +144,18 @@ def change_bussel_password(request):
         else:
             return HttpResponse(status=400)
 
+def update_bussel_location(request):
+    code = request.GET["code"]
+    lat  = request.GET["lat"]
+    lon  = request.GET["lon"]
+
+    bussel = Bussel.objects.get(code=code)
+
+    bussel.location = {'type':'Point', 'coordinates': [float(lon), float(lat)]}
+
+    return HttpResponse(status=200)
+
+
 def json_bussel_list(request):
     
     if request.method == "GET":

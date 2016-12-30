@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^all/$', BusselListView.as_view(), name="all-bussels"),
     url(r'^authenticate/$', authenticate_bussel_request, name="bussel-authenticate"),
     url(r'^change/password/$', change_bussel_password, name="bussel-password-change"),
+    url(r'^update/location/$', update_bussel_location, name="bussel-update-location"),
     url(r'^reports/all$', BusselReportListView.as_view(), name="all-bussel-reports"),
     url(r'^reports/all/export$', export_bussels_list, name="all-bussel-export"),
     url(r'^reports/details/(?P<pk>\d+)/$', BusselReportEditView.as_view(), name="bussel-report-detail"),
