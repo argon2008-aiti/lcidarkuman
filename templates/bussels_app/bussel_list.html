@@ -30,6 +30,7 @@
 		    data-search="true">
                 <thead>
 	         <th>Bussel Name</th>
+	         <th>Bussel Code</th>
 	         <th>Bussel Leader</th>
 	         <th>Bussel Location</th>
 		</thead>	    
@@ -54,6 +55,7 @@ $(document).ready(function(){
 			    var detail_link = "/bussels/details/"+bussel.pk + "/"
 			    $(".table > tbody").append('<tr> \
 			          <td><a href="" class=' + bussel.pk + '>' + bussel.name + '</a></td> \
+			          <td><a href="" class=' + bussel.pk + '>' + bussel.code + '</a></td> \
 				  <td><a href="" class=' + bussel.pk + '>' + bussel.leader + '</a></td> \
 			          <td><a href="" class=' + bussel.pk + '>' + bussel.location + '</a></td></tr>'
 				  );

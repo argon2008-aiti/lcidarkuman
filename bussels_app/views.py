@@ -166,6 +166,7 @@ def json_bussel_list(request):
             object_dict = {}
             object_dict['pk'] = bussel.pk
             object_dict['name'] = bussel.name
+            object_dict['code'] = bussel.code
             object_dict['leader'] = bussel.leader.first_name + " " + \
                 bussel.leader.middle_name + " " + bussel.leader.last_name
             object_dict['location'] = "HNo. " + bussel.house_number + ", " + \
