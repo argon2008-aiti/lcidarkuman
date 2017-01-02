@@ -154,6 +154,8 @@ def update_bussel_location(request):
 
     bussel.bussel_location = {'type':'Point', 'coordinates': [float(lon), float(lat)]}
 
+    bussel.save()
+
     return HttpResponse(status=200)
 
 
