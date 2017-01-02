@@ -152,7 +152,7 @@ def update_bussel_location(request):
 
     bussel = Bussel.objects.get(code=code)
 
-    bussel.location = {'type':'Point', 'coordinates': [float(lon), float(lat)]}
+    bussel.bussel_location = {'type':'Point', 'coordinates': [float(lon), float(lat)]}
 
     return HttpResponse(status=200)
 
@@ -282,9 +282,16 @@ def save_bussel_report(request):
         bussel = Bussel.objects.get(code=bussel_code)
         bussel_report_dates = BusselReport.objects.filter(bussel=bussel).values_list('date')
         report_date = datetime.date.today() 
+        # An already submitted report
         if (report_date,) in bussel_report_dates:
             print "report available for this date"
             return HttpResponse(status=409)
+
+        # A report on a day other than Saturday
+        if report_date.day() != 5:
+            print "report available for this date"
+            return HttpResponse(status=403)
+
         report = BusselReport.objects.create(
                  topic=request.POST['topic'],
                  time_started = request.POST['time_started'],
