@@ -93,13 +93,14 @@ class BusselDetailView(DetailView):
         context["chart_label"]  = [rev for rev in reversed([saturday.strftime('%d-%m-%Y') \
                                                             for saturday in past_saturdays(12)])]
         context["average_offertory"] = bussel_reports.aggregate(Avg("offertory_given"))
-        print bussel_password
         context["average_offertory_per_head"] = bussel_reports.aggregate(Avg("offertory_given")).values()[0]\
                               /bussel_reports.aggregate(Avg("bussel_attendance")).values()[0]
 
         context["average_bussel_attendance"] = bussel_reports.aggregate(Avg("bussel_attendance"))
         context["average_church_attendance"] = bussel_reports.aggregate(Avg("church_attendance"))
         context["average_souls_won"] = bussel_reports.aggregate(Avg("num_souls_won"))
+        context["longitude"] = self.get_object().bussel_location['coordinates'][0] 
+        context["latitude"] = self.get_object().bussel_location['coordinates'][1] 
         return context
 
 def authenticate_bussel(bussel_code, bussel_password):
@@ -280,14 +281,12 @@ def save_bussel_report(request):
     if authenticate_bussel(bussel_code, bussel_password):
         bussel = Bussel.objects.get(code=bussel_code)
         bussel_report_dates = BusselReport.objects.filter(bussel=bussel).values_list('date')
-        yr, mn, day = request.POST['date'].split("-")
-        report_date = datetime.date(int(yr), int(mn), int(day))
+        report_date = datetime.date.today() 
         if (report_date,) in bussel_report_dates:
             print "report available for this date"
             return HttpResponse(status=409)
         report = BusselReport.objects.create(
                  topic=request.POST['topic'],
-                 date = request.POST['date'],
                  time_started = request.POST['time_started'],
                  time_ended = request.POST['time_ended'],
                  bussel_attendance=request.POST['bussel_attendance'],
@@ -328,13 +327,14 @@ def export_bussels_list(request):
         # list is not empty
         else:
             data = []
-            header = ["R/N", "Bussel Name", "Bussel Leader", "Bussel Location", 
+            header = ["R/N", "Bussel Name", "Bussel Code", "Bussel Leader", "Bussel Location", 
                       "Date Created"]
             data.append(header)
             bussel_each = []
             for index, bussel in enumerate(bussels_all):
                 bussel_each.append(index + 1)
                 bussel_each.append(bussel.name)
+                bussel_each.append(bussel.code)
                 bussel_each.append(bussel.leader)
                 bussel_each.append("HNo. " + bussel.house_number +", " + bussel.street_name + 
                                    ", " + bussel.suburb)

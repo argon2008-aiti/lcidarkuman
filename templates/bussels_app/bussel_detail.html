@@ -123,7 +123,7 @@
 {% block footer %}
 	<script>
 		function initMap(){
-			var loc = {lat: 5.602078, lng: -0.254704};
+			var loc = {lat: {{latitude}}, lng: {{longitude}} };
 			var map = new google.maps.Map(document.getElementById('bussel-location-map'), {
 			        zoom: 16,
 			        center: loc,
