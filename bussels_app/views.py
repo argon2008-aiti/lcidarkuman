@@ -291,7 +291,7 @@ def save_bussel_report(request):
 
         # A report on a day other than Saturday
         if report_date.day() != 5:
-            print "report available for this date"
+            print "Reporting Window Closed"
             return HttpResponse(status=403)
 
         report = BusselReport.objects.create(
@@ -336,7 +336,7 @@ def export_bussels_list(request):
         # list is not empty
         else:
             data = []
-            header = ["R/N", "Bussel Name", "Bussel Code", "Bussel Leader", "Bussel Location", 
+            header = ["R/N", "Bussell Name", "Bussell Code", "Bussell Leader", "Bussell Location", 
                       "Date Created"]
             data.append(header)
             bussel_each = []
@@ -395,7 +395,7 @@ def export_bussels_list(request):
 
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
-            subtitle = 'All Registered Bussels (Generated ' + datetime.datetime.now().strftime("%c") + ')'
+            subtitle = 'All Registered Bussells (Generated ' + datetime.datetime.now().strftime("%c") + ')'
 
             elements.append(Paragraph(title, title_style))
             elements.append(Paragraph(branch, branch_style))
@@ -442,13 +442,14 @@ def export_bussel_reports(request):
 
         else:
             data = []
-            header = ["R/N", "Bussel Name", "Bussel Leader", "Topic Taught", 
+            header = ["R/N", "Bussell Name","Bussell Code", "Bussell Leader", "Topic Taught", 
                       "B/A", "C/A", "Of(GHC)", "F/T", "S/W"]
             data.append(header)
             bussel_each = []
             for index, report in enumerate(bussel_reports):
                 bussel_each.append(index + 1)
                 bussel_each.append(report.bussel.name)
+                bussel_each.append(report.bussel.code)
                 bussel_each.append(report.bussel.leader)
                 bussel_each.append(report.topic)
                 bussel_each.append(report.bussel_attendance)
@@ -505,7 +506,7 @@ def export_bussel_reports(request):
 
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
-            subtitle = 'Bussel Reports for ' + request_date_wrapper.get_request_date().strftime('%d/%b/%Y')
+            subtitle = 'Bussell Reports for ' + request_date_wrapper.get_request_date().strftime('%d/%b/%Y')
 
             elements.append(Paragraph(title, title_style))
             elements.append(Paragraph(branch, branch_style))
@@ -550,7 +551,7 @@ def get_reports_for_bussel(request):
                 object_list.append(object_dict)
 
         except BusselReport.DoesNotExist:
-            return HttpResponse(status=403)
+            return HttpResponse(status=404)
 
         return JsonResponse(object_list, safe=False)
 
