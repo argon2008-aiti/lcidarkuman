@@ -331,7 +331,6 @@ td a:visited {
 
 .footer-contents {
     padding-top: 10px;
-    width: 90%;
     font-size: 20px;
     margin: auto;
     clear: both;
@@ -339,4 +338,16 @@ td a:visited {
 
 .footer-header {
     color: white;
+    margin-left: 50px;
+    margin-bottom: 5px;
+}
+
+.footer-items {
+    text-align: left;
+    color: white;
+    font-size: 16px;
+}
+
+.footer-items li {
+    margin-top: 5px;
 }
