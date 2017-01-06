@@ -328,3 +328,15 @@ td a:visited {
     background-color: #333;
     display: block;
 }
+
+.footer-contents {
+    padding-top: 10px;
+    width: 90%;
+    font-size: 20px;
+    margin: auto;
+    clear: both;
+}
+
+.footer-header {
+    color: white;
+}
