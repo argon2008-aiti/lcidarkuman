@@ -327,6 +327,7 @@ td a:visited {
     height: 200px;
     background-color: #333;
     display: block;
+    padding-left: 20px;
 }
 
 .footer-contents {
@@ -337,17 +338,26 @@ td a:visited {
 }
 
 .footer-header {
-    color: white;
-    margin-left: 50px;
-    margin-bottom: 5px;
+    color: #fff;
+    margin-left: 40px;
+    margin-bottom: 10px;
 }
 
 .footer-items {
     text-align: left;
-    color: white;
+    color: #ccc;
     font-size: 16px;
 }
 
 .footer-items li {
     margin-top: 5px;
+    list-style: none;
+}
+
+.footer-items li a {
+    color: #ccc;
+}
+
+.footer-items li a:hover {
+    color: #fbe40c;
 }
