@@ -290,7 +290,7 @@ def save_bussel_report(request):
             return HttpResponse(status=409)
 
         # A report on a day other than Saturday
-        if report_date.day() != 5:
+        if report_date.weekday() != 5:
             print "Reporting Window Closed"
             return HttpResponse(status=403)
 
