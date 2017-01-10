@@ -24,31 +24,16 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
   </head>
           <body>
-		  <div class="container">
+		  <div class="container out">
 			  {% block banner %}
-			  <div class="banner">
+			  <div class="banner out">
 			       <div class="logo">
-			          <img src="/static/lci-logo.png" alt="logo" height="120" width="120">
+			          <img src="/static/lci-logo.png" alt="logo" height="50" width="50">
 			       </div>
 			       
-			       <div class="vertical-separator"></div>
+			       <div class="vertical-separator out"></div>
 			       <div class="brand-name">Lighthouse Chapel International</div>
-	 		       <div class="brand-name-sub">Darkuman Branch</div>
-
-			       {% if user.is_authenticated %}
-		  <div class="user dropdown">
-			  <a href="#" data-toggle="dropdown" class="dropdown-toggle" >
-				  <span class="fa fa-user"> </span> {{user.username|lower}}
-				  <span class="caret"></span> 
-			  </a>
-			  <ul class="dropdown-menu">
-				  <li><a href=""><span class="fa fa-lock"></span> Account</a></li>
-				  <li><a href="{% url 'logout' %}"><span class="fa fa-arrow-right">
-						  </span> Logout</a>
-				  </li>
-			  </ul>
-		  </div>
-		               {% endif %}
+			       <div class="brand-name-sub">Darkuman Branch</div>
 
 			  </div>
 			  {% endblock %}

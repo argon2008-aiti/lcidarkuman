@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from djgeojson.fields import PointField
 
 MARITAL_STATUS = [
@@ -30,3 +31,6 @@ class Member(models.Model):
 
     def __unicode__(self):
         return self.first_name + " " + self.middle_name + " " + self.last_name
+
+class Manager(models.Model):
+    user = models.OneToOneField(User)

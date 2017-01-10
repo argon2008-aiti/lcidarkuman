@@ -17,6 +17,7 @@ import datetime
 
 # This view shows all available bussels in our DB
 # We use this to return a JSON object 
+
 class BusselListView(TemplateView):
     template_name = "bussels_app/bussel_list.html"
 

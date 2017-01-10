@@ -1,0 +1,59 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>LCI Darkuman</title>
+      <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/static/css/custom.css" rel="stylesheet">
+      <link href="/static/css/formValidation.min.css" rel="stylesheet">
+      <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+	        <script src="/static/js/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	        <script src="/static/js/bootstrap.min.js"></script>
+	        <script src="/static/js/formValidation.min.js"></script>
+	        <script src="/static/js/framework/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  </head>
+          <body>
+		  <div class="container out">
+			  {% block banner %}
+			  <div class="banner out">
+			       <div class="logo out">
+			          <img src="/static/lci-logo.png" alt="logo" height="80" width="80">
+			       </div>
+			       
+			       <div class="vertical-separator out"></div>
+			       <div class="brand-name out">Lighthouse Chapel International [Darkuman Branch]</div>
+
+			  </div>
+			  {% endblock %}
+
+			  {% block contents %}
+			   <h1>This is the Base Template</h1>
+
+
+			  {% endblock %}
+
+
+			  {% block footer %}
+
+			  {% endblock %}
+		  </div>
+	        <script src="/static/js/customjs.js"></script>
+		<style>
+	            body {
+		       background-color: white; 
+		    }	
+		</style>
+
+	  </body>
+</html>

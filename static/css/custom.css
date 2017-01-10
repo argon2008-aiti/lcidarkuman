@@ -11,10 +11,18 @@ html, body {
     background-color: #fbe40c;
 }
 
+.banner.out {
+    height: 60px;
+}
+
 .logo {
     margin-top: -13px;
     margin-left: -15px;
     float: left;
+}
+
+.logo.out {
+    margin-left: 0px;
 }
 
 .vertical-separator {
@@ -24,9 +32,19 @@ html, body {
     margin-top: 10px;
 }
 
+.vertical-separator.out {
+    height: 40px;
+}
+
 .brand-name {
     font-size: 40px;
     margin-left: 120px;
+}
+
+.brand-name.out {
+    margin-left: 100px;
+    font-size: 30px;
+    line-height: 2;
 }
 
 .brand-name-sub {
@@ -234,6 +252,11 @@ td a:visited {
     margin-top: 40px;
 }
 
+.container.out {
+    width: 100%;
+    padding: 0px;
+}
+
 .data-section {
     min-height: 100px;
     border: 1px solid #f1f1f1;
@@ -360,4 +383,41 @@ td a:visited {
 
 .footer-items li a:hover {
     color: #fbe40c;
+}
+
+.form-container {
+    border: 1px #dfdfdf solid;
+    padding: 20px 15px;
+}
+
+.form-container.compact-login-form {
+    position: absolute;
+    width: 500px;
+    top: 180px;
+    left: 30%;
+}
+
+.server-message {
+    text-align: center;
+}
+
+.user {
+    margin-right: 110px;
+    font-family: "Helvetica Nue", Helvetica, Arial, sans-serif;
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    font-size: 20px;
+    padding-right: 15px;
+    color: #333;
+}
+
+.user>a {
+    outline: none;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-menu {
+    border-radius: 0px;
 }

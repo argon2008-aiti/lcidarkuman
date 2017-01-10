@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^bussels/', include('bussels_app.urls', namespace="bussel")),
     url(r'^json/', include('bussels_app.urls', namespace="ajax")),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('django.contrib.auth.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
