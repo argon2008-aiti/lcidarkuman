@@ -8,6 +8,8 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
+from braces.views import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.db.models import Avg, Sum, Max
 from saturdays_list import past_saturdays
@@ -18,12 +20,16 @@ import datetime
 # This view shows all available bussels in our DB
 # We use this to return a JSON object 
 
-class BusselListView(TemplateView):
+class BusselListView(LoginRequiredMixin, TemplateView):
     template_name = "bussels_app/bussel_list.html"
 
-class BusselDetailView(DetailView):
+    login_url ="/login/"
+
+class BusselDetailView(LoginRequiredMixin, DetailView):
     template_name ="bussels_app/bussel_detail.html"
     model = Bussel
+
+    login_url ="/login/"
 
     # add the attendance and average data to the context
     def get_context_data(self, **kwargs):
@@ -180,8 +186,10 @@ def json_bussel_list(request):
         return JsonResponse(object_list, safe=False)
 
 # get all bussel reports for the given date
-class BusselReportListView(TemplateView):
+class BusselReportListView(LoginRequiredMixin, TemplateView):
     template_name = "bussels_app/bussel_reports_list.html"
+
+    login_url ="/login/"
 
     def get_context_data(self, **kwargs):
         context = super(BusselReportListView, self).get_context_data(**kwargs)
@@ -232,10 +240,12 @@ def json_bussel_reports_list(request):
 
         return JsonResponse(object_list, safe=False)
 
-class BusselReportEditView(UpdateView):
+class BusselReportEditView(LoginRequiredMixin, UpdateView):
     model = BusselReport
     form_class = BusselReportDetailForm
     template_name = "bussels_app/bussel_report_detail.html"
+
+    login_url ="/login/"
 
     def get_context_data(self, **kwargs):
         context = super(BusselReportEditView, self).get_context_data(**kwargs)

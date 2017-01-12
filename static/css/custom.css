@@ -42,9 +42,10 @@ html, body {
 }
 
 .brand-name.out {
-    margin-left: 100px;
+    margin-left: 10px;
     font-size: 30px;
     line-height: 2;
+    float: left;
 }
 
 .brand-name-sub {
@@ -302,6 +303,7 @@ td a:visited {
 
 .form-control:focus {
     border-color: #fbe40c;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(251,228,12,.6);
 }
 
 .btn {
@@ -420,4 +422,11 @@ td a:visited {
 
 .dropdown-menu {
     border-radius: 0px;
+}
+
+.brand-name-sub.out {
+    position: absolute;
+    right: 5px;
+    font-size: 30px;
+    line-height: 2;
 }
