@@ -10,7 +10,6 @@ django-widget-tweaks==1.4.1
 djangoajax==2.2.15
 gunicorn==19.3.0
 jsonfield==1.0.3
-PIL==1.1.7
 Pillow==3.4.2
 psycopg2==2.6
 reportlab==3.3.0
