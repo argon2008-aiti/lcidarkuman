@@ -1,14 +1,16 @@
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.contrib.auth import hashers
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.db.models import Avg, Sum, Max
@@ -20,16 +22,37 @@ import datetime
 # This view shows all available bussels in our DB
 # We use this to return a JSON object 
 
-class BusselListView(LoginRequiredMixin, TemplateView):
+'''class GroupRequiredMixin(object):
+
+    def get(self, request, *args, **kwargs):
+        group_found = False
+        for group in self.request.user.groups.all():
+            if group.name in self.group_required:
+                group_found = True
+                break
+        if group_found == False:
+            reverse('access-denied')
+        else:
+            print "Group found"
+            return'''
+
+def show_access_denied_page(caller, request):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+    return redirect(reverse('access-denied'))
+
+class BusselListView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = "bussels_app/bussel_list.html"
-
     login_url ="/login/"
+    group_required= [u"Bussell", u"Manager"]
+    raise_exception = show_access_denied_page
 
-class BusselDetailView(LoginRequiredMixin, DetailView):
+class BusselDetailView(LoginRequiredMixin, GroupRequiredMixin, DetailView):
     template_name ="bussels_app/bussel_detail.html"
     model = Bussel
-
     login_url ="/login/"
+    group_required= [u"Bussell", u"Manager"]
+    raise_exception = show_access_denied_page
 
     # add the attendance and average data to the context
     def get_context_data(self, **kwargs):
@@ -110,6 +133,16 @@ class BusselDetailView(LoginRequiredMixin, DetailView):
         context["latitude"] = self.get_object().bussel_location['coordinates'][1] 
         return context
 
+class SectionUnderDevelopment(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
+    template_name = "bussels_app/under_development.html"
+    group_required= [u"Bussell", u"Manager", u"Finance"]
+    login_url = "/login/"
+    raise_exception = show_access_denied_page
+
+class AccessDenied(LoginRequiredMixin, TemplateView):
+    login_url = "/login/"
+    template_name = "bussels_app/access_denied.html"
+
 def authenticate_bussel(bussel_code, bussel_password):
     # let's see if a bussel exists with this code
     try:
@@ -186,10 +219,11 @@ def json_bussel_list(request):
         return JsonResponse(object_list, safe=False)
 
 # get all bussel reports for the given date
-class BusselReportListView(LoginRequiredMixin, TemplateView):
+class BusselReportListView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = "bussels_app/bussel_reports_list.html"
-
     login_url ="/login/"
+    group_required= [u"Bussell", u"Manager"]
+    raise_exception = show_access_denied_page
 
     def get_context_data(self, **kwargs):
         context = super(BusselReportListView, self).get_context_data(**kwargs)
@@ -216,7 +250,7 @@ def json_bussel_reports_list(request):
         request_date_wrapper.set_request_date(request_date)
         bussel_reports = BusselReport.objects.filter(date=request_date)
         print bussel_reports
-        offertory_total = bussel_reports.aggregate(Sum('offertory_given'))
+        offertory_total = bussel_reports.aggregate("{0:.2f}".format(Sum('offertory_given')))
         souls_won_total = bussel_reports.aggregate(Sum('num_souls_won'))
         bussel_attendance_total = bussel_reports.aggregate(Sum('bussel_attendance'))
         church_attendance_total = bussel_reports.aggregate(Sum('church_attendance'))
@@ -240,12 +274,13 @@ def json_bussel_reports_list(request):
 
         return JsonResponse(object_list, safe=False)
 
-class BusselReportEditView(LoginRequiredMixin, UpdateView):
+class BusselReportEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = BusselReport
     form_class = BusselReportDetailForm
     template_name = "bussels_app/bussel_report_detail.html"
-
     login_url ="/login/"
+    group_required= [u"Bussell", u"Manager"]
+    raise_exception = show_access_denied_page
 
     def get_context_data(self, **kwargs):
         context = super(BusselReportEditView, self).get_context_data(**kwargs)
@@ -381,7 +416,7 @@ def export_bussels_list(request):
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
                                    ('BOX', (0,0), (-1,0), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                                   ('BOX', (0,1), (-1,-1), 0.25, colors.black)])
+                                   ('BOX', (0,1), (-1,-1), 1.5, colors.black)])
 
             title_style = ParagraphStyle(
                            name = 'title',

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="main-contents">
+    <div class="section-header">
+	    <p class=section-title>Access Denied</p>
+    </div>
+    <div class="data-container" id=>
+	    <div class="access_denied_div">
+		    <img src="/static/access_denied.png" alt="not found" height:"256" width:"300" id="access_denied_img">
+		   <h2 id="access_denied_string">You do not have permission to access this content!</h2>
+	    </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}

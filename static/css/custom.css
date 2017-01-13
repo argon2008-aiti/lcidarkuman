@@ -331,28 +331,34 @@ td a:visited {
     outline: none;
 }
 
-.empty_error_div {
+.empty_error_div,
+.under_development_div,
+.access_denied_div {
     margin-bottom: 50px;
     margin-top: 50px;
     clear: both;
 }
 
-#r404_image{
+#r404_image,
+#under_dev_img,
+#access_denied_img {
     display: block;
     margin: 0 auto;
 }
 
-#empty_error_string {
+#empty_error_string,
+#under_development_string,
+#access_denied_string {
     text-align: center;
     margin-top: 50px;
     color: #a1a1a1;
 }
 
 #footer {
-    height: 200px;
     background-color: #333;
     display: block;
     padding-left: 20px;
+    padding-bottom: 10px;
 }
 
 .footer-contents {
@@ -385,6 +391,9 @@ td a:visited {
 
 .footer-items li a:hover {
     color: #fbe40c;
+}
+.footer-chunk {
+    margin-bottom: 20px;
 }
 
 .form-container {
