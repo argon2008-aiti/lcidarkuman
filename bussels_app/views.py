@@ -248,9 +248,12 @@ def json_bussel_reports_list(request):
         yr, mn, day   = request_date.split("-")
         request_date  = datetime.date(int(yr), int(mn), int(day))
         request_date_wrapper.set_request_date(request_date)
-        bussel_reports = BusselReport.objects.filter(date=request_date)
+        try:
+            bussel_reports = BusselReport.objects.filter(date=request_date)
+        except BusselReport.DoesNotExist:
+            return JsonResponse([], safe=False)
         print bussel_reports
-        offertory_total = bussel_reports.aggregate("{0:.2f}".format(Sum('offertory_given')))
+        offertory_total = bussel_reports.aggregate(Sum('offertory_given'))
         souls_won_total = bussel_reports.aggregate(Sum('num_souls_won'))
         bussel_attendance_total = bussel_reports.aggregate(Sum('bussel_attendance'))
         church_attendance_total = bussel_reports.aggregate(Sum('church_attendance'))

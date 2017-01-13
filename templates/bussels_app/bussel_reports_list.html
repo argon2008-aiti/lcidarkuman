@@ -121,12 +121,13 @@ function get_bussel_reports(report_date) {
 		    $(".badge.bussel-count").html(data.length);
 		    console.log(data)
 		    if(data.length == 0) {
+			    console.log(data.length);
 			 $(".empty_error_div").show();
 			 return;
 		    }
 		    else {
 			    $("#report-total").html(data.length);
-			    $("#offertory-total").html(data[0].offertory_given__sum);
+			    $("#offertory-total").html((data[0].offertory_given__sum).toFixed(2));
 			    $("#souls-total").html(data[0].num_souls_won__sum);
 			    $("#attendance-total").html(data[0].church_attendance__sum + '/' + data[0].bussel_attendance__sum);
 			    $(".empty_error_div").hide();
