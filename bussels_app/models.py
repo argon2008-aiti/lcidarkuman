@@ -45,7 +45,7 @@ class Bussel(models.Model):
 class BusselReport(models.Model):
     bussel             = models.ForeignKey(Bussel)
     topic              = models.CharField(max_length=100)
-    date               = models.DateField(auto_now_add=True)
+    date               = models.DateField()
     time               = models.TimeField(auto_now_add=True)
     time_started       = models.TimeField()
     time_ended         = models.TimeField()

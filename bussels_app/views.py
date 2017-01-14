@@ -347,6 +347,7 @@ def save_bussel_report(request):
                  topic=request.POST['topic'],
                  time_started = request.POST['time_started'],
                  time_ended = request.POST['time_ended'],
+                 date = report_date,
                  bussel_attendance=request.POST['bussel_attendance'],
                  num_souls_won=request.POST['num_souls_won'],
                  num_first_timers=request.POST['num_first_timers'],
