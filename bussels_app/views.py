@@ -526,7 +526,7 @@ def export_bussel_reports(request):
                 bussel_each.append(report.num_souls_won)
 
                 # add this bussel information to our data table
-                [data.append(bussel_each) for x in range(20)]
+                data.append(bussel_each)
                 bussel_each = []
 
 
