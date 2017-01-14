@@ -135,8 +135,7 @@ function get_bussel_reports(report_date) {
 		            $(".data-section").show();
 			    $.each(data, function(i, bussel) {
 				    var detail_link = "/bussels/reports/details/"+bussel.pk + "/"
-			            var con_class = (bussel.c_attendance==0 ? "danger" : "success")
-				    $(".table > tbody").append('<tr class=' + con_class + '> \
+				    $(".table > tbody").append('<tr> \
 					  <td><a href="" class=' + bussel.pk + '>' + bussel.name + '</a></td> \
 					  <td><a href="" class=' + bussel.pk + '>' + bussel.leader + '</a></td> \
 					  <td><a href="" class=' + bussel.pk + '>' + bussel.topic + '</a></td> \
