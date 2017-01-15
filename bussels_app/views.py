@@ -508,6 +508,11 @@ def export_bussel_reports(request):
             pass
 
         else:
+            offertory_total = bussel_reports.aggregate(Sum('offertory_given'))
+            souls_won_total = bussel_reports.aggregate(Sum('num_souls_won'))
+            bussel_attendance_total = bussel_reports.aggregate(Sum('bussel_attendance'))
+            church_attendance_total = bussel_reports.aggregate(Sum('church_attendance'))
+            first_timers_total = bussel_reports.aggregate(Sum('num_first_timers'))
             data = []
             header = ["R/N", "Bussell Name","Bussell Code", "Bussell Leader", "Topic Taught", 
                       "B/A", "C/A", "Of(GHC)", "F/T", "S/W"]
@@ -530,6 +535,11 @@ def export_bussel_reports(request):
                 bussel_each = []
 
 
+            data.append(["", "", "", "", "", bussel_attendance_total["bussel_attendance__sum"],
+                         church_attendance_total["church_attendance__sum"], 
+                         "{0:.2f}".format(offertory_total["offertory_given__sum"]), 
+                         first_timers_total["num_first_timers__sum"],
+                         souls_won_total["num_souls_won__sum"]])
             # make the pdf document
             response = HttpResponse(content_type='application/pdf')
             file_name = "bussel_reports(" +  \
@@ -542,13 +552,16 @@ def export_bussel_reports(request):
             # container to hold flowables
             elements = []
 
-            table_style = TableStyle([('INNERGRID', (0,0), (-1,-1), 0.0, colors.black),
+            table_style = TableStyle([('INNERGRID', (0,0), (-1,-2), 0.0, colors.black),
                                    ('INNERGRID', (0,0), (-1, 0), 1.5, colors.black),
+                                   ('INNERGRID', (5,-1), (-1, -1), 1.5, colors.black),
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
                                    ('BOX', (0,0), (-1,0), 1.5, colors.black),
+                                   ('BOX', (5,-1), (-1,-1), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                                   ('ALIGN', (4, 1), (-1, -1), 'RIGHT'),
-                                   ('BOX', (0,1), (-1,-1), 1.5, colors.black)])
+                                   ('BACKGROUND', (5, -1), (-1, -1), colors.lightgrey),
+                                   ('ALIGN', (5, 1), (-1, -1), 'RIGHT'),
+                                   ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
 
             title_style = ParagraphStyle(
                            name = 'title',
@@ -583,7 +596,7 @@ def export_bussel_reports(request):
             table = Table(data)
             table.setStyle(table_style)
 
-            for each in range(1, len(data)):
+            for each in range(1, len(data)-1):
                 if each % 2 == 0:
                     bg_color = colors.whitesmoke
                 else:
