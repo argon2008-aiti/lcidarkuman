@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from djgeojson.fields import PointField
+from django.utils import timezone
 import datetime
 
 MARITAL_STATUS = [
@@ -84,7 +85,7 @@ class Member(models.Model):
     marital_status = models.IntegerField(choices=MARITAL_STATUS, default=0)
     profile        = models.ImageField(upload_to="static/profiles/", blank=True, \
                                        default="static/profiles/default.png")
-    date_of_birth  = models.DateField(default=datetime.date.today())
+    date_of_birth  = models.DateField(default=timezone.now)
     place_of_birth = models.CharField(max_length=100, default="Accra")
     nationality    = models.IntegerField(choices=NATIONALITY)
     nationality_at_birth = models.IntegerField(choices=NATIONALITY)
