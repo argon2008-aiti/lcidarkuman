@@ -112,7 +112,7 @@ li.dropdown {
 div.dropdown-content {
     display: none;
     position: absolute;
-    min-width: 160px;
+    min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     background-color: #333; 
 }
@@ -150,6 +150,10 @@ div.dropdown-content a {
     float: left;
 }
 
+.no-float {
+    float: none;
+}
+
 input.search-box {
     margin-top: 5px;
     height: 35px;
@@ -183,6 +187,12 @@ input.search-box:focus {
 .search-box#report-search {
     width: 200px;
 }
+
+.search-box#member-search {
+    width: 380px;
+    margin-left: 30px;
+}
+
 .section-item {
     float: left;
     font-size: 25px;
@@ -210,7 +220,8 @@ input.search-box:focus {
     margin-top: 20px;
 }
 
-.badge.bussel-count {
+.badge.bussel-count,
+.badge.member-count {
     background-color: #fbe40c;
     color: #333;
     font-size: 14px;
@@ -276,9 +287,9 @@ td a:visited {
 
 .data-section-data {
     padding-left: 40px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 30px;
     padding-right: 20px;
+    padding-bottom: 20px;
 }
 
 .data-section-data a{
@@ -296,6 +307,7 @@ td a:visited {
     width: 96%;
     clear: both;
     margin-top: 10px;
+    margin-bottom: 30px;
 }
 
 .form-control {
@@ -445,7 +457,71 @@ td a:visited {
     font-size: 20px;
     margin-top: 10px;
 }
+
 .subtitle {
     font-size: 16px;
     margin-top: 5px;
 }
+
+#new-member-btn {
+    margin-top: 40px;
+}
+
+.member-profile {
+    width: 90px;
+    height: 90px;
+    float: left;
+}
+
+.member-item {
+    margin-bottom: 25px;
+}
+
+.member-item a{
+    text-decoration: none;
+    color: #333;
+}
+
+.member-item:hover{
+    background-color: #f5f5f5;
+}
+
+.member-item:hover .member-name {
+    color: #806f02; 
+}
+
+.member-name {
+    margin-left: 100px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.member-location,
+.member-phone {
+    margin-left: 100px;
+    margin-top: -5px;
+}
+
+.member-location {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.member-phone {
+    margin-top: 10px;
+}
+
+#member-edit-link {
+    font-size: 25px;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+#member-edit-link a {
+    color: white;
+    text-decoration: none;
+}
+
+#member-edit-link a:hover {
+    color: #fbe40c;
+}
+

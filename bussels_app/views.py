@@ -16,31 +16,12 @@ from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.db.models import Avg, Sum, Max
 from saturdays_list import past_saturdays
+from info_system.views import *
 from models import *
 from forms import *
 import datetime
 
 # This view shows all available bussels in our DB
-# We use this to return a JSON object 
-
-'''class GroupRequiredMixin(object):
-
-    def get(self, request, *args, **kwargs):
-        group_found = False
-        for group in self.request.user.groups.all():
-            if group.name in self.group_required:
-                group_found = True
-                break
-        if group_found == False:
-            reverse('access-denied')
-        else:
-            print "Group found"
-            return'''
-
-def show_access_denied_page(caller, request):
-    if not request.user.is_authenticated:
-        return redirect("/login/")
-    return redirect(reverse('access-denied'))
 
 class BusselListView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = "bussels_app/bussel_list.html"

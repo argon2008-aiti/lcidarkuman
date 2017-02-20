@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% load widget_tweaks %} 
+{% block contents %}
+<div class="main-contents">
+    <div class="section-header">
+	    <p class="section-title no-float">{{title}}</p>
+    </div>
+    <div class="data-container">
+	    <div class="data-section">
+		    <div class="data-section-header">
+			    <p class="data-section-title">{{subtitle}}</p>
+		    </div>
+		        <div class="data-section-data">
+			     <form action="#" role="form" method="post">
+				{% csrf_token %} 
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.first_name.auto_id}}">
+					      {{form.first_name.label}}
+				      </label>
+					      {% render_field form.first_name class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.middle_name.auto_id}}">
+					      {{form.middle_name.label}}
+				      </label>
+					      {% render_field form.middle_name class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.last_name.auto_id}}">
+					      {{form.last_name.label}}
+				      </label>
+					      {% render_field form.last_name class+="form-control" %}
+				 </div> 
+			    </div>
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.phone.auto_id}}">
+					      {{form.phone.label}}
+				      </label>
+					      {% render_field form.phone class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.email_address.auto_id}}">
+					      {{form.email_address.label}}
+				      </label>
+					      {% render_field form.email_address class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-2">
+				      <label class="control-label" for="{{form.marital_status.auto_id}}">
+					      {{form.marital_status.label}}
+				      </label>
+					      {% render_field form.marital_status class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-2">
+				      <label class="control-label" for="{{form.gender.auto_id}}">
+					      {{form.gender.label}}
+				      </label>
+					      {% render_field form.gender class+="form-control" %}
+				 </div> 
+
+			    </div>
+
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.date_of_birth.auto_id}}">
+					      {{form.date_of_birth.label}}
+				      </label>
+					      {% render_field form.date_of_birth class+="form-control datepicker" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.place_of_birth.auto_id}}">
+					      {{form.place_of_birth.label}}
+				      </label>
+					      {% render_field form.place_of_birth class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-2">
+				      <label class="control-label" for="{{form.nationality_at_birth.auto_id}}">
+					      {{form.nationality_at_birth.label}}
+				      </label>
+					      {% render_field form.nationality_at_birth class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-2">
+				      <label class="control-label" for="{{form.nationality.auto_id}}">
+					      {{form.nationality.label}}
+				      </label>
+					      {% render_field form.nationality class+="form-control" %}
+				 </div> 
+
+			    </div>
+			    <div class="row">
+				 <div class="form-group col-sm-6">
+				      <label class="control-label" for="{{form.hometown.auto_id}}">
+					      {{form.hometown.label}}
+				      </label>
+					      {% render_field form.hometown class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-6">
+				      <label class="control-label" for="{{form.tribal_origin.auto_id}}">
+					      {{form.tribal_origin.label}}
+				      </label>
+					      {% render_field form.tribal_origin class+="form-control" %}
+				 </div> 
+
+			    </div>
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.level_of_education.auto_id}}">
+					      {{form.level_of_education.label}}
+				      </label>
+					      {% render_field form.level_of_education class+="form-control datepicker" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.occupation.auto_id}}">
+					      {{form.occupation.label}}
+				      </label>
+					      {% render_field form.occupation class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.lingual_competency.auto_id}}">
+					      {{form.lingual_competency.label}}
+				      </label>
+					      {% render_field form.lingual_competency class+="form-control" %}
+				 </div> 
+			    </div>
+			    <hr>
+
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.house_number.auto_id}}">
+					      {{form.house_number.label}}
+				      </label>
+					      {% render_field form.house_number class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.street_name.auto_id}}">
+					      {{form.street_name.label}}
+				      </label>
+					      {% render_field form.street_name class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.suburb.auto_id}}">
+					      {{form.suburb.label}}
+				      </label>
+					      {% render_field form.suburb class+="form-control" %}
+				 </div> 
+			    </div>
+                          
+			    <div class=row>
+				 <div class="form-group col-sm-12">
+				      <label class="control-label" for="{{form.description_of_house.auto_id}}">
+					      {{form.description_of_house.label}}
+				      </label>
+					      {% render_field form.description_of_house class+="form-control" %}
+				 </div> 
+			    </div>
+			    <hr>
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.date_joined.auto_id}}">
+					      {{form.date_joined.label}}
+				      </label>
+					      {% render_field form.date_joined class+="form-control datepicker" %}
+				 </div> 
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.ministries.auto_id}}">
+					      {{form.ministries.label}}
+				      </label>
+					      {% render_field form.ministries class+="form-control" %}
+				 </div> 
+
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.leadership_role.auto_id}}">
+					      {{form.leadership_role.label}}
+				      </label>
+					      {% render_field form.leadership_role class+="form-control" %}
+				 </div> 
+			    </div>
+			    <div class="row">
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.membership_status.auto_id}}">
+					      {{form.membership_status.label}}
+				      </label>
+					      {% render_field form.membership_status class+="form-control" %}
+				 </div> 
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.baptized_by_immersion.auto_id}}">
+					      {{form.baptized_by_immersion.label}}
+				      </label>
+					      {% render_field form.baptized_by_immersion class+="form-control" %}
+				 </div> 
+				 <div class="form-group col-sm-4">
+				      <label class="control-label" for="{{form.holy_ghost_baptism.auto_id}}">
+					      {{form.holy_ghost_baptism.label}}
+				      </label>
+					      {% render_field form.holy_ghost_baptism class+="form-control" %}
+				 </div> 
+			    </div>
+			      <div>
+			          <button type=submit class="btn btn-primary pull-right" id="new-member-btn">
+					  Save Member 
+				  </button>
+			      </div>
+			     </form>
+			</div>
+	    </div>
+    </div>
+</div>
+{% endblock %}
+{% block footer %}
+{% include "footer.html" %}
+
+<script>
+       $(function() {
+		$(".datepicker").datepicker({
+	            changeMonth: true,
+	            changeYear: true,
+		    dateFormat: "yy-mm-dd",
+	            yearRange: new Date().getFullYear()-100 + ":" +  new Date().getFullYear	    
+		});
+		$("#pastoral_care_link").addClass("active");
+
+	});
+</script>
+{% endblock %}
