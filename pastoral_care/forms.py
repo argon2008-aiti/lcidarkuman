@@ -19,7 +19,7 @@ class NewMemberForm(forms.Form):
     phone = forms.CharField(label='Phone Number', max_length=100,
                                  widget=forms.TextInput({"placeholder": "e.g +233241234567"}))
 
-    email_address = forms.EmailField(label="Email", max_length=50,
+    email_address = forms.EmailField(label="Email", max_length=50, required=False,
                                      widget=forms.EmailInput({"placeholder": "e.g example@gmail.com"}))
 
     gender = forms.ChoiceField(label="Gender",  choices=GENDER)
@@ -28,33 +28,33 @@ class NewMemberForm(forms.Form):
 
     date_of_birth = forms.DateField(label="Date of Birth", widget=forms.TextInput({'placeholder': 'choose date'}))
 
-    place_of_birth  = forms.CharField(label='Place of Birth', max_length=100,
+    place_of_birth  = forms.CharField(label='Place of Birth', max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g Accra"}))
 
-    hometown  = forms.CharField(label='Hometown (Town or City, Region or State or Province, Country)', max_length=200,
+    hometown  = forms.CharField(label='Hometown (Town or City, Region or State or Province, Country)', max_length=200, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g Chorkor, Greater Accra, Ghana"}))
 
-    tribal_origin  = forms.CharField(label='Tribal Origin (Tribe, Region or State or Province, Country)', max_length=200,
+    tribal_origin  = forms.CharField(label='Tribal Origin (Tribe, Region or State or Province, Country)', max_length=200, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g Asante, Asante Region, Ghana"}))
 
     nationality_at_birth = forms.ChoiceField(choices=NATIONALITY)
     nationality  = forms.ChoiceField(choices=NATIONALITY)
     level_of_education = forms.ChoiceField(choices=EDUCATION_LEVEL)
-    lingual_competency = forms.ModelMultipleChoiceField(Language.objects.all(), label="Lingual Comptence")
-    occupation = forms.CharField(label="Current Occupation", max_length=100,
+    lingual_competency = forms.ModelMultipleChoiceField(Language.objects.all(), label="Lingual Comptence" required=False,)
+    occupation = forms.CharField(label="Current Occupation", max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder":"e.g Police"}))
 
     # residence ------------------------------------------------------
-    house_number  = forms.CharField(label='House Number', max_length=100,
+    house_number  = forms.CharField(label='House Number', max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g B1043/15"}))
 
-    street_name  = forms.CharField(label='Street Name', max_length=100,
+    street_name  = forms.CharField(label='Street Name', max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g Antruma St."}))
 
-    suburb  = forms.CharField(label='Suburb', max_length=100,
+    suburb  = forms.CharField(label='Suburb', max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g Alafia"}))
 
-    description_of_house  = forms.CharField(label='Description of Residence', max_length=1024,
+    description_of_house  = forms.CharField(label='Description of Residence', max_length=1024, required=False,
                                  widget=forms.Textarea({"placeholder": "e.g. green storey building with blue gates adjacent to Azia Preparatory School"}))
 
     # church info ----------------------------------------------------

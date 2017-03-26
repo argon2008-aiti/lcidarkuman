@@ -77,7 +77,7 @@ class Language(models.Model):
 class Member(models.Model):
     # personal info ----------------------------
     first_name     = models.CharField(max_length=20)
-    middle_name    = models.CharField(max_length=20)
+    middle_name    = models.CharField(max_length=20, blank=True, null=True)
     last_name      = models.CharField(max_length=20)
     gender         = models.IntegerField(choices=GENDER, default=0)
     phone          = models.CharField(max_length=15)
