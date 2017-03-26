@@ -85,15 +85,15 @@ class Member(models.Model):
     profile        = models.ImageField(upload_to="static/profiles/", blank=True, \
                                        default="static/profiles/default.png")
     date_of_birth  = models.DateField(default=datetime.date.today())
-    place_of_birth = models.CharField(max_length=100, default="Accra")
+    place_of_birth = models.CharField(max_length=100, default="Accra", blank=True, null=True)
     nationality    = models.IntegerField(choices=NATIONALITY)
     nationality_at_birth = models.IntegerField(choices=NATIONALITY)
-    hometown       = models.CharField(max_length=200, default="Madina, Greater Accra, Ghana")
-    tribal_origin  = models.CharField(max_length=200, default="Asante, Asante Region, Ghana")
+    hometown       = models.CharField(max_length=200, default="Madina, Greater Accra, Ghana", blank=True, null=True)
+    tribal_origin  = models.CharField(max_length=200, default="Asante, Asante Region, Ghana", blank=True, null=True)
     email_address  = models.EmailField(null=True, blank=True)
     lingual_competency = models.ManyToManyField(Language)
     level_of_education = models.IntegerField(choices=EDUCATION_LEVEL, default=0)
-    occupation = models.CharField(max_length=100, default="Unemployed")
+    occupation = models.CharField(max_length=100, default="Unemployed", blank=True, null=True)
 
     # address ----------------------------------
     house_number = models.CharField(max_length=50, blank=True, null=True)

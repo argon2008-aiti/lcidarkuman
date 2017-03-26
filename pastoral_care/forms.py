@@ -63,4 +63,4 @@ class NewMemberForm(forms.Form):
     holy_ghost_baptism  = forms.ChoiceField(label="Holy Ghost Baptism", choices=YES_NO)
     leadership_role = forms.ChoiceField(label="Leadership Role", choices=ROLES)
     membership_status = forms.ChoiceField(label="Membership Status", choices=MEMBERSHIP_STATUS)
-    ministries = forms.ModelMultipleChoiceField(Ministry.objects.all(), label="Ministries")
+    ministries = forms.ModelMultipleChoiceField(Ministry.objects.all(), label="Ministries", required=False)
