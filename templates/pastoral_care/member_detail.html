@@ -86,31 +86,6 @@
 			   <p class="subsection-title">Membership Information</p>
 		   </div>
 		   <div class="data-section-data">
-			   <div class="row">
-			       <div class="col-sm-4">
-				       <p>Bussell Attendance(AVG): 
-				       {% if average_bussel_attendance == 0 %}
-				       <b> 0</b>
-				       {% else %}
-				       <b>{{average_bussel_attendance.bussel_attendance__avg|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
-			       <div class="col-sm-4">
-				       <p>Church Attendance(AVG):
-				       {% if average_church_attendance == 0 %}
-				       <b> 0</b>
-				       {% else %}
-				       <b>{{average_church_attendance.church_attendance__avg|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
-			       <div class="col-sm-4">
-				       <p>Souls Won(AVG): 
-				       {% if average_souls_won == 0 %}
-				       <b> 0</b>
-				       {% else %}
-				       <b>{{average_souls_won.num_souls_won__avg|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
 			   </div>
 		   </div>
 	    </div>
@@ -119,47 +94,6 @@
 			   <p class="subsection-title">Church Attendance Information</p>
 		   </div>
 		   <div class="data-section-data">
-			   <div class="row">
-			       <div class="col-sm-6">
-				       <p>Offertory (AVG): {% if average_offertory == 0 %} <b>GHC 0.00</b>
-				       {% else %}
-				       <b>GHC {{average_offertory.offertory_given__avg|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
-			       <div class="col-sm-6">
-				       <p>Offertory Per Head (AVG): {% if average_offertory_per_head == 0 %} <b>GHC 0.00</b>
-				       {% else %}
-				       <b>GHC {{average_offertory_per_head|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
-			   </div>
-			   <canvas id=bussel-offertory-chart>
-			   
-			   </canvas>
-		   </div>
-	    </div>
-	    <div class="data-section bussel-offertory-info">
-	           <div class="data-section-header">
-			   <p class="subsection-title">Tithing Information</p>
-		   </div>
-		   <div class="data-section-data">
-			   <div class="row">
-			       <div class="col-sm-6">
-				       <p>Offertory (AVG): {% if average_offertory == 0 %} <b>GHC 0.00</b>
-				       {% else %}
-				       <b>GHC {{average_offertory.offertory_given__avg|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
-			       <div class="col-sm-6">
-				       <p>Offertory Per Head (AVG): {% if average_offertory_per_head == 0 %} <b>GHC 0.00</b>
-				       {% else %}
-				       <b>GHC {{average_offertory_per_head|floatformat:2}}</b></p>
-				       {% endif  %}
-			       </div>
-			   </div>
-			   <canvas id=bussel-offertory-chart>
-			   
-			   </canvas>
 		   </div>
 	    </div>
     </div>
