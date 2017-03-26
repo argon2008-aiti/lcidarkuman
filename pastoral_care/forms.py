@@ -40,7 +40,7 @@ class NewMemberForm(forms.Form):
     nationality_at_birth = forms.ChoiceField(choices=NATIONALITY)
     nationality  = forms.ChoiceField(choices=NATIONALITY)
     level_of_education = forms.ChoiceField(choices=EDUCATION_LEVEL)
-    lingual_competency = forms.ModelMultipleChoiceField(Language.objects.all(), label="Lingual Comptence" required=False,)
+    lingual_competency = forms.ModelMultipleChoiceField(Language.objects.all(), label="Lingual Comptence", required=False)
     occupation = forms.CharField(label="Current Occupation", max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder":"e.g Police"}))
 
