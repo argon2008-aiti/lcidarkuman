@@ -18,4 +18,3 @@ urlpatterns = [
     url(r'^', include('django.contrib.auth.urls')),
 ]
 
-urlpatterns += staticfiles_urlpatterns()

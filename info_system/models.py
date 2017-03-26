@@ -96,10 +96,10 @@ class Member(models.Model):
     occupation = models.CharField(max_length=100, default="Unemployed")
 
     # address ----------------------------------
-    house_number = models.CharField(max_length=50)
-    street_name = models.CharField(max_length=50)
-    suburb      = models.CharField(max_length=50)
-    description_of_house = models.CharField(max_length=300)
+    house_number = models.CharField(max_length=50, blank=True, null=True)
+    street_name = models.CharField(max_length=50, blank=True, null=True)
+    suburb      = models.CharField(max_length=50, blank=True, null=True)
+    description_of_house = models.CharField(max_length=300, blank=True, null=True)
     member_location = PointField(null=True)
 
     # church info ------------------------------
