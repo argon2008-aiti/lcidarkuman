@@ -26,7 +26,7 @@ class NewMemberForm(forms.Form):
 
     marital_status = forms.ChoiceField(choices=MARITAL_STATUS)
 
-    date_of_birth = forms.DateField(label="Date of Birth", widget=forms.TextInput({'placeholder': 'choose date'}))
+    date_of_birth = forms.DateField(label="Date of Birth", required=False, widget=forms.TextInput({'placeholder': 'choose date'}))
 
     place_of_birth  = forms.CharField(label='Place of Birth', max_length=100, required=False,
                                  widget=forms.TextInput({"placeholder": "e.g Accra"}))
@@ -58,7 +58,7 @@ class NewMemberForm(forms.Form):
                                  widget=forms.Textarea({"placeholder": "e.g. green storey building with blue gates adjacent to Azia Preparatory School"}))
 
     # church info ----------------------------------------------------
-    date_joined = forms.DateField(label="Date Joined", widget=forms.TextInput({'placeholder': 'choose date'}))
+    date_joined = forms.DateField(label="Date Joined", required=False, widget=forms.TextInput({'placeholder': 'choose date'}))
     baptized_by_immersion  = forms.ChoiceField(label="Water Baptism By Immersion", choices=YES_NO)
     holy_ghost_baptism  = forms.ChoiceField(label="Holy Ghost Baptism", choices=YES_NO)
     leadership_role = forms.ChoiceField(label="Leadership Role", choices=ROLES)
