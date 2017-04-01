@@ -84,7 +84,7 @@ class Member(models.Model):
     marital_status = models.IntegerField(choices=MARITAL_STATUS, default=0)
     profile        = models.ImageField(upload_to="static/profiles/", blank=True, \
                                        default="static/profiles/default.png")
-    date_of_birth  = models.DateField(default=datetime.date.today())
+    date_of_birth  = models.DateField(default=datetime.date.today(), blank=True, null=True)
     place_of_birth = models.CharField(max_length=100, default="Accra", blank=True, null=True)
     nationality    = models.IntegerField(choices=NATIONALITY)
     nationality_at_birth = models.IntegerField(choices=NATIONALITY)
@@ -103,7 +103,7 @@ class Member(models.Model):
     member_location = PointField(null=True)
 
     # church info ------------------------------
-    date_joined = models.DateField(default=datetime.date.today())
+    date_joined = models.DateField(default=datetime.date.today(), blank=True, null=True)
     baptized_by_immersion = models.IntegerField(choices=YES_NO, default=1)
     holy_ghost_baptism    = models.IntegerField(choices=YES_NO, default=0)
     leadership_role = models.IntegerField(choices=ROLES, default=0)
