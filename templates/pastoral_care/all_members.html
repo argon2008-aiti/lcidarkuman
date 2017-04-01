@@ -60,7 +60,7 @@ $(document).ready(function(){
 	    success: function(data) {
 		    $.each(data, function(i, member) {
 			    var link = "/pastoral/members/details/" + member.pk;
-			    $(".data-container > .row").append('<div class="member-item col-xsm-12 col-md-4 col-lg-3"><div class="thumbnail"><a href='+link+ '><img class='+ "member-profile" +' src=/'+member.profile_url+'><p class=member-name>'+ member.first_name+ " "+ member.middle_name+ " "+ member.surname+ '</p> <div class="member-location"><span class="fa fa-map-marker"></span>&nbsp'+" " + member.suburb+'</div><div class="member-phone"><span class="fa fa-phone"></span>'+ " "+member.phone+'</a></div></div></div>'
+			    $(".data-container > .row").append('<div class="member-item col-xsm-12 col-md-4 col-lg-3"><div class="thumbnail"><a href='+link+ '><img class='+ "member-profile" +' src=/'+member.profile_url+'><p class=member-name>'+ member.first_name+ " "+ member.surname+ '</p> <div class="member-location"><span class="fa fa-map-marker"></span>&nbsp'+" " + member.suburb+'</div><div class="member-phone"><span class="fa fa-phone"></span>'+ " "+member.phone+'</a></div></div></div>'
 					    )
 		    })
 		    $(".badge.member-count").html(data.length);
