@@ -43,7 +43,8 @@ INSTALLED_APPS = (
     'bussels_app',
     'widget_tweaks',
     'braces',
-    'pastoral_care'
+    'pastoral_care',
+    'notice_board'
 )
 
 MIDDLEWARE_CLASSES = (

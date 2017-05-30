@@ -10,6 +10,7 @@ urlpatterns = [
 
     url(r'^bussels/', include('bussels_app.urls', namespace="bussel")),
     url(r'^pastoral/', include('pastoral_care.urls', namespace="pastoral")),
+    url(r'^notice/', include('notice_board.urls', namespace="noticeboard")),
     url(r'^json/', include('bussels_app.urls', namespace="ajax")),
     url(r'^under_development/', bussels_app.views.SectionUnderDevelopment.as_view(), name="under-dev"),
     url(r'^$', bussels_app.views.SectionUnderDevelopment.as_view(), name="under-dev"),
