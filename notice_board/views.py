@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from braces.views import LoginRequiredMixin
 from models import Notice
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import dateformat
 
 from django.http import JsonResponse, HttpResponse
 
+@csrf_exempt
 def add_notice(request):
     username = request.POST["username"]
     password = request.POST["password"]
@@ -37,7 +40,7 @@ def notice_list_json(request):
 
             object_dict['pk'] = notice.pk
             object_dict['title'] = notice.title
-            object_dict['date'] = notice.date
+            object_dict['date'] = dateformat.format(notice.date, 'U')
             object_dict['content'] = notice.content
             object_dict['creator'] = notice.creator.first_name + \
                 " " + notice.creator.last_name
