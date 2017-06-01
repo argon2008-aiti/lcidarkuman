@@ -9,3 +9,6 @@ class Notice(models.Model):
     content = models.CharField(max_length=2048)
     creator = models.ForeignKey(User)
     date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date']
