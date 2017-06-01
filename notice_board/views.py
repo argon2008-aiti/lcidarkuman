@@ -55,4 +55,4 @@ def notice_list_json(request):
     return HttpResponse(status=401)
 
 def authenticate_user(username, password):
-    return authenticate(username, password)
+    return authenticate(username=username, password=password)
