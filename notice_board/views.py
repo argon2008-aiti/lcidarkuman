@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 
+import string
+
 @csrf_exempt
 def add_notice(request):
     username = request.POST["username"]
@@ -40,7 +42,7 @@ def notice_list_json(request):
             object_dict = {}
 
             object_dict['pk'] = notice.pk
-            object_dict['title'] = notice.title
+            object_dict['title'] = string.capwords(notice.title)
             object_dict['date'] = dateformat.format(notice.date, 'U')
             object_dict['content'] = notice.content
             object_dict['creator'] = notice.creator.first_name + \
