@@ -1,6 +1,6 @@
 from django.db import models
 
-from info_system import Member
+from info_system.models import Member
 
 class MasterAttendance(models.Model):
     description = models.CharField(max_length=2048)
