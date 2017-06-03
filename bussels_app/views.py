@@ -210,6 +210,8 @@ def json_bussel_list(request):
             object_dict['code'] = bussel.code
             object_dict['leader'] = bussel.leader.first_name + " " + \
                 bussel.leader.middle_name + " " + bussel.leader.last_name
+            object_dict['leader_short'] = bussel.leader.first_name + " " + \
+                 bussel.leader.last_name
             object_dict['location'] = "HNo. " + bussel.house_number + ", " + \
                 bussel.street_name+ ", " + bussel.suburb
             object_dict['location_short'] = bussel.suburb
