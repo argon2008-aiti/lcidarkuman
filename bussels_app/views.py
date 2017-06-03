@@ -212,6 +212,7 @@ def json_bussel_list(request):
                 bussel.leader.middle_name + " " + bussel.leader.last_name
             object_dict['location'] = "HNo. " + bussel.house_number + ", " + \
                 bussel.street_name+ ", " + bussel.suburb
+            object_dict['location_short'] = bussel.suburb
             object_list.append(object_dict)
 
         return JsonResponse(object_list, safe=False)
