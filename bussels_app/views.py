@@ -14,7 +14,8 @@ from django.views.generic.edit import UpdateView
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
-from django.db.models import Avg, Sum, Max
+from django.db.models import Avg, Sum, Max, Count
+from django.utils import dateformat
 from saturdays_list import past_saturdays
 from info_system.views import *
 from models import *
@@ -277,6 +278,23 @@ def json_bussel_reports_list(request):
             object_list.append(object_dict)
 
         return JsonResponse(object_list, safe=False)
+
+def bussell_reports_header_json(request):
+
+    report_headers = BusselReport.objects.all() \
+        .extra({'mdate':"date(date)"}) \
+        .values('date') \
+        .annotate(count=Count('id')).order_by('-date')
+
+    object_list = []
+    for header in report_headers:
+        object_dict = {}
+        object_dict['date'] = dateformat.format(header.get('date'), 'U')
+        object_dict['count'] = header.get('count')
+
+        object_list.append(object_dict)
+
+    return JsonResponse(object_list, safe=False)
 
 class BusselReportEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = BusselReport
