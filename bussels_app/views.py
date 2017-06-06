@@ -278,7 +278,7 @@ def json_bussel_reports_list(request):
             object_dict['souls_won'] = report.num_souls_won
             object_dict['time_started'] = report.time_started
             object_dict['time_ended'] = report.time_ended
-            object_dict['offertory'] = report.offertory
+            object_dict['offertory'] = report.offertory_given
 
             object_dict.update(offertory_total)
             object_dict.update(souls_won_total)
