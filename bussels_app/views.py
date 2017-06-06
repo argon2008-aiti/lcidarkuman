@@ -274,6 +274,12 @@ def json_bussel_reports_list(request):
             object_dict['c_attendance'] = report.church_attendance
             object_dict['time'] = report.time.strftime('%H:%M:%S')
             object_dict['topic'] = report.topic
+            object_dict['first_timers'] = report.num_first_timers
+            object_dict['souls_won'] = report.num_souls_won
+            object_dict['time_started'] = report.time_started
+            object_dict['time_ended'] = report.time_ended
+            object_dict['offertory'] = report.offertory
+
             object_dict.update(offertory_total)
             object_dict.update(souls_won_total)
             object_dict.update(bussel_attendance_total)
