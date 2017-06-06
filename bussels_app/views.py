@@ -267,6 +267,9 @@ def json_bussel_reports_list(request):
             object_dict['name'] = report.bussel.name
             object_dict['leader'] = report.bussel.leader.first_name + " " + \
                 report.bussel.leader.middle_name + " " + report.bussel.leader.last_name
+
+            object_dict['leader_short'] = report.bussel.leader.first_name + " " + \
+                report.bussel.leader.last_name
             object_dict['b_attendance'] = report.bussel_attendance
             object_dict['c_attendance'] = report.church_attendance
             object_dict['time'] = report.time.strftime('%H:%M:%S')
@@ -295,6 +298,7 @@ def bussell_reports_header_json(request):
         object_list.append(object_dict)
 
     return JsonResponse(object_list, safe=False)
+
 
 class BusselReportEditView(LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = BusselReport
