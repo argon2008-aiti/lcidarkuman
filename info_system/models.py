@@ -116,13 +116,9 @@ class Member(models.Model):
 class Manager(models.Model):
     user = models.OneToOneField(User)
 
-class Attendance(models.Model):
-    date = models.DateField(auto_now_add=True)
-    description = models.CharField(max_length=250)
+class Shepherd(models.Model):
+    user = models.OneToOneField(User)
     member = models.ForeignKey(Member)
 
     def __unicode__(self):
-        return self.date + " -- " + self.member.first_name + " " + self.member.last_name
-
-
-
+        return self.member.first_name + " "+ self.member.surname + "--" + user.username

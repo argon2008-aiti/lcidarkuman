@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 import bussels_app
+import info_system
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
@@ -9,6 +10,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^bussels/', include('bussels_app.urls', namespace="bussel")),
+    url(r'^info/', include('info_system.urls', namespace="info")),
     url(r'^pastoral/', include('pastoral_care.urls', namespace="pastoral")),
     url(r'^notice/', include('notice_board.urls', namespace="noticeboard")),
     url(r'^json/', include('bussels_app.urls', namespace="ajax")),

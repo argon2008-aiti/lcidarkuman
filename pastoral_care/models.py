@@ -10,5 +10,3 @@ class MasterAttendance(models.Model):
 class MemberAttendance(models.Model):
     master_attendance = models.ForeignKey(MasterAttendance)
     member = models.ForeignKey(Member)
-
-
