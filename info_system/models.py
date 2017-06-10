@@ -121,4 +121,4 @@ class Shepherd(models.Model):
     member = models.ForeignKey(Member)
 
     def __unicode__(self):
-        return self.member.first_name + " "+ self.member.last_name + "--" + user.username
+        return self.member.first_name + " "+ self.member.last_name + "--" + self.user.username
