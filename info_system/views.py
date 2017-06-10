@@ -20,3 +20,6 @@ def log_in_shepherd(request):
         return HttpResponse("OK")
     else:
         return HttpResponse("UNAUTHORIZED")
+
+def change_password(request):
+    pass
