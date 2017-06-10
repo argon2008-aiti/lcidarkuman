@@ -1,5 +1,5 @@
 from django.contrib import admin
-from info_system.models import Member, Ministry, Language
+from info_system.models import Member, Ministry, Language, Shepherd
 
 class MemberAdmin(admin.ModelAdmin):
     exclude = ('member_location',)
@@ -7,4 +7,5 @@ class MemberAdmin(admin.ModelAdmin):
 admin.site.register(Member, MemberAdmin)
 admin.site.register(Ministry)
 admin.site.register(Language)
+admin.site.register(Shepherd)
 
