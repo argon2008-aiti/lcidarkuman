@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from models import Shepherd
 
 
 def show_access_denied_page(caller, request):
