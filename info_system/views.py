@@ -17,9 +17,10 @@ def log_in_shepherd(request):
 
     user = authenticate(username=username, password=password)
     if user is not None:
+        shepherd = Shepherd.objects.get(user=user)
         json_object = {}
-        json_object["first_name"] = user.shepherd.member.first_name
-        json_object["last_name"] = user.shepherd.member.last_name
+        json_object["first_name"] = shepherd.member.first_name
+        json_object["last_name"] = shepherd.member.last_name
 
         return JsonResponse(json_object, safe=False)
     else:
