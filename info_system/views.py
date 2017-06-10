@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate
-from django.view.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
 
