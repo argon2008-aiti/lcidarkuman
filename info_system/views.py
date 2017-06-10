@@ -17,9 +17,9 @@ def log_in_shepherd(request):
 
     user = authenticate(username, password)
     if user is not None:
-        return HttpResponse("OK")
+        return HttpResponse("OK", status=200)
     else:
-        return HttpResponse("UNAUTHORIZED")
+        return HttpResponse("UNAUTHORIZED", status=401)
 
 def change_password(request):
     pass
