@@ -17,7 +17,11 @@ def log_in_shepherd(request):
 
     user = authenticate(username=username, password=password)
     if user is not None:
-        return HttpResponse("OK", status=200)
+        json_object = {}
+        json_object["first_name"] = user.shepherd.member.first_name
+        json_object["last_name"] = user.shepherd.member.last_name
+
+        return JsonResponse(json_object, safe=False)
     else:
         return HttpResponse("UNAUTHORIZED", status=401)
 
