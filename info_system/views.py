@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from models import Shepherd
 
 
@@ -21,6 +21,7 @@ def log_in_shepherd(request):
         shepherd = Shepherd.objects.get(user=user)
         json_object = {}
         json_object["first_name"] = shepherd.member.first_name
+        json_object["middle_name"] = shepherd.member.middle_name
         json_object["last_name"] = shepherd.member.last_name
 
         return JsonResponse(json_object, safe=False)
