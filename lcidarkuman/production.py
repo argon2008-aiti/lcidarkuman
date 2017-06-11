@@ -44,7 +44,8 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'braces',
     'pastoral_care',
-    'notice_board'
+    'notice_board',
+    'treasury'
 )
 
 MIDDLEWARE_CLASSES = (

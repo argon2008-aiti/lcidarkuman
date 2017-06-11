@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^info/', include('info_system.urls', namespace="info")),
     url(r'^pastoral/', include('pastoral_care.urls', namespace="pastoral")),
     url(r'^notice/', include('notice_board.urls', namespace="noticeboard")),
+    url(r'^finance/', include('treasury.urls', namespace="finance")),
     url(r'^json/', include('bussels_app.urls', namespace="ajax")),
     url(r'^under_development/', bussels_app.views.SectionUnderDevelopment.as_view(), name="under-dev"),
     url(r'^$', bussels_app.views.SectionUnderDevelopment.as_view(), name="under-dev"),
