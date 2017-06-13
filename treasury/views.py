@@ -8,7 +8,7 @@ import datetime
 
 
 def is_treasurer(user):
-    return user.groups.filter(name="Finance").exists()
+    return user.groups.filter(name="Finance").exists() or user.is_superuser
 
 @csrf_exempt
 def get_all_offerings(request):
@@ -95,7 +95,7 @@ def add_tithe(request):
 
     if user is not None and is_treasurer(user):
 
-        member = Member.objects.get(pk=request.POST["pk"])
+        member = Member.objects.get(pk=request.POST["member"])
 
         tithe = Tithe(member=member, \
                             amount=request.POST["amount"], \
