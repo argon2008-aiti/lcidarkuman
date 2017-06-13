@@ -29,6 +29,7 @@ class Tithe(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     month = models.IntegerField(choices=MONTHS)
     year = models.IntegerField()
+    date = models.DateField(auto_now=True)
 
     def __unicode__(self):
         return self.member.first_name + " " + self.member.last_name + " " + \
