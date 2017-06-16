@@ -278,6 +278,17 @@ def export_members(request):
 
 
 # church attendance session data
+class AttendanceOfficer:
+    def __init__(self, pk):
+        self.pk = pk
+        self.assigned_members = []
+        self.finished = False
+        return
+
+    def add_member(self, member_pk):
+        self.assigned_members.append(member_pk)
+        return
+
 attendance_in_session = False
 attendance_officers = []
 def is_member_pastoral(user):
@@ -290,6 +301,8 @@ def authorize_attendance(request):
 
     user = authenticate(username=username, password=password)
     if user is not None and is_member_pastoral(user):
+        if attendance_in_session:
+            return HttpResponse("FORBIDDEN", status=403)
         pastoral_care = User.objects.filter(groups__name__in=['Pastoral'])
         pastoral_list = []
         for user in pastoral_care:
@@ -300,4 +313,24 @@ def authorize_attendance(request):
         return JsonResponse(pastoral_list, safe=False, status=200)
     else:
         return HttpResponse("UNAUTHORIZED", status=401)
+
+
+@csrf_exempt
+def start_attendance(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+
+    officers = request.POST.get("officers")
+    attendance_officers = [AttendanceOfficer(int(item)) for item in officers.split(',')]
+
+    from info_system.models import Member
+    
+    n = 0
+    for member in Member.objects.order_by('?'):
+        attendance_officers[n].add_member(member.pk)
+        n = n + 1
+        if n>=len(attendance_officers):
+            n = 0
+
+    return JsonResponse([officer.assigned_members for officer in attendance_officers], safe=False, status=200)
 
