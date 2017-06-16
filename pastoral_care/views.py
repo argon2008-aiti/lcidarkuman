@@ -7,6 +7,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 from info_system.models import Member
 from forms import NewMemberForm
 import datetime
@@ -275,6 +276,10 @@ def export_members(request):
 
             return response
 
+
+# church attendance session data
+attendance_in_session = False
+attendance_officers = []
 def is_member_pastoral(user):
     return user.groups.filter(name="Pastoral").exists() or user.is_superuser
 
@@ -284,9 +289,15 @@ def authorize_attendance(request):
     password = request.POST.get("password")
 
     user = authenticate(username=username, password=password)
-
     if user is not None and is_member_pastoral(user):
-        return HttpResponse("AUTHORIZED", status=200)
+        pastoral_care = User.objects.filter(groups__name__in=['Pastoral'])
+        pastoral_list = []
+        for user in pastoral_care:
+            data = {}
+            data["pk"] = user.shepherd.pk
+            data["name"] = user.shepherd.member.first_name + " " + user.shepherd.member.last_name
+            pastoral_list.append(data)
+        return JsonResponse(pastoral_list, safe=False, status=200)
     else:
         return HttpResponse("UNAUTHORIZED", status=401)
 

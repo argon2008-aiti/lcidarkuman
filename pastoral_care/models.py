@@ -5,6 +5,7 @@ from info_system.models import Member
 class MasterAttendance(models.Model):
     description = models.CharField(max_length=2048)
     authorized_by = models.ForeignKey(Member)
+    in_session = models.BooleanField(default=False)
     date_time = models.DateTimeField(auto_now=True)
 
 class MemberAttendance(models.Model):
