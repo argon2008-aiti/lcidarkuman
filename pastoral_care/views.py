@@ -5,6 +5,8 @@ from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic.detail import DetailView
+from django.contrib.auth import authenticate
+from django.views.decorators.csrf import csrf_exempt
 from info_system.models import Member
 from forms import NewMemberForm
 import datetime
@@ -272,3 +274,19 @@ def export_members(request):
                       onLaterPages=add_footer_note)
 
             return response
+
+def is_member_pastoral(user):
+    return user.groups.filter(name="Pastoral").exists() or user.is_superuser
+
+@csrf_exempt
+def authorize_attendance(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None and is_member_pastoral(user):
+        return HttpResponse("AUTHORIZED", status=200)
+    else:
+        return HttpResponse("UNAUTHORIZED", status=401)
+

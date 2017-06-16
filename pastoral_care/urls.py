@@ -10,4 +10,5 @@ urlpatterns = [
     url('^members/all/json$', json_member_list, name="all-members-json"),
     url('^members/new/$', AddNewMemberView.as_view(form_class=NewMemberForm), name="new-member"),
     url('^members/export$', export_members, name="export-members"),
+    url('^attendance/authorize/$', authorize_attendance, name="authorize-attendance"),
 ]

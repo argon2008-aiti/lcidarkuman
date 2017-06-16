@@ -16,13 +16,23 @@ MONTHS = [
     (11, "December"),
 ]
 
+
+def get_week_number(p_date):
+    return p_date.isocalendar()[1]
+
+
 class Offering(models.Model):
     description = models.CharField(max_length=64)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateField()
+    week_number = models.IntegerField()
 
     def __unicode__(self):
         return self.description + " " + self.date.strftime("%d-%m-%Y") +  " -- " + str(self.amount)
+
+    def save(self, *args, **kwargs):
+        self.week_number = get_week_number(self.date)
+        return super(Offering, self).save(*args, **kwargs)
 
 class Tithe(models.Model):
     member = models.ForeignKey(Member)
@@ -30,7 +40,12 @@ class Tithe(models.Model):
     month = models.IntegerField(choices=MONTHS)
     year = models.IntegerField()
     date = models.DateField(auto_now=True)
+    week_number = models.IntegerField()
 
     def __unicode__(self):
         return self.member.first_name + " " + self.member.last_name + " " + \
             ", "+ self.get_month_display() + " -- " + str(self.amount)
+
+    def save(self, *args, **kwargs):
+        self.week_number = get_week_number(self.date)
+        return super(Tithe, self).save(*args, **kwargs)
