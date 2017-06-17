@@ -14,4 +14,5 @@ urlpatterns = [
     url('^attendance/start/$', start_attendance, name="start-attendance"),
     url('^attendance/finish/$', finish_attendance, name="finish-attendance"),
     url('^attendance/all/json/$', json_attendance_list, name="all-attendance-json"),
+    url('^attendance/assigned/json/$', get_assigned_members, name="assigned-attendance-json"),
 ]

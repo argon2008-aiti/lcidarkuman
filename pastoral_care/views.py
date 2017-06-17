@@ -343,6 +343,31 @@ def start_attendance(request):
 
 
 @csrf_exempt
+def get_assigned_members(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    user = authenticate(username=username, password=password)
+
+    if user is not None and is_member_pastoral(user):
+        pk = user.shepherd.pk
+
+        # get members assigned to this officer
+        officer = AttendanceOfficer.objects.get(pk=pk)
+        off_list = []
+        for pk in officer.assigned_members:
+            member = Member.objects.get(pk=pk)
+            data = {}
+            data["pk"] = pk
+            data["name"] = member.first_name + " " + member.last_name
+            data["profile"] = member.profile.url
+            off_list.append(data)
+
+        return JsonResponse(off_list, safe=False, status=200)
+
+    return HttpResponse(status=401)
+
+
+@csrf_exempt
 def json_attendance_list(request):
     from models import MasterAttendance
 
@@ -384,7 +409,7 @@ def finish_attendance(request):
     user = authenticate(username=username, password=password)
 
     officers = AttendanceOfficer.objects.all()
-    if officers is not []:
+    if officers.count()>0 and get_attendance_session_status():
         officer_list = []
         for of in officers:
             officer_dict = {}
@@ -402,4 +427,3 @@ def finish_attendance(request):
             master_attendance.save()
 
         return HttpResponse(status=200)
-
