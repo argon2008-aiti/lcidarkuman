@@ -391,7 +391,7 @@ def finish_attendance(request):
             shepherd = Shepherd.objects.get(pk=of.shepherd_pk)
             officer_list.append(shepherd.member.first_name + " " + shepherd.member.last_name)
 
-        return JsonResponse(officer_list, safe=True, status=403)
+        return JsonResponse(officer_list, safe=False, status=403)
     else:
         master_attendance = MasterAttendance.objects.get(in_session=True)
         if master_attendance is None:
