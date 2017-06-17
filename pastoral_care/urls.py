@@ -12,5 +12,6 @@ urlpatterns = [
     url('^members/export$', export_members, name="export-members"),
     url('^attendance/authorize/$', authorize_attendance, name="authorize-attendance"),
     url('^attendance/start/$', start_attendance, name="start-attendance"),
+    url('^attendance/finish/$', finish_attendance, name="finish-attendance"),
     url('^attendance/all/json/$', json_attendance_list, name="all-attendance-json"),
 ]

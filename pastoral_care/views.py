@@ -376,5 +376,29 @@ def json_attendance_list(request):
         return JsonResponse(attendance_list, safe=False, status=202)
     return JsonResponse(attendance_list, safe=False, status=200)
 
+def finish_attendance(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
 
+    user = authenticate(username=username, password=password)
+
+    officers = AttendanceOfficer.objects.all()
+    if officers is not []:
+        officer_list = []
+        for of in officers:
+            officer_dict = {}
+            shepherd = Shepherd.objects.get(pk=of.shepherd_pk)
+            officer_list.append(shepherd.member.first_name + " " + shepherd.member.last_name)
+
+        return JsonResponse(officer_list, safe=True, status=403)
+    else:
+        master_attendance = MasterAttendance.objects.get(in_session=True)
+        if master_attendance is None:
+            return HttpResponse(status=200)
+
+        else:
+            master_attendance.in_session=False
+            master_attendance.save()
+
+        return HttpResponse(status=200)
 
