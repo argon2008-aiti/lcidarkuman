@@ -418,11 +418,12 @@ def finish_attendance(request):
 
         return JsonResponse(officer_list, safe=False, status=403)
     else:
-        master_attendance = MasterAttendance.objects.get(in_session=True)
-        if master_attendance is None:
+        try:
+            master_attendance = MasterAttendance.objects.get(in_session=True)
+        except MasterAttendance.DoesNotExist:
             return HttpResponse(status=200)
 
-        else:
+        finally:
             master_attendance.in_session=False
             master_attendance.save()
 
