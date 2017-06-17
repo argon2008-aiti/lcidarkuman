@@ -376,6 +376,7 @@ def json_attendance_list(request):
         return JsonResponse(attendance_list, safe=False, status=202)
     return JsonResponse(attendance_list, safe=False, status=200)
 
+@csrf_exempt
 def finish_attendance(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
