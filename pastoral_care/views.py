@@ -12,6 +12,9 @@ from info_system.models import Member
 from forms import NewMemberForm
 import datetime
 
+attendance_in_session = False
+attendance_officers = []
+
 class MemberShipListView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = "pastoral_care/all_members.html"
     login_url     = "/login/"
@@ -143,7 +146,7 @@ class AddNewMemberView(LoginRequiredMixin, GroupRequiredMixin, FormView):
         print form
         return super(AddNewMemberView, self).form_invalid(form)
     
-
+@csrf_exempt
 def json_member_list(request):
     
     if request.method == "GET":
@@ -162,8 +165,8 @@ def json_member_list(request):
             object_dict['profile_url'] = member.profile.url
 
             object_list.append(object_dict)
-
         return JsonResponse(object_list, safe=False)
+
 def add_footer_note(canvas, doc):
     from reportlab.lib.units import mm
     timestamp = datetime.datetime.now().strftime("%c")
@@ -289,8 +292,6 @@ class AttendanceOfficer:
         self.assigned_members.append(member_pk)
         return
 
-attendance_in_session = False
-attendance_officers = []
 def is_member_pastoral(user):
     return user.groups.filter(name="Pastoral").exists() or user.is_superuser
 
@@ -321,6 +322,7 @@ def start_attendance(request):
     password = request.POST.get("password")
 
     officers = request.POST.get("officers")
+    global attendance_officers
     attendance_officers = [AttendanceOfficer(int(item)) for item in officers.split(',')]
 
     from info_system.models import Member
@@ -332,5 +334,42 @@ def start_attendance(request):
         if n>=len(attendance_officers):
             n = 0
 
-    return JsonResponse([officer.assigned_members for officer in attendance_officers], safe=False, status=200)
+    global attendance_in_session 
+    attendance_in_session = True
+    return HttpResponse(status=200)
+
+
+@csrf_exempt
+def json_attendance_list(request):
+    from models import MasterAttendance
+
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+
+    user = authenticate(username=username, password=password)
+
+    officer_alert = False
+    if attendance_in_session and user.shepherd.pk in \
+            [officer.pk for officer in attendance_officers]:
+        officer_alert = True
+        query = MasterAttendance.objects.all().order_by('-date_time')
+
+    else:
+        query = MasterAttendance.objects.filter(in_session=False).order_by('-date_time')
+
+    attendance_list = []
+    for attendance in query:
+        data = {}
+        data["pk"] = attendance.pk
+        data["description"] = attendance.description
+        data["authorized_by"] = attendance.authorized_by.first_name + " " + attendance.authorized_by.last_name
+        data["date_time"] = attendance.date
+        data["in_session"] = attendance.in_session
+        attendance_list.append(data)
+
+    if officer_alert:
+        return JsonResponse(attendance_list, safe=False, status=202)
+    return JsonResponse(attendance_list, safe=False, status=200)
+
+
 
