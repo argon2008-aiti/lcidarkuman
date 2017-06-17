@@ -10,10 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from info_system.models import Member
 from forms import NewMemberForm
+from models import *
 import datetime
-
-attendance_in_session = False
-attendance_officers = []
 
 class MemberShipListView(LoginRequiredMixin, GroupRequiredMixin, TemplateView):
     template_name = "pastoral_care/all_members.html"
@@ -281,16 +279,6 @@ def export_members(request):
 
 
 # church attendance session data
-class AttendanceOfficer:
-    def __init__(self, pk):
-        self.pk = pk
-        self.assigned_members = []
-        self.finished = False
-        return
-
-    def add_member(self, member_pk):
-        self.assigned_members.append(member_pk)
-        return
 
 def is_member_pastoral(user):
     return user.groups.filter(name="Pastoral").exists() or user.is_superuser
@@ -302,7 +290,7 @@ def authorize_attendance(request):
 
     user = authenticate(username=username, password=password)
     if user is not None and is_member_pastoral(user):
-        if attendance_in_session:
+        if get_attendance_session_status():
             return HttpResponse("FORBIDDEN", status=403)
         pastoral_care = User.objects.filter(groups__name__in=['Pastoral'])
         pastoral_list = []
@@ -322,20 +310,35 @@ def start_attendance(request):
     password = request.POST.get("password")
 
     officers = request.POST.get("officers")
-    global attendance_officers
-    attendance_officers = [AttendanceOfficer(int(item)) for item in officers.split(',')]
 
-    from info_system.models import Member
+    # ensure there is not attendance officer in the database before start
+    for ao in AttendanceOfficer.objects.all():
+            ao.delete
+
+    attendance_officers = []
+    attendance_list = []
+
+    for of in [int(item) for item in officers.split(',')]:
+        db_off = AttendanceOfficer(shepherd_pk=of, assigned_members=[])
+        db_off.save()
+        attendance_officers.append(db_off)
+        attendance_list.append(list())
+
     
     n = 0
     for member in Member.objects.order_by('?'):
-        attendance_officers[n].add_member(member.pk)
+        attendance_list[n].append(member.pk)
         n = n + 1
         if n>=len(attendance_officers):
             n = 0
+    n = 0
+    for officer in attendance_officers:
+        officer.assigned_members = attendance_list[n]
+        officer.save()
+        n = n + 1
+        print officer.assigned_members
 
-    global attendance_in_session 
-    attendance_in_session = True
+    set_attendance_session_status(True)
     return HttpResponse(status=200)
 
 
@@ -349,12 +352,14 @@ def json_attendance_list(request):
     user = authenticate(username=username, password=password)
 
     officer_alert = False
-    if attendance_in_session and user.shepherd.pk in \
-            [officer.pk for officer in attendance_officers]:
+    if get_attendance_session_status() and user.shepherd.pk in \
+            [officer.shepherd_pk for officer in AttendanceOfficer.objects.all()]:
         officer_alert = True
         query = MasterAttendance.objects.all().order_by('-date_time')
+        print "partaking"
 
     else:
+        print "not partaking"
         query = MasterAttendance.objects.filter(in_session=False).order_by('-date_time')
 
     attendance_list = []
