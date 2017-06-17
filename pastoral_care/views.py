@@ -352,7 +352,7 @@ def get_assigned_members(request):
         pk = user.shepherd.pk
 
         # get members assigned to this officer
-        officer = AttendanceOfficer.objects.get(pk=pk)
+        officer = AttendanceOfficer.objects.get(shepherd_pk=pk)
         off_list = []
         for pk in officer.assigned_members:
             member = Member.objects.get(pk=pk)
@@ -418,12 +418,11 @@ def finish_attendance(request):
 
         return JsonResponse(officer_list, safe=False, status=403)
     else:
-        try:
-            master_attendance = MasterAttendance.objects.get(in_session=True)
-        except MasterAttendance.DoesNotExist:
+        master_attendance = MasterAttendance.objects.get(in_session=True)
+        if master_attendance is None:
             return HttpResponse(status=200)
 
-        finally:
+        else:
             master_attendance.in_session=False
             master_attendance.save()
 
