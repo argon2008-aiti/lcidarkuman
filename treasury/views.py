@@ -74,7 +74,7 @@ def get_all_tithes(request):
 
             object_dict["member"] = tithe.member.first_name + " " \
                           + tithe.member.middle_name + " " + tithe.member.last_name
-            object_dict["month"] = tithe.month
+            object_dict["month"] = tithe.get_month_display()
             object_dict["year"] = tithe.year
             object_dict["amount"] = tithe.amount
             object_dict["pk"] = tithe.member.pk
