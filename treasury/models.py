@@ -1,5 +1,6 @@
 from django.db import models
 from info_system.models import Member
+import datetime
 
 MONTHS = [
     (0, "January"),
@@ -47,5 +48,5 @@ class Tithe(models.Model):
             ", "+ self.get_month_display() + " -- " + str(self.amount)
 
     def save(self, *args, **kwargs):
-        self.week_number = get_week_number(self.date)
+        self.week_number = get_week_number(datetime.datetime.today())
         return super(Tithe, self).save(*args, **kwargs)
