@@ -360,6 +360,7 @@ def get_assigned_members(request):
             data["pk"] = pk
             data["name"] = member.first_name + " " + member.last_name
             data["profile"] = member.profile.url
+            data["phone"] = member.phone
             off_list.append(data)
 
         return JsonResponse(off_list, safe=False, status=200)
