@@ -47,11 +47,12 @@ def notice_list_json(request):
             object_dict['date'] = dateformat.format(notice.date, 'U')
             object_dict['content'] = notice.content
 
-            shepherd = Shepherd.objects.get(user=notice.creator)
-            if shepherd is not None:
-                name = shepherd.member.first_name + " " + shepherd.member.last_name
-            else:
+            try:
+                shepherd = Shepherd.objects.get(user=notice.creator)
+            except Shepherd.DoesNotExist:
                 name = notice.creator.first_name + " " + notice.creator.last_name
+            finally:
+                name = shepherd.member.first_name + " " + shepherd.member.last_name
             object_dict['creator'] = name
 
             object_list.append(object_dict)
