@@ -48,7 +48,7 @@ def notice_list_json(request):
             object_dict['content'] = notice.content
 
             shepherd = Shepherd.objects.get(user=notice.creator)
-            if user is not None:
+            if shepherd is not None:
                 name = shepherd.member.first_name + " " + shepherd.member.last_name
             else:
                 name = notice.creator.first_name + " " + notice.creator.last_name
