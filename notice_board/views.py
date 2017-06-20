@@ -49,10 +49,9 @@ def notice_list_json(request):
 
             try:
                 shepherd = Shepherd.objects.get(user=notice.creator)
+                name = shepherd.member.first_name + " " + shepherd.member.last_name
             except Shepherd.DoesNotExist:
                 name = notice.creator.first_name + " " + notice.creator.last_name
-            finally:
-                name = shepherd.member.first_name + " " + shepherd.member.last_name
             object_dict['creator'] = name
 
             object_list.append(object_dict)
