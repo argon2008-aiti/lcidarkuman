@@ -45,8 +45,8 @@ def notice_list_json(request):
             object_dict['title'] = string.capwords(notice.title)
             object_dict['date'] = dateformat.format(notice.date, 'U')
             object_dict['content'] = notice.content
-            object_dict['creator'] = notice.creator.first_name + \
-                " " + notice.creator.last_name
+            object_dict['creator'] = notice.creator.shepherd.member.first_name + \
+                " " + notice.creator.shepherd.member.last_name
 
             object_list.append(object_dict)
 
