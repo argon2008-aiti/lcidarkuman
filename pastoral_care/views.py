@@ -160,6 +160,7 @@ def json_member_list(request):
             object_dict['phone'] = member.phone
             object_dict['street_name'] = member.street_name
             object_dict['suburb'] = member.suburb
+            object_dict['status'] = member.membership_status
             object_dict['profile_url'] = member.profile.url
 
             object_list.append(object_dict)

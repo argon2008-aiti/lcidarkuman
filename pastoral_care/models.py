@@ -3,11 +3,20 @@ from django.contrib.postgres.fields import ArrayField
 from info_system.models import Member
 from django.core.exceptions import ValidationError
 
+
+ATTENDANCE_TYPE = (
+(0, "Sunday Morning Service"),
+(1, "Wednesday Evening Service"),
+(2, "Shepherds Meeting"),
+(3, "Other")
+)
+
 class MasterAttendance(models.Model):
     description = models.CharField(max_length=2048)
     authorized_by = models.ForeignKey(Member)
     in_session = models.BooleanField(default=False)
     date_time = models.DateTimeField(auto_now=True)
+    attendance_type = models.IntegerField(choices=ATTENDANCE_TYPE, default=0)
 
 class MemberAttendance(models.Model):
     master_attendance = models.ForeignKey(MasterAttendance)
