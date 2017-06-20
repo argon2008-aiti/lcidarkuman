@@ -362,6 +362,7 @@ def get_assigned_members(request):
             data["name"] = member.first_name + " " + member.last_name
             data["profile"] = member.profile.url
             data["phone"] = member.phone
+            data["active_flag"] = member.membership_status
             off_list.append(data)
 
         return JsonResponse(off_list, safe=False, status=200)
