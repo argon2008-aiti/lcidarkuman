@@ -310,7 +310,13 @@ def start_attendance(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
 
+    user = authenticate(username=username, password=password)
+    shepherd = Shepherd.objects.get(user=user)
+
     officers = request.POST.get("officers")
+
+    attendance_type = int(request.POST.get("attendance_type"))
+    attendance_description = request.POST.get("attendance_description")
 
     # ensure there is not attendance officer in the database before start
     for ao in AttendanceOfficer.objects.all():
@@ -338,6 +344,12 @@ def start_attendance(request):
         officer.save()
         n = n + 1
         print officer.assigned_members
+
+    master_attendance = MasterAttendance(attendance_type=attendance_type,
+                                         description=attendance_description,
+                                         in_session=True,
+                                         authorized_by=shepherd.member)
+    master_attendance.save()
 
     set_attendance_session_status(True)
     return HttpResponse(status=200)
@@ -394,6 +406,7 @@ def json_attendance_list(request):
     for attendance in query:
         data = {}
         data["pk"] = attendance.pk
+        data["type"] = attendance.get_attendance_type_display()
         data["description"] = attendance.description
         data["authorized_by"] = attendance.authorized_by.first_name + " " + attendance.authorized_by.last_name
         data["date_time"] = attendance.date
