@@ -23,7 +23,7 @@ def log_in_shepherd(request):
         json_object["first_name"] = shepherd.member.first_name
         json_object["middle_name"] = shepherd.member.middle_name
         json_object["last_name"] = shepherd.member.last_name
-        json_object["profile"] = shepherd.member.profile
+        json_object["profile"] = shepherd.member.profile.url
 
         return JsonResponse(json_object, safe=False)
     else:
