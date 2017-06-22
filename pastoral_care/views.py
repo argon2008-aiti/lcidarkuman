@@ -320,7 +320,7 @@ def start_attendance(request):
 
     # ensure there is not attendance officer in the database before start
     for ao in AttendanceOfficer.objects.all():
-            ao.delete
+        ao.delete
 
     attendance_officers = []
     attendance_list = []
