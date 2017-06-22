@@ -282,7 +282,7 @@ def export_members(request):
 # church attendance session data
 
 def is_member_pastoral(user):
-    return user.groups.filter(name="Pastoral").exists() or user.is_superuser
+    return user.groups.filter(name="Pastoral").exists()
 
 @csrf_exempt
 def authorize_attendance(request):
@@ -409,7 +409,7 @@ def json_attendance_list(request):
         data["type"] = attendance.get_attendance_type_display()
         data["description"] = attendance.description
         data["authorized_by"] = attendance.authorized_by.first_name + " " + attendance.authorized_by.last_name
-        data["date_time"] = attendance.date
+        data["date_time"] = attendance.date_time
         data["in_session"] = attendance.in_session
         attendance_list.append(data)
 
