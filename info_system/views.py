@@ -31,3 +31,16 @@ def log_in_shepherd(request):
 
 def change_password(request):
     pass
+
+
+@csrf_exempt
+def treasury_authenticate(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+
+    user = authenticate(username=username, password=password)
+
+    if user is not None and user.groups.filter(name="Finance").exists():
+        return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=401)
