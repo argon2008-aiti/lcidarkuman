@@ -17,6 +17,7 @@ class MasterAttendance(models.Model):
     in_session = models.BooleanField(default=False)
     date_time = models.DateTimeField(auto_now=True)
     attendance_type = models.IntegerField(choices=ATTENDANCE_TYPE, default=0)
+    head_count = models.IntegerField(default=0)
 
 class MemberAttendance(models.Model):
     master_attendance = models.ForeignKey(MasterAttendance)

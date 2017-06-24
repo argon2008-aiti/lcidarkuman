@@ -409,7 +409,7 @@ def json_attendance_list(request):
         data["type"] = attendance.get_attendance_type_display()
         data["description"] = attendance.description
         data["authorized_by"] = attendance.authorized_by.first_name + " " + attendance.authorized_by.last_name
-        data["date_time"] = attendance.date_time
+        data["date_time"] = attendance.date_time.strftime("%s")
         data["in_session"] = attendance.in_session
         attendance_list.append(data)
 
