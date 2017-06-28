@@ -443,3 +443,26 @@ def finish_attendance(request):
             master_attendance.save()
 
         return HttpResponse(status=200)
+
+@csrf_exempt
+def get_attendance_insession_details(request):
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+
+    user = authenticate(username=username, password=password)
+    
+    if user is not None:
+        officers = AttendanceOfficer.objects.all()
+        if officers.count()>0:
+            officer_list = []
+            for of in officers:
+                officer_dict = {}
+                shepherd = Shepherd.objects.get(pk=of.shepherd_pk)
+                officer_dict["name"] = shepherd.member.first_name + " " + shepherd.member.last_name
+                officer_dict["phone_number"] = shepherd.member.phone
+                officer_dict["status"] = of.status
+                officer_list.append(officer_dict)
+            return JsonResponse(officer_list, safe=False, status=200)
+    else:
+        return HttpResponse(status=401)
+    return HttpResponse(status=403)

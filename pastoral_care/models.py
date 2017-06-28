@@ -25,6 +25,7 @@ class MemberAttendance(models.Model):
 
 class AttendanceOfficer(models.Model):
     shepherd_pk = models.IntegerField()
+    status = models.BooleanField(default=True)
     assigned_members = ArrayField(models.IntegerField())
 
 class AttendanceConfiguration(models.Model):
