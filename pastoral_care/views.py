@@ -461,6 +461,8 @@ def get_attendance_insession_details(request):
                 officer_dict["name"] = shepherd.member.first_name + " " + shepherd.member.last_name
                 officer_dict["phone_number"] = shepherd.member.phone
                 officer_dict["status"] = of.status
+                officer_dict["profile"] = shepherd.member.profile.url
+                officer_dict["assigned"] = len(of.assigned_members) 
                 officer_list.append(officer_dict)
             return JsonResponse(officer_list, safe=False, status=200)
     else:
