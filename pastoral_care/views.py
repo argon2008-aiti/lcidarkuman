@@ -391,11 +391,11 @@ def json_attendance_list(request):
 
     user = authenticate(username=username, password=password)
 
-    status = 201
+    status = -1
     if get_attendance_session_status() and user.shepherd.pk in \
             [officer.shepherd_pk for officer in AttendanceOfficer.objects.all()]:
         officer = AttendanceOfficer.objects.get(shepherd_pk=user.shepherd.pk)
-        if officer.status==True:
+        if !officer.status:
             status = 201
         else:
             status = 202
