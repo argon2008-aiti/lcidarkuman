@@ -391,15 +391,20 @@ def json_attendance_list(request):
 
     user = authenticate(username=username, password=password)
 
-    officer_alert = False
+    status = 201
     if get_attendance_session_status() and user.shepherd.pk in \
-            [officer.shepherd_pk for officer in AttendanceOfficer.objects.filter(status=True)]:
-        officer_alert = True
+            [officer.shepherd_pk for officer in AttendanceOfficer.objects.all()]:
+        officer = AttendanceOfficer.objects.get(shepherd_pk=user.shepherd.pk)
+        if officer.status==True:
+            status = 201
+        else:
+            status = 202
         query = MasterAttendance.objects.all().order_by('-date_time')
         print "partaking"
 
     else:
         print "not partaking"
+        status = 200
         query = MasterAttendance.objects.filter(in_session=False).order_by('-date_time')
 
     attendance_list = []
@@ -414,9 +419,7 @@ def json_attendance_list(request):
         data["total"] = attendance.memberattendance_set.count()
         attendance_list.append(data)
 
-    if officer_alert:
-        return JsonResponse(attendance_list, safe=False, status=202)
-    return JsonResponse(attendance_list, safe=False, status=200)
+    return JsonResponse(attendance_list, safe=False, status=status)
 
 @csrf_exempt
 def finish_attendance(request):
