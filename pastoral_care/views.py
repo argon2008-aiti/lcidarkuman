@@ -408,7 +408,7 @@ def json_attendance_list(request):
         query = MasterAttendance.objects.filter(in_session=False).order_by('-date_time')
 
     attendance_list = []
-    active_count = Member.objects.filter(membership_status=1).count
+    active_count = Member.objects.filter(membership_status=1).count()
     for attendance in query:
         data = {}
         data["pk"] = attendance.pk
