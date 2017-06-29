@@ -428,27 +428,32 @@ def finish_attendance(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
 
+    first_timers = request.POST.get("first_timers")
+    congregants = request.POST.get("congregants")
+
     user = authenticate(username=username, password=password)
 
     officers = AttendanceOfficer.objects.all()
     if officers.count()>0 and get_attendance_session_status():
         officer_list = []
         for of in officers:
-            officer_dict = {}
-            shepherd = Shepherd.objects.get(pk=of.shepherd_pk)
-            officer_list.append(shepherd.member.first_name + " " + shepherd.member.last_name)
+            if of.status:
+                return HttpResponse(status=405)
 
-        return JsonResponse(officer_list, safe=False, status=403)
-    else:
         master_attendance = MasterAttendance.objects.get(in_session=True)
         if master_attendance is None:
-            return HttpResponse(status=200)
+            return HttpResponse(status=201)
 
         else:
             master_attendance.in_session=False
+            master_attendance.head_count = congregants
+            master_attendance.first_timers = first_timers
             master_attendance.save()
-
-        return HttpResponse(status=200)
+            for of in officers:
+                of.delete()
+            return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=201)
 
 @csrf_exempt
 def get_attendance_insession_details(request):
