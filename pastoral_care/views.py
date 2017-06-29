@@ -408,6 +408,7 @@ def json_attendance_list(request):
         query = MasterAttendance.objects.filter(in_session=False).order_by('-date_time')
 
     attendance_list = []
+    active_count = Member.objects.filter(member_status=1).count
     for attendance in query:
         data = {}
         data["pk"] = attendance.pk
@@ -417,6 +418,7 @@ def json_attendance_list(request):
         data["date_time"] = attendance.date_time.strftime("%s")
         data["in_session"] = attendance.in_session
         data["total"] = attendance.memberattendance_set.count()
+        data["percent"] = "{0:.2f}".format(float(attendance.memberattendance_set.count()/active_count))
         attendance_list.append(data)
 
     return JsonResponse(attendance_list, safe=False, status=status)
