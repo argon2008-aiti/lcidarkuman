@@ -480,7 +480,7 @@ def submit_attendance(request):
     user = authenticate(username=user_json.get('username'), password=user_json.get("password"))
     master_attendance = MasterAttendance.objects.get(in_session=True)
     for attendance in json_array:
-        member = Member.objects.get(pk=int(atendance.get('pk')))
+        member = Member.objects.get(pk=int(attendance.get('pk')))
         if attendance.get("status") == True:
             member.membership_status = 1
             member.save()
