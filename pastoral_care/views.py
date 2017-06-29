@@ -468,3 +468,32 @@ def get_attendance_insession_details(request):
     else:
         return HttpResponse(status=401)
     return HttpResponse(status=403)
+
+@csrf_exempt
+def submit_attendance(request):
+    import json
+
+    json_array = json.loads(request.body)
+
+    user_json = json_array[0]
+
+    user = authenticate(username=user_json.get('username'), password=user_json.get("password"))
+    master_attendance = MasterAttendance.objects.get(in_session=True)
+    for attendance in json_array:
+        member = Member.objects.get(pk=int(atendance.get('pk')))
+        if attendance.get("status") == True:
+            member.membership_status = 1
+            member.save()
+            member_attendance = MemberAttendance.create(
+                master_attendance = master_attendance,
+                member = member
+            )
+            member_attendance.save()
+
+    shepherd = Shepherd.objects.get(user=user)
+    attendance_officer = AttendanceOfficer.objects.get(shepherd_pk=shepherd.pk)
+    attendance_officer.status=False
+    attendance_officer.save()
+
+    return HttpResponse(status=200)
+

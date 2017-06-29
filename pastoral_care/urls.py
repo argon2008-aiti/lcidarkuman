@@ -16,4 +16,5 @@ urlpatterns = [
     url('^attendance/all/json/$', json_attendance_list, name="all-attendance-json"),
     url('^attendance/assigned/json/$', get_assigned_members, name="assigned-attendance-json"),
     url('^attendance/insession/details/$', get_attendance_insession_details, name="insession-details"),
+    url('^attendance/submit/$', submit_attendance, name="attendance-submit"),
 ]
