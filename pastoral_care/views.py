@@ -484,7 +484,7 @@ def submit_attendance(request):
         if attendance.get("status") == True:
             member.membership_status = 1
             member.save()
-            member_attendance = MemberAttendance.create(
+            member_attendance = MemberAttendance(
                 master_attendance = master_attendance,
                 member = member
             )
