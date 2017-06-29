@@ -393,7 +393,7 @@ def json_attendance_list(request):
 
     officer_alert = False
     if get_attendance_session_status() and user.shepherd.pk in \
-            [officer.shepherd_pk for officer in AttendanceOfficer.objects.all()]:
+            [officer.shepherd_pk for officer in AttendanceOfficer.objects.filter(status=True)]:
         officer_alert = True
         query = MasterAttendance.objects.all().order_by('-date_time')
         print "partaking"
@@ -411,6 +411,7 @@ def json_attendance_list(request):
         data["authorized_by"] = attendance.authorized_by.first_name + " " + attendance.authorized_by.last_name
         data["date_time"] = attendance.date_time.strftime("%s")
         data["in_session"] = attendance.in_session
+        data["total"] = attendance.memberattendance_set.count()
         attendance_list.append(data)
 
     if officer_alert:
