@@ -417,6 +417,8 @@ def json_attendance_list(request):
         data["authorized_by"] = attendance.authorized_by.first_name + " " + attendance.authorized_by.last_name
         data["date_time"] = attendance.date_time.strftime("%s")
         data["in_session"] = attendance.in_session
+        data["head_count"] = attendance.head_count
+        data["first_timers"] = attendance.first_timers
         data["total"] = attendance.memberattendance_set.count()
         data["percent"] = "{0:.2f}".format(attendance.memberattendance_set.count()*100/float(active_count))
         attendance_list.append(data)
