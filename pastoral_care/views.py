@@ -451,6 +451,7 @@ def finish_attendance(request):
             master_attendance.head_count = congregants
             master_attendance.first_timers = first_timers
             master_attendance.save()
+            set_attendance_session_status(False)
             for of in officers:
                 of.delete()
             return HttpResponse(status=200)
