@@ -327,6 +327,7 @@ def start_attendance(request):
 
     for of in [int(item) for item in officers.split(',')]:
         db_off = AttendanceOfficer(shepherd_pk=of, assigned_members=[])
+        db.status=True
         db_off.save()
         attendance_officers.append(db_off)
         attendance_list.append(list())
