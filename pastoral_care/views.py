@@ -318,7 +318,7 @@ def start_attendance(request):
     attendance_type = int(request.POST.get("attendance_type"))
     attendance_description = request.POST.get("attendance_description")
 
-    # ensure there is not attendance officer in the database before start
+    # ensure there is no attendance officer in the database before start
     for ao in AttendanceOfficer.objects.all():
         ao.delete
 

@@ -294,12 +294,14 @@ def bussell_reports_header_json(request):
         .extra({'mdate':"date(date)"}) \
         .values('date') \
         .annotate(count=Count('id')).order_by('-date')
+    bussell_total = Bussel.objects.all().count()
 
     object_list = []
     for header in report_headers:
         object_dict = {}
         object_dict['date'] = dateformat.format(header.get('date'), 'U')
         object_dict['count'] = header.get('count')
+        object_dict['total'] = bussell_total
 
         object_list.append(object_dict)
 
