@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'braces',
     'pastoral_care',
     'notice_board',
+    'events_calendar',
     'treasury'
 )
 

@@ -647,6 +647,9 @@ def get_reports_for_bussel(request):
                 object_dict['start_time'] = report.time_started.strftime('%H:%M:%S')
                 object_dict['end_time'] = report.time_ended.strftime('%H:%M:%S')
                 object_dict['topic'] = report.topic
+                object_dict['first_timers'] = report.num_first_timers
+                object_dict['new_converts'] = report.num_souls_won
+                object_dict['offering'] = report.offertory_given
                 object_dict['date'] = report.date.strftime('%d-%b-%Y')
                 object_list.append(object_dict)
 
