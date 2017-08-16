@@ -174,6 +174,7 @@ def add_footer_note(canvas, doc):
 def export_members(request):
 
     export_type = request.GET['export_type']
+    status_type = request.GET['status_type']
 
     #export as MS-EXCEL
     if export_type == "excel":
@@ -188,7 +189,17 @@ def export_members(request):
         from reportlab.lib.enums import TA_CENTER
         from reportlab.pdfgen import canvas
         
-        all_members = Member.objects.all()
+        if status_type=='all':
+            all_members = Member.objects.all()
+            subtitle = 'All Registered Church Members' 
+
+        elif status_type=='active':
+            all_members = Member.objects.filter(membership_status=1)
+            subtitle = 'All Active Church Members' 
+
+        else:
+            all_members = Member.objects.filter(membership_status=0)
+            subtitle = 'All Inactive Church Members' 
 
         if not all_members:
             pass
@@ -253,7 +264,6 @@ def export_members(request):
                                           )
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
-            subtitle = 'All Registered Church Members' 
             
             elements.append(Paragraph(title, title_style))
             elements.append(Paragraph(branch, branch_style))
