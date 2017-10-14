@@ -16,6 +16,11 @@ DAYS = [
     (6, "Saturday"),
 ]
 
+STATUS = [
+    (0, "Inactive"),
+    (1, "Active"),
+]
+
 class Bussel(models.Model):
     # Bussel Information ---------------------
     name            = models.CharField(max_length=50)
@@ -35,6 +40,7 @@ class Bussel(models.Model):
     leader = models.ForeignKey(Member)
 
     # Meta Data ------------------------------
+    status       = models.IntegerField(choices=STATUS, default=0)
     date_created = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
