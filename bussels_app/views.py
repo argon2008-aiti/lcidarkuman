@@ -706,7 +706,7 @@ def export_bussel_monthly_reports(request):
                 for date in bussell_dates:
                     for report in bussell.busselreport_set.filter(date__month=9):
                         if date == report.date:
-                            bussel_each.append(str(report.bussel_attendance)+ "|" + str(report.church_attendance))                           
+                            bussel_each.append("B: " + str(report.bussel_attendance)+ ", " + "C: "+ str(report.church_attendance))                           
 
                 # add this bussel information to our data table
                 data.append(bussel_each)
@@ -730,8 +730,7 @@ def export_bussel_monthly_reports(request):
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
                                    ('BOX', (0,0), (-1,-1), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, -1), colors.lightgrey),
-                                   ('BOX', (0,1), (-1,-2), 1.5, colors.black),
-                                   ('SPAN', (0,1), (-1,-2)])
+                                   ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
 
             title_style = ParagraphStyle(
                            name = 'title',
