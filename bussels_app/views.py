@@ -559,7 +559,7 @@ def export_bussel_reports(request):
             response = HttpResponse(content_type='application/pdf')
             file_name = "bussel_reports(" +  \
                          request_date_wrapper.get_request_date().strftime('%d/%b/%Y') + ").pdf"
-            response['Content-Disposition'] = 'inline; filename=file_name'
+            response['Content-Disposition'] = 'inline; filename=' + file_name
             doc = SimpleDocTemplate(response, pagesize=A4,
                                     rightMargin=24, topMargin=30)
             doc.pagesize = landscape(A4)
@@ -661,3 +661,136 @@ def get_reports_for_bussel(request):
 
     else:
         return HttpResponse(status=401)
+
+def get_dates_in_month(year, month, day_of_week):
+    from calendar import weekday, monthrange
+
+    days = [weekday(year, month, d+1) for d in range(monthrange(year, month)[1])]
+    saturdays = [i for i, x in enumerate(days) if x==day_of_week]
+    return [datetime.date(year, month, d) for d in saturdays]
+
+def export_bussel_monthly_reports(request):
+    export_type = request.GET["export_type"]
+    #month = request.GET["month"]
+
+    # export as MS-EXCEL
+    if export_type == "excel":
+        import xlwt
+
+    # export as PDF
+    elif export_type == "pdf":
+        from reportlab.lib import colors
+        from reportlab.lib.pagesizes import letter, inch, A4, landscape
+        from reportlab.platypus import Image, Paragraph, SimpleDocTemplate, Table, TableStyle
+        from reportlab.platypus.flowables import Spacer
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.enums import TA_CENTER
+
+
+        bussells = Bussel.objects.filter(busselreport__date__month=9)
+
+        else:
+            offertory_total = bussel_reports.aggregate(Sum('offertory_given'))
+            souls_won_total = bussel_reports.aggregate(Sum('num_souls_won'))
+            bussel_attendance_total = bussel_reports.aggregate(Sum('bussel_attendance'))
+            church_attendance_total = bussel_reports.aggregate(Sum('church_attendance'))
+            first_timers_total = bussel_reports.aggregate(Sum('num_first_timers'))
+            data = []
+            header = ["R/N", "Bussell Name", "Bussell Leader"]
+            bussell_dates = get_dates_in_month(2017, 9, 5)
+            for d in bussell_dates:
+                header.append(d.strftime('%-d-%-m-%y'))
+            data.append(header)
+            bussel_each = []
+            for index, bussell in enumerate(bussells):
+                bussel_each.append(index + 1)
+                bussel_each.append(bussel.name)
+                bussel_each.append(bussel.leader)
+                for date in bussell_dates:
+                    for report in bussell.busselreport_set.all():
+                        if date == report.date
+                            bussel_each.append(report.bussel_attendance)
+                            bussel_each.append(report.church_attendance)
+                        else:
+                            bussel_each.append("--")
+                            bussel_each.append("--")
+
+                # add this bussel information to our data table
+                data.append(bussel_each)
+                bussel_each = []
+
+
+            # make the pdf document
+            response = HttpResponse(content_type='application/pdf')
+            file_name = "bussel_months_reports(" +  \
+                         request_date_wrapper.get_request_date().strftime('%d/%b/%Y') + ").pdf"
+            response['Content-Disposition'] = 'inline; filename=' + file_name
+            doc = SimpleDocTemplate(response, pagesize=A4,
+                                    rightMargin=24, topMargin=30)
+            doc.pagesize = landscape(A4)
+
+            # container to hold flowables
+            elements = []
+
+            table_style = TableStyle([('INNERGRID', (0,0), (-1,-2), 0.0, colors.black),
+                                   ('INNERGRID', (0,0), (-1, 0), 1.5, colors.black),
+                                   ('INNERGRID', (5,-1), (-1, -1), 1.5, colors.black),
+                                   ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
+                                   ('BOX', (0,0), (-1,0), 1.5, colors.black),
+                                   ('BOX', (5,-1), (-1,-1), 1.5, colors.black),
+                                   ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+                                   ('BACKGROUND', (5, -1), (-1, -1), colors.lightgrey),
+                                   ('ALIGN', (5, 1), (-1, -1), 'RIGHT'),
+                                   ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
+
+            title_style = ParagraphStyle(
+                           name = 'title',
+                           spaceAfter=20,
+                           fontSize=24,
+                           alignment=TA_CENTER
+            )
+
+            subtitle_style = ParagraphStyle(
+                              name = 'subtitle',
+                              spaceAfter=20,
+                              fontSize = 14,
+                              alignment=TA_CENTER
+            )
+
+            branch_style = ParagraphStyle(
+                              name = 'branch', 
+                              spaceAfter=20,
+                              fontSize = 18,
+                              alignment=TA_CENTER
+            )
+
+            title = 'Lighthouse Chapel International'
+            branch = 'Darkuman Branch'
+            subtitle = 'Bussell Reports for ' + request_date_wrapper.get_request_date().strftime('%d/%b/%Y')
+
+            elements.append(Paragraph(title, title_style))
+            elements.append(Paragraph(branch, branch_style))
+            elements.append(Paragraph(subtitle, subtitle_style))
+
+
+            table = Table(data)
+            table.setStyle(table_style)
+
+            for each in range(1, len(data)-1):
+                if each % 2 == 0:
+                    bg_color = colors.whitesmoke
+                else:
+                    bg_color = colors.white
+
+                table.setStyle(TableStyle([('BACKGROUND', (0, each), (-1, each), bg_color)]))
+                table.setStyle(TableStyle([('INNERGRID', (0, each), (-1, each), 1.5, colors.black)]))
+
+            elements.append(table)
+            cols_sign = [["_______________________","_______________________", "______________________"  ],
+                         ["Bussell Clerk", "Treasurer", "Pastor"]]
+            table_sign = Table(cols_sign, colWidths=[180, 180, 180])
+            elements.append(Spacer(1, 0.2*inch))
+            elements.append(table_sign)
+            doc.build(elements)
+
+            return response
