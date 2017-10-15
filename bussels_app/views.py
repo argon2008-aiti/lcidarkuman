@@ -730,7 +730,8 @@ def export_bussel_monthly_reports(request):
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
                                    ('BOX', (0,0), (-1,-1), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, -1), colors.lightgrey),
-                                   ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
+                                   ('BOX', (0,1), (-1,-2), 1.5, colors.black),
+                                   ('SPAN', (0,1), (-1,-2)])
 
             title_style = ParagraphStyle(
                            name = 'title',
