@@ -726,8 +726,7 @@ def export_bussel_monthly_reports(request):
             elements = []
 
             table_style = TableStyle([('INNERGRID', (0,0), (-1,-2), 0.0, colors.black),
-                                   ('INNERGRID', (0,0), (-1, 0), 1.5, colors.black),
-                                   ('INNERGRID', (5,-1), (-1, -1), 1.5, colors.black),
+                                   ('INNERGRID', (0,0), (-1, -1), 1.5, colors.black),
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
                                    ('BOX', (0,0), (-1,-1), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
@@ -777,11 +776,6 @@ def export_bussel_monthly_reports(request):
                 table.setStyle(TableStyle([('INNERGRID', (0, each), (-1, each), 1.5, colors.black)]))
 
             elements.append(table)
-            cols_sign = [["_______________________","_______________________", "______________________"  ],
-                         ["Bussell Clerk", "Treasurer", "Pastor"]]
-            table_sign = Table(cols_sign, colWidths=[180, 180, 180])
-            elements.append(Spacer(1, 0.2*inch))
-            elements.append(table_sign)
             doc.build(elements)
 
             return response
