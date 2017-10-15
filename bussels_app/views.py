@@ -725,7 +725,7 @@ def export_bussel_monthly_reports(request):
             # container to hold flowables
             elements = []
 
-            table_style = TableStyle([('INNERGRID', (0,0), (-1,-2), 0.0, colors.black),
+            table_style = TableStyle([
                                    ('INNERGRID', (0,0), (-1, 0), 1.5, colors.black),
                                    ('INNERGRID', (5,-1), (-1, -1), 1.5, colors.black),
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
@@ -733,7 +733,6 @@ def export_bussel_monthly_reports(request):
                                    ('BOX', (5,-1), (-1,-1), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
                                    ('BACKGROUND', (5, -1), (-1, -1), colors.lightgrey),
-                                   ('ALIGN', (5, 1), (-1, -1), 'RIGHT'),
                                    ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
 
             title_style = ParagraphStyle(
@@ -759,7 +758,7 @@ def export_bussel_monthly_reports(request):
 
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
-            subtitle = 'Bussell Reports for ' + request_date_wrapper.get_request_date().strftime('%d/%b/%Y')
+            subtitle = 'Bussell Reports Summary for ' + request_date_wrapper.get_request_date().strftime('%d/%b/%Y')
 
             elements.append(Paragraph(title, title_style))
             elements.append(Paragraph(branch, branch_style))
