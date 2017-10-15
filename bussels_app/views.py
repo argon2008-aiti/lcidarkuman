@@ -710,7 +710,7 @@ def export_bussel_monthly_reports(request):
                 bussel_each.append(bussel.leader)
                 for date in bussell_dates:
                     for report in bussell.busselreport_set.all():
-                        if date == report.date
+                        if date == report.date:
                             bussel_each.append(report.bussel_attendance)
                             bussel_each.append(report.church_attendance)
                         else:
