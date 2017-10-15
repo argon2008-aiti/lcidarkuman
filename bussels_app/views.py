@@ -694,11 +694,11 @@ def export_bussel_monthly_reports(request):
         else:
             data = []
             header = ["R/N", "Bussell Name", "Bussell Leader"]
-            bussell_dates = get_dates_in_month(2017, 9, 5)
+            bussell_dates = get_dates_in_month(2017, 9, 6)
             for d in bussell_dates:
                 header.append(d.strftime('%-d-%-m-%y'))
             data.append(header)
-            ''' bussel_each = []
+            bussel_each = []
             for index, bussell in enumerate(bussells):
                 bussel_each.append(index + 1)
                 bussel_each.append(bussell.name)
@@ -714,7 +714,7 @@ def export_bussel_monthly_reports(request):
 
                 # add this bussel information to our data table
                 data.append(bussel_each)
-                bussel_each = []'''
+                bussel_each = []
 
 
             # make the pdf document
