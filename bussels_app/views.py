@@ -698,7 +698,7 @@ def export_bussel_monthly_reports(request):
             for d in bussell_dates:
                 header.append(d.strftime('%-d-%-m-%y'))
             data.append(header)
-            bussel_each = []
+           ''' bussel_each = []
             for index, bussell in enumerate(bussells):
                 bussel_each.append(index + 1)
                 bussel_each.append(bussell.name)
@@ -759,7 +759,7 @@ def export_bussel_monthly_reports(request):
                               spaceAfter=20,
                               fontSize = 18,
                               alignment=TA_CENTER
-            )
+            )'''
 
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
