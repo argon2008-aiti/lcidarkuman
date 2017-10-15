@@ -755,7 +755,7 @@ def export_bussel_monthly_reports(request):
 
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
-            subtitle = 'Bussell Reports Summary for ' + request_date_wrapper.get_request_date().strftime('%d/%b/%Y')
+            subtitle = 'Bussell Reports Summary for September, 2017'  
 
             elements.append(Paragraph(title, title_style))
             elements.append(Paragraph(branch, branch_style))
