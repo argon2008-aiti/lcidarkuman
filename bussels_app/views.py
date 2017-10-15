@@ -692,11 +692,6 @@ def export_bussel_monthly_reports(request):
             pass
 
         else:
-            offertory_total = bussel_reports.aggregate(Sum('offertory_given'))
-            souls_won_total = bussel_reports.aggregate(Sum('num_souls_won'))
-            bussel_attendance_total = bussel_reports.aggregate(Sum('bussel_attendance'))
-            church_attendance_total = bussel_reports.aggregate(Sum('church_attendance'))
-            first_timers_total = bussel_reports.aggregate(Sum('num_first_timers'))
             data = []
             header = ["R/N", "Bussell Name", "Bussell Leader"]
             bussell_dates = get_dates_in_month(2017, 9, 5)
