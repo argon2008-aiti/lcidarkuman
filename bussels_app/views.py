@@ -729,8 +729,7 @@ def export_bussel_monthly_reports(request):
                                    ('INNERGRID', (0,0), (-1, -1), 1.5, colors.black),
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
                                    ('BOX', (0,0), (-1,-1), 1.5, colors.black),
-                                   ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                                   ('BACKGROUND', (5, -1), (-1, -1), colors.lightgrey),
+                                   ('BACKGROUND', (0, 0), (-1, -1), colors.lightgrey),
                                    ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
 
             title_style = ParagraphStyle(
