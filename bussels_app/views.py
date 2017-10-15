@@ -725,12 +725,11 @@ def export_bussel_monthly_reports(request):
             # container to hold flowables
             elements = []
 
-            table_style = TableStyle([
+            table_style = TableStyle([('INNERGRID', (0,0), (-1,-2), 0.0, colors.black),
                                    ('INNERGRID', (0,0), (-1, 0), 1.5, colors.black),
                                    ('INNERGRID', (5,-1), (-1, -1), 1.5, colors.black),
                                    ('TEXTFONT', (0,0), (-1, 0), 'Times-Bold'),
-                                   ('BOX', (0,0), (-1,0), 1.5, colors.black),
-                                   ('BOX', (5,-1), (-1,-1), 1.5, colors.black),
+                                   ('BOX', (0,0), (-1,-1), 1.5, colors.black),
                                    ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
                                    ('BACKGROUND', (5, -1), (-1, -1), colors.lightgrey),
                                    ('BOX', (0,1), (-1,-2), 1.5, colors.black)])
