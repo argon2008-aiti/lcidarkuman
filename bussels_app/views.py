@@ -666,7 +666,7 @@ def get_dates_in_month(year, month, day_of_week):
     from calendar import weekday, monthrange
 
     days = [weekday(year, month, d+1) for d in range(monthrange(year, month)[1])]
-    saturdays = [i for i, x in enumerate(days) if x==day_of_week]
+    saturdays = [i+1 for i, x in enumerate(days) if x==day_of_week]
     return [datetime.date(year, month, d) for d in saturdays]
 
 def export_bussel_monthly_reports(request):
@@ -694,7 +694,7 @@ def export_bussel_monthly_reports(request):
         else:
             data = []
             header = ["R/N", "Bussell Name", "Bussell Leader"]
-            bussell_dates = get_dates_in_month(2017, 9, 6)
+            bussell_dates = get_dates_in_month(2017, 9, 5)
             for d in bussell_dates:
                 header.append(d.strftime('%-d-%-m-%y'))
             data.append(header)
