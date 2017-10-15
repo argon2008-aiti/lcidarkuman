@@ -696,7 +696,7 @@ def export_bussel_monthly_reports(request):
             header = ["R/N", "Bussell Name", "Bussell Leader"]
             bussell_dates = get_dates_in_month(2017, 9, 5)
             for d in bussell_dates:
-                header.append(d.strftime('%-d-%-m-%y'))
+                header.append(d.strftime('%d-%m-%Y'))
             data.append(header)
             bussel_each = []
             for index, bussell in enumerate(bussells):
@@ -765,7 +765,7 @@ def export_bussel_monthly_reports(request):
             table = Table(data)
             table.setStyle(table_style)
 
-            for each in range(1, len(data)-1):
+            for each in range(1, len(data)):
                 if each % 2 == 0:
                     bg_color = colors.whitesmoke
                 else:
