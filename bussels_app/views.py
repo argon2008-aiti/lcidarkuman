@@ -687,7 +687,7 @@ def export_bussel_monthly_reports(request):
         from reportlab.lib.enums import TA_CENTER
 
 
-        bussells = Bussel.objects.filter(busselreport__date__month=9)
+        bussells = Bussel.objects.all()
         if not bussells:
             pass
 
@@ -704,7 +704,7 @@ def export_bussel_monthly_reports(request):
                 bussel_each.append(bussell.name)
                 bussel_each.append(bussell.leader)
                 for date in bussell_dates:
-                    for report in bussell.busselreport_set.all():
+                    for report in bussell.busselreport_set.filter(date__month=9):
                         if date == report.date:
                             bussel_each.append(report.bussel_attendance)
                             bussel_each.append(report.church_attendance)
