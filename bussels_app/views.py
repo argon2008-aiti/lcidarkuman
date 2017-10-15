@@ -688,7 +688,7 @@ def export_bussel_monthly_reports(request):
 
 
         bussells = Bussel.objects.filter(busselreport__date__month=9)
-        if bussells:
+        if not bussells:
             pass
 
         else:
