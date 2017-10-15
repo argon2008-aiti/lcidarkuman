@@ -687,7 +687,7 @@ def export_bussel_monthly_reports(request):
         from reportlab.lib.enums import TA_CENTER
 
 
-        bussells = Bussel.objects.all()
+        bussells = Bussel.objects.filter(status=1)
         if not bussells:
             pass
 
