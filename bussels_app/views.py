@@ -714,7 +714,7 @@ def export_bussel_monthly_reports(request):
 
                 # add this bussel information to our data table
                 data.append(bussel_each)
-                bussel_each = []
+                bussel_each = []'''
 
 
             # make the pdf document
@@ -759,7 +759,7 @@ def export_bussel_monthly_reports(request):
                               spaceAfter=20,
                               fontSize = 18,
                               alignment=TA_CENTER
-            )'''
+            )
 
             title = 'Lighthouse Chapel International'
             branch = 'Darkuman Branch'
