@@ -706,7 +706,7 @@ def export_bussel_monthly_reports(request):
                 for date in bussell_dates:
                     for report in bussell.busselreport_set.filter(date__month=9):
                         if date == report.date:
-                            bussel_each.append(str(report.bussel_attendance)+ "|" + str(report.church_attendance))
+                            bussel_each.append(str(report.bussel_attendance)+ "|" + str(report.church_attendance))                           break
                         else:
                             bussel_each.append("--")
 
