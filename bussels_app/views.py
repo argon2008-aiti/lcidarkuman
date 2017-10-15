@@ -701,8 +701,8 @@ def export_bussel_monthly_reports(request):
             bussel_each = []
             for index, bussell in enumerate(bussells):
                 bussel_each.append(index + 1)
-                bussel_each.append(bussel.name)
-                bussel_each.append(bussel.leader)
+                bussel_each.append(bussell.name)
+                bussel_each.append(bussell.leader)
                 for date in bussell_dates:
                     for report in bussell.busselreport_set.all():
                         if date == report.date:
