@@ -780,7 +780,7 @@ def export_bussel_monthly_reports(request):
             return response
 
 class BussellPerformanceMetricsView(TemplateView):
-    template_name = "bussels_app/bussel_performance_metrics.html"
+    template_name = "bussels_app/bussell_performance_metrics.html"
     login_url ="/login/"
     group_required= [u"Bussell", u"Manager"]
     raise_exception = show_access_denied_page
