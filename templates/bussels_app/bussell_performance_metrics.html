@@ -7,17 +7,20 @@
     </div>
     <div class="data-container">
 	    <div class="data-section">
-		    <div class="form-group col-md-4">
-			    <label class="control-label" for="id_bussell">Select Bussell:</label>
-			   {% render_field form.bussell class+="form-control" %} 
-		    </div>
-		    <div class="form-group col-md-4">
-			    <label class="control-label" for="id_from_date">Start Date:</label>
-			   {% render_field form.from_date class+="form-control" %} 
-		    </div>
-		    <div class="form-group col-md-4">
-			    <label class="control-label" for="id_to_date">End Date:</label>
-			   {% render_field form.to_date class+="form-control" %} 
+		    <div class="data-section-data">
+			    <div class="form-group col-md-4">
+				    <label class="control-label" for="id_bussell">Select Bussell:</label>
+				   {% render_field form.bussell class+="form-control" %} 
+			    </div>
+			    <div class="col-md-4"></div>
+			    <div class="form-group col-md-2">
+				    <label class="control-label" for="id_from_date">Start Date:</label>
+				   {% render_field form.from_date class+="form-control" %} 
+			    </div>
+			    <div class="form-group col-md-2">
+				    <label class="control-label" for="id_to_date">End Date:</label>
+				   {% render_field form.to_date class+="form-control" %} 
+			    </div>
 		    </div>
 	    </div>
     </div>
