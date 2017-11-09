@@ -44,7 +44,7 @@ class Bussel(models.Model):
     date_created = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.name + " -- " + self.leader.last_name
+        return self.name + "( " + self.leader.first_name + " " + self.leader.last_name + " )"
 
 
 # Weekly Report ------------------------------
