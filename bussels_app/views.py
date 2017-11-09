@@ -778,3 +778,16 @@ def export_bussel_monthly_reports(request):
             doc.build(elements)
 
             return response
+
+class BussellPerformanceMetricsView(TemplateView):
+    template_name = "bussels_app/bussel_performance_metrics.html"
+    login_url ="/login/"
+    group_required= [u"Bussell", u"Manager"]
+    raise_exception = show_access_denied_page
+
+    def get_context_data(self, **kwargs):
+        context = super(BussellPerformanceMetricsView, self).get_context_data(**kwargs)
+        form = BussellPerformanceMetricsForm()
+        context['form'] = form
+        return context
+

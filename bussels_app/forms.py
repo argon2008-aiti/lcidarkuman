@@ -1,4 +1,5 @@
 from django import forms
+from models import Bussel
 
 class BusselReportDetailForm(forms.Form):
     topic = forms.CharField(label="Topic:", max_length=200)
@@ -13,3 +14,9 @@ class BusselReportDetailForm(forms.Form):
     num_souls_won     = forms.IntegerField(label="Souls Won:")
     num_first_timers  = forms.IntegerField(label="First Timers:")
     offertory_given   = forms.DecimalField(label="Offertory(GHS):", decimal_places=2, max_digits=10)
+
+
+class BussellPerformanceMetricsForm(forms.Form):
+    bussell = forms.ModelChoiceField(Bussel.objects.all())
+    from_date = forms.DateField(input_formats=('%d-%m-%Y',))
+    to_date = forms.DateField(input_formats=('%d-%m-%Y',))
