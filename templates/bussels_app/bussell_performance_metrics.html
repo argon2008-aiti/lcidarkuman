@@ -37,6 +37,7 @@ $(document).ready(function(){
 	            changeMonth: true,
 	            changeYear: false,
 		    dateFormat: "yy-mm-dd",
+		    maxDate:'0',
 		});
 
 		$(".to_datepicker").datepicker({
@@ -44,6 +45,10 @@ $(document).ready(function(){
 	            changeYear: false,
 		    dateFormat: "yy-mm-dd",
 		    maxDate:'0',
+		});
+
+		$("#id_bussell").on('change', function(e) {
+	             alert(this.value);	
 		});
 })
 </script>
