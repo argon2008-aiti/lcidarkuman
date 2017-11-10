@@ -15,11 +15,11 @@
 			    <div class="col-md-4"></div>
 			    <div class="form-group col-md-2">
 				    <label class="control-label" for="id_from_date">Start Date:</label>
-				   {% render_field form.from_date class+="form-control" %} 
+				   {% render_field form.from_date class+="form-control from_datepicker" %} 
 			    </div>
 			    <div class="form-group col-md-2">
 				    <label class="control-label" for="id_to_date">End Date:</label>
-				   {% render_field form.to_date class+="form-control" %} 
+				   {% render_field form.to_date class+="form-control to_datepicker" %} 
 			    </div>
 		    </div>
 	    </div>
@@ -32,6 +32,19 @@
 
 <script>
 $(document).ready(function(){
+
+		$(".from_datepicker").datepicker({
+	            changeMonth: true,
+	            changeYear: false,
+		    dateFormat: "yy-mm-dd",
+		});
+
+		$(".to_datepicker").datepicker({
+	            changeMonth: true,
+	            changeYear: false,
+		    dateFormat: "yy-mm-dd",
+		    maxDate:'0',
+		});
 })
 </script>
 {% endblock %}
