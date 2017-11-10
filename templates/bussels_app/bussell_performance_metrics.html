@@ -50,7 +50,7 @@ $(document).ready(function(){
 		$("#id_bussell").on('change', function(e) {
 			$.ajax({
 			    type: 'GET',
-			    url: "{% url 'bussels:bussell-performance-json' %}",
+			    url: "{% url 'bussel:bussell-performance-json' %}",
 			    data: {pk: this.value},
 			    dataType: 'json',
 			    success: function(data) {
