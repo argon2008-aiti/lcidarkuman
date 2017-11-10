@@ -791,3 +791,18 @@ class BussellPerformanceMetricsView(TemplateView):
         context['form'] = form
         return context
 
+def get_performance_data(request):
+    pid = request.GET['pk']
+    reports = BusselReport.objects.filter(bussel.id=pid)
+
+    object_list = []
+
+    for report in reports:
+        object_dict = {}
+        object_dict['b_attendance'] = report.bussel_attendance
+        object_dict['c_attendance'] = report.church_attendance
+        object_dict['date'] = report.date
+
+        object_list.append(object_dict)
+
+    return JsonResponse(object_list, safe=False)
