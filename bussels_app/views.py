@@ -807,4 +807,4 @@ def get_performance_data(request):
         date_labels.append(report.date)
 
 
-    return JsonResponse([date_labels, bussell_attendance, church_attendance], safe=False)
+    return JsonResponse([date_labels, safe=False)
