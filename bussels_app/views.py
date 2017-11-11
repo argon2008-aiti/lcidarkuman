@@ -797,12 +797,14 @@ def get_performance_data(request):
 
     object_list = []
 
+    date_labels = []
+    bussell_attendance_list = []
+    church_attendance_list = []
+
     for report in reports:
-        object_dict = {}
-        object_dict['b_attendance'] = report.bussel_attendance
-        object_dict['c_attendance'] = report.church_attendance
-        object_dict['date'] = report.date
+        bussell_attendance_list.append(report.bussel_attendance)
+        church_attendance_list.append(report.church_attendance)
+        date_labels.append(report.date)
 
-        object_list.append(object_dict)
 
-    return JsonResponse(object_list, safe=False)
+    return JsonResponse([date_labels, bussell_attendance, church_attendance], safe=False)
