@@ -806,6 +806,5 @@ def get_performance_data(request):
         church_attendance_list.append(report.church_attendance)
         date_labels.append(report.date)
 
-    object_list = list(date_labels, bussell_attendance_list, church_attendance_list)
 
-    return JsonResponse(object_list, safe=False)
+    return JsonResponse([date_labels, bussell_attendance, church_attendance], safe=False)
