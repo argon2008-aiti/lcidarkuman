@@ -85,8 +85,8 @@ $(document).ready(function(){
 				       data: {pk: this.value},
 				       dataType: 'json',
 				       success: function(data)  {
-					       $("#monthly-average-table").dataTable({
-		                                   "data": data;			       
+					       $("#monthly-average-table").DataTable({
+		                                   "data": data,		       
 					       });
 					           
 				       },
