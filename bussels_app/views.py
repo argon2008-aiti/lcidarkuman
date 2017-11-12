@@ -809,8 +809,8 @@ def get_performance_data(request):
 
     monthly_average = reports.annotate(month=Month('date'))\
                              .values('month')\
-                             .annotate(avg_bu=Avg(bussel_attendance))\
-                             .annotate(avg_ch=Avg(church_attendance))\
+                             .annotate(avg_bu=Avg('bussel_attendance'))\
+                             .annotate(avg_ch=Avg('church_attendance'))\
                              .order_by("month")
 
 
