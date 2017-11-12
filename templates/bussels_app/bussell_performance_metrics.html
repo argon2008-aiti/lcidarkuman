@@ -23,11 +23,11 @@
 			    </div>
 		    </div>
 
-		    <div id="chart-container" style="position: relative, height:80vh, width=200vw">
+		    <div id="chart-container" style="position: relative, height:80vh, width=100vw">
 			      <canvas id="chart"></canvas>
 		    </div>
 
-		    <table id="monthly-average-table" class="display">
+		    <table id="monthly-average-table" class="display" style="margin-top: 20px, width=100vw">
 		          <thead>
 		          	<tr>
 		          		<th>Month</th>
@@ -51,7 +51,11 @@ $(document).ready(function(){
 	chart_data = [];
 	var attendanceBarChart = null;
 
-	var attendanceTable = $("#monthly-average-table").DataTable();
+	var attendanceTable = $("#monthly-average-table").DataTable({
+                               "paging": false,
+			       "ordering": false,
+			       "info": false
+	});
 
 		$(".from_datepicker").datepicker({
 	            changeMonth: true,
