@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^reports/all$', BusselReportListView.as_view(), name="all-bussel-reports"),
     url(r'^performance$', BussellPerformanceMetricsView.as_view(), name="bussel-performance"),
     url(r'^performance/json/$', get_performance_data, name="bussell-performance-json"),
+    url(r'^performance/monthly_average/json/$', get_monthly_average, name="bussell-performance-monthly-json"),
     url(r'^reports/all/export$', export_bussels_list, name="all-bussel-export"),
     url(r'^reports/month/export$', export_bussel_monthly_reports, name="monthly-bussel-export"),
     url(r'^reports/headers/all/json/$', bussell_reports_header_json, name="all-bussel-header-list"),

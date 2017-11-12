@@ -807,13 +807,28 @@ def get_performance_data(request):
         date_labels.append(report.date)
 
 
-    monthly_average = reports.annotate(month=Month('date'))\
-                             .values('month')\
-                             .annotate(avg_bu=Avg('bussel_attendance'))\
-                             .annotate(avg_ch=Avg('church_attendance'))\
-                             .order_by("month")
 
 
     #return JsonResponse([date_labels, bussell_attendance_list, church_attendance_list], safe=False)
     return JsonResponse(monthly_average, safe=False)
 
+def get_monthly_average(request):
+    pid = request.GET['pk']
+
+    monthly_average = BusselReport.objects.filter.annotate(month=Month('date'))\
+                             .values('month')\
+                             .annotate(avg_bu=Avg('bussel_attendance'))\
+                             .annotate(avg_ch=Avg('church_attendance'))\
+                             .order_by("month")
+
+    response_list = []
+
+    for ma in monthly_average:
+        temp_list = []
+        temp_list.append(calendar.month_name[ma.month])
+        temp_list.append(ma.avg_bu)
+        temp_list.append(ma.avg_ch)
+
+        response_list.append(temp_list)
+    
+    return JsonResponse(response_list, safe=False)
