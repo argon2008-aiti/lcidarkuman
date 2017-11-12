@@ -79,10 +79,29 @@ $(document).ready(function(){
 				    chart_data = data;
 				    drawChart();
 
-				    $('#monthly-average-table').DataTable( {
-					    "ajax": "{% url 'bussel:bussell-performance-monthly-json'%}" 
-				    })
-			    },
+				    $.ajax({
+				       type: 'GET',
+				       url: "{% url 'bussel:bussell-performance-monthly-json'%}",
+				       data: {pk: this.value},
+				       dataType: 'json',
+				       success: function(data)  {
+					       $("#monthly-average-table").dataTable({
+		                                   "data": data;			       
+					       });
+					           
+				       },
+       				       
+				       beforeSend: function(){
+					    $('#chart-container').LoadingOverlay("show");
+				       },
+
+				       complete: function(){
+					    $('#chart-container').LoadingOverlay("hide");
+				       }
+					    
+				     });
+
+				    },
 
 			    beforeSend: function(){
 			            $('#chart-container').LoadingOverlay("show");
