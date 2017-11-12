@@ -51,7 +51,7 @@ $(document).ready(function(){
 	chart_data = [];
 	var attendanceBarChart = null;
 
-	var attendanceTable = $("monthly-average-table").DataTable();
+	var attendanceTable = $("#monthly-average-table").DataTable();
 
 		$(".from_datepicker").datepicker({
 	            changeMonth: true,
@@ -89,6 +89,7 @@ $(document).ready(function(){
 				       dataType: 'json',
 				       success: function(data)  {
 					       attendanceTable.clear();
+					       console.log(data);
 					       attendanceTable.rows.add(data);
 					       attendanceTable.draw();
 					           
