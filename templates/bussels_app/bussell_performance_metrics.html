@@ -35,6 +35,7 @@
 
 <script>
 $(document).ready(function(){
+	chart_data = [];
 
 		$(".from_datepicker").datepicker({
 	            changeMonth: true,
@@ -57,11 +58,51 @@ $(document).ready(function(){
 			    data: {pk: this.value},
 			    dataType: 'json',
 			    success: function(data) {
-				    console.log(data)
+				    chart_data = data;
+				    drawChart();
 			    }
 		        });
 		});
 })
-
+function drawChart() {
+	var ctx = document.getElementById("chart").getContext("2d");
+	var data = {
+		labels : chart_data[0],
+		datasets: [
+	        {
+			label: "bussel attendance",
+		        borderColor: "#bce0ba",
+			backgroundColor: "#bce0ba",
+			data: chart_data[1] 
+		},	
+	        {
+			label: "church attendance",
+		        borderColor: "#e6b795",
+			backgroundColor: "#e6b795",
+			data: { chart_data[2]
+		},	
+		]
+	}
+	var attendanceBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+	            scales: {
+			  yAxes: [{
+			      ticks: {
+				 max: 20,
+				 min: 0,
+				 stepSize: 1
+			      },
+			      scaleLabel: {
+				 display: true,
+				 labelString: 'Attendance'
+			      }
+			  }]
+		    }
+	    }	    
+	});
+     
+}
 </script>
 {% endblock %}
