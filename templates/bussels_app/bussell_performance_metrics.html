@@ -22,9 +22,10 @@
 				   {% render_field form.to_date class+="form-control to_datepicker" %} 
 			    </div>
 		    </div>
-	    </div>
-	    <div id="chart-container" style="position: relative, height:80vh, width=200vw">
-	              <canvas id="chart"></canvas>
+
+		    <div id="chart-container" style="position: relative, height:80vh, width=200vw">
+			      <canvas id="chart"></canvas>
+		    </div>
 	    </div>
     </div>
 </div>
@@ -95,6 +96,7 @@ function drawChart() {
 	            scales: {
 			  yAxes: [{
 			      ticks: {
+				 max: 30,
 				 min: 0,
 				 stepSize: 1
 			      },
