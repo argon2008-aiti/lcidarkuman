@@ -51,6 +51,8 @@ $(document).ready(function(){
 	chart_data = [];
 	var attendanceBarChart = null;
 
+	var attendanceTable = $("monthly-average-table").DataTable();
+
 		$(".from_datepicker").datepicker({
 	            changeMonth: true,
 	            changeYear: false,
@@ -68,10 +70,11 @@ $(document).ready(function(){
 		});
 
 		$("#id_bussell").on('change', function(e) {
+			var bussell_id = this.value;
 			$.ajax({
 			    type: 'GET',
 			    url: "{% url 'bussel:bussell-performance-json' %}",
-			    data: {pk: this.value},
+			    data: {pk: bussell_id},
 			    dataType: 'json',
 			    success: function(data) {
 				    $('#chart').remove();
@@ -82,12 +85,12 @@ $(document).ready(function(){
 				    $.ajax({
 				       type: 'GET',
 				       url: "{% url 'bussel:bussell-performance-monthly-json'%}",
-				       data: {pk: 5},
+				       data: {pk: bussell_id},
 				       dataType: 'json',
 				       success: function(data)  {
-					       $("#monthly-average-table").DataTable({
-		                                   "data": data,		       
-					       });
+					       attendanceTable.clear();
+					       attendanceTable.rows.add(data);
+					       attendanceTable.draw();
 					           
 				       },
        				       
