@@ -82,7 +82,7 @@ $(document).ready(function(){
 				    $.ajax({
 				       type: 'GET',
 				       url: "{% url 'bussel:bussell-performance-monthly-json'%}",
-				       data: {pk: $("#id_bussell").value},
+				       data: {pk: 5},
 				       dataType: 'json',
 				       success: function(data)  {
 					       $("#monthly-average-table").DataTable({
