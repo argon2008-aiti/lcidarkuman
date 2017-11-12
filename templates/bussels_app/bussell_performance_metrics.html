@@ -35,8 +35,36 @@
 
 <script>
 $(document).ready(function(){
-	chart_data = [];
+	chart_data = [[0], [0], [0]];
 
+		$(".from_datepicker").datepicker({
+	            changeMonth: true,
+	            changeYear: false,
+		    dateFormat: "yy-mm-dd",
+		    maxDate:'0',
+		});
+
+		$(".to_datepicker").datepicker({
+	            changeMonth: true,
+	            changeYear: false,
+		    dateFormat: "yy-mm-dd",
+		    maxDate:'0',
+		});
+
+		$("#id_bussell").on('change', function(e) {
+			$.ajax({
+			    type: 'GET',
+			    url: "{% url 'bussel:bussell-performance-json' %}",
+			    data: {pk: this.value},
+			    dataType: 'json',
+			    success: function(data) {
+				    chart_data = data;
+				    attendanceBarChart.update();
+			    }
+		        });
+		});
+})
+function drawChart() {
 	var ctx = document.getElementById("chart").getContext("2d");
 	var data = {
 		labels : chart_data[0],
@@ -75,33 +103,6 @@ $(document).ready(function(){
 	    }	    
 	});
      
-
-		$(".from_datepicker").datepicker({
-	            changeMonth: true,
-	            changeYear: false,
-		    dateFormat: "yy-mm-dd",
-		    maxDate:'0',
-		});
-
-		$(".to_datepicker").datepicker({
-	            changeMonth: true,
-	            changeYear: false,
-		    dateFormat: "yy-mm-dd",
-		    maxDate:'0',
-		});
-
-		$("#id_bussell").on('change', function(e) {
-			$.ajax({
-			    type: 'GET',
-			    url: "{% url 'bussel:bussell-performance-json' %}",
-			    data: {pk: this.value},
-			    dataType: 'json',
-			    success: function(data) {
-				    chart_data = data;
-				    attendanceBarChart.update();
-			    }
-		        });
-		});
-})
+}
 </script>
 {% endblock %}
