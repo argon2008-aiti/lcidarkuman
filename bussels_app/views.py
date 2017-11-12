@@ -810,8 +810,7 @@ def get_performance_data(request):
 
 
 
-    #return JsonResponse([date_labels, bussell_attendance_list, church_attendance_list], safe=False)
-    return JsonResponse(monthly_average, safe=False)
+    return JsonResponse([date_labels, bussell_attendance_list, church_attendance_list], safe=False)
 
 def get_monthly_average(request):
     pid = request.GET['pk']
