@@ -66,6 +66,14 @@ $(document).ready(function(){
 				    $('#chart-container').append('<canvas id="chart"></canvas>')
 				    chart_data = data;
 				    drawChart();
+			    },
+
+			    beforeSend: function(){
+			            $('#chart-container').LoadingOverlay("show");
+			    },
+
+			    complete: function(){
+			            $('#chart-container').LoadingOverlay("show");
 			    }
 		        });
 		});
