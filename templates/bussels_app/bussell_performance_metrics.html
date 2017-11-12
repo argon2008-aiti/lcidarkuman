@@ -23,7 +23,7 @@
 			    </div>
 		    </div>
 	    </div>
-	    <div class="chart-container" style="position: relative, height:100vh, width=200vw">
+	    <div id="chart-container" style="position: relative, height:100vh, width=200vw">
 	              <canvas id="chart"></canvas>
 	    </div>
     </div>
@@ -59,9 +59,8 @@ $(document).ready(function(){
 			    data: {pk: this.value},
 			    dataType: 'json',
 			    success: function(data) {
-				    if(attendanceBarChart!=null) {
-				           attendanceBarChart.chart.destory();
-				    }
+				    $('#chart').remove();
+				    $('#chart-container').append('<canvas id="chart"></canvas>')
 				    chart_data = data;
 				    drawChart();
 			    }
