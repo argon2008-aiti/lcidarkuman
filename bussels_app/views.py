@@ -815,6 +815,8 @@ def get_performance_data(request):
 def get_monthly_average(request):
     pid = request.GET['pk']
 
+    print pid
+
     monthly_average = BusselReport.objects.filter(bussel=pid).annotate(month=Month('date'))\
                              .values('month')\
                              .annotate(avg_bu=Avg('bussel_attendance'))\
