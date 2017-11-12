@@ -60,7 +60,7 @@ $(document).ready(function(){
 			    dataType: 'json',
 			    success: function(data) {
 				    if(attendanceBarChart!=null) {
-				           attendanceBarChart.destory();
+				           attendanceBarChart.chart.destory();
 				    }
 				    chart_data = data;
 				    drawChart();
