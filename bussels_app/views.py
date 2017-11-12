@@ -826,9 +826,9 @@ def get_monthly_average(request):
 
     for ma in monthly_average:
         temp_list = []
-        temp_list.append(calendar.month_name[ma.month])
-        temp_list.append(ma.avg_bu)
-        temp_list.append(ma.avg_ch)
+        temp_list.append(calendar.month_name[ma.get('month')])
+        temp_list.append(ma.get('avg_bu'))
+        temp_list.append(ma.get('avg_ch'))
 
         response_list.append(temp_list)
     
