@@ -95,7 +95,7 @@ $(document).ready(function(){
 			    data: {pk: this.value},
 			    dataType: 'json',
 			    success: function(data) {
-				    chart_data = data;
+				    attendanceBarChart.config.data = data;
 				    attendanceBarChart.update();
 			    }
 		        });
