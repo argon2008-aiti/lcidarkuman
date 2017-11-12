@@ -829,6 +829,7 @@ def get_monthly_average(request):
         temp_list.append(calendar.month_name[ma.get('month')])
         temp_list.append(ma.get('avg_bu'))
         temp_list.append(ma.get('avg_ch'))
+        temp_list.append(ma.get('avg_bu')*100.0/ma.get('avg_ch'))
 
         response_list.append(temp_list)
     
