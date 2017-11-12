@@ -78,6 +78,10 @@ $(document).ready(function(){
 				    $('#chart-container').append('<canvas id="chart"></canvas>')
 				    chart_data = data;
 				    drawChart();
+
+				    $('#monthly-average-table').DataTable( {
+					    "ajax": "{% url 'bussel:bussell-performance-monthly-json'%}" 
+				    })
 			    },
 
 			    beforeSend: function(){
