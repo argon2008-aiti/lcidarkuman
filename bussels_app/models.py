@@ -6,6 +6,8 @@ from django.dispatch import receiver
 from django.contrib.auth.hashers import *
 from django.utils.crypto import get_random_string
 
+from django.db.models import Func, F, Sum
+
 DAYS = [
     (0, "Sunday"),
     (1, "Monday"),
@@ -67,6 +69,10 @@ class BusselReport(models.Model):
     def __unicode__(self):
         return self.bussel.name + "--" + self.topic
 
+class Month(Func):
+    function = 'EXTRACT'
+    template = '%(function)s(MONTH from %(expressions)s)'
+    output_field = models.IntegerField()
 
 # Generate unique xxxx-xxxx hex code for each bussel
 def get_hex_code():
@@ -104,3 +110,4 @@ def save_hex_code(sender, **kwargs):
     bussel.code = code
     print code
     return
+
