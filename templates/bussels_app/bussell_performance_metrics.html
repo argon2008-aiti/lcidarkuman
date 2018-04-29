@@ -26,17 +26,6 @@
 		    <div id="chart-container" style="position: relative, height:80vh, width=100vw, margin: 20px">
 			      <canvas id="chart"></canvas>
 		    </div>
-
-		    <table id="monthly-average-table" class="display" style="margin: 20px, width=100vw">
-		          <thead>
-		          	<tr>
-		          		<th>Month</th>
-		          		<th>Bussell Attendance(Average)</th>
-		          		<th>Church Attendance(Average)</th>
-		          		<th>Percentage</th>
-		          	</tr>
-		          </thead>
-		    </table>
 	    </div>
     </div>
 </div>
@@ -73,42 +62,28 @@ $(document).ready(function(){
 		    maxDate:'0',
 		});
 
-		$("#id_bussell").on('change', function(e) {
-			var bussell_id = this.value;
+		$("#id_bussell, #id_from_date, #id_to_date").on('change', function(e) {
+			var bussell_id = $("#id_bussell").val();
+			var from_date =$.datepicker.formatDate('yy-mm-dd', 
+					$("#id_from_date").datepicker("getDate"));
+			var to_date = $.datepicker.formatDate('yy-mm-dd', 
+					$("#id_to_date").datepicker("getDate"));
+			if(from_date == "" || to_date == "") {
+				return;
+			
+			}
+			console.log(typeof(from_date))
+			console.log(to_date)
 			$.ajax({
 			    type: 'GET',
 			    url: "{% url 'bussel:bussell-performance-json' %}",
-			    data: {pk: bussell_id},
+			    data: {pk: bussell_id, from: from_date, to:to_date},
 			    dataType: 'json',
 			    success: function(data) {
 				    $('#chart').remove();
 				    $('#chart-container').append('<canvas id="chart"></canvas>')
 				    chart_data = data;
 				    drawChart();
-
-				    $.ajax({
-				       type: 'GET',
-				       url: "{% url 'bussel:bussell-performance-monthly-json'%}",
-				       data: {pk: bussell_id},
-				       dataType: 'json',
-				       success: function(data)  {
-					       attendanceTable.clear();
-					       console.log(data);
-					       attendanceTable.rows.add(data);
-					       attendanceTable.draw();
-					           
-				       },
-       				       
-				       beforeSend: function(){
-					    $('#monthly-average-table').LoadingOverlay("show");
-				       },
-
-				       complete: function(){
-					    $('#monthly-average-table').LoadingOverlay("hide");
-				       }
-					    
-				     });
-
 				    },
 
 			    beforeSend: function(){

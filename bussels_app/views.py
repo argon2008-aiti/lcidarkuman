@@ -794,7 +794,10 @@ class BussellPerformanceMetricsView(TemplateView):
 
 def get_performance_data(request):
     pid = request.GET['pk']
-    reports = BusselReport.objects.filter(bussel=pid)
+    from_date = request.GET['from']
+    to_date = request.GET['to']
+
+    reports = BusselReport.objects.filter(bussel=pid, date__range=[from_date, to_date]).order_by('date')
 
     object_list = []
 
