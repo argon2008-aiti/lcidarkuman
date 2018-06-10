@@ -202,7 +202,7 @@ def update_bussel_location(request):
 def json_bussel_list(request):
     
     if request.method == "GET":
-        bussels = Bussel.objects.all()
+        bussels = Bussel.objects.filter(status=1)
         object_list = []
 
         for bussel in bussels:
