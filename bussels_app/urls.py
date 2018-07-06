@@ -22,4 +22,7 @@ urlpatterns = [
     url(r'^bussel_reports/all/export$', export_bussel_reports, name="bussel-reports-export"),
     url(r'^details/(?P<pk>\d+)/$', BusselDetailView.as_view(), name="bussel-detail"),
     url(r'^report/save/$', save_bussel_report, name="bussel-report-save"),
+    url(r'^member/save/$', save_bussell_member, name="bussel-member-save"),
+    url(r'^profile/save/$', update_bussell_profile, name="bussel-profile-save"),
+    url(r'^profile/get/$', get_bussell_group_pic_url, name="bussel-profile-get"),
 ]
