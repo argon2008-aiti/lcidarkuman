@@ -392,6 +392,32 @@ def save_bussel_report(request):
         return HttpResponse(status=401)
 
 
+# this saves a bussell member
+def save_bussell_member(request):
+    first_name = request.POST["first_name"]
+    other_names = request.POST["other_names"]
+    phone = request.POST["phone"]
+    date_of_birth = request.POST["date_of_birth"]
+    date_joined = request.POST["date_joined"]
+    gender = request.POST["gender"]
+    church_member = request.POST["church_member"]
+
+    profile = request.POST["profile"]
+    bussell = request.POST["bussell_id"]
+
+    bussell_member = BussellMember()
+    bussell_member.first_name = first_name
+    bussell_member.other_names = other_names
+    bussell_member.phone = phone
+    bussell_member.date_of_birth = date_of_birth
+    bussell_member.date_joined = date_joined
+    bussell_member.gender = gender
+    bussell_member.church_member = church_member
+    bussell_member.bussell = bussell_id
+    bussell_member.profile = profile
+    bussell_member.save()
+
+
 def export_bussels_list(request):
     export_type = request.GET["export_type"]
 

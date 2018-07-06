@@ -23,6 +23,11 @@ STATUS = [
     (1, "Active"),
 ]
 
+GENDER = [
+    (0, "Male"),
+    (1, "Female"),
+]
+
 class Bussel(models.Model):
     # Bussel Information ---------------------
     name            = models.CharField(max_length=50)
@@ -44,6 +49,8 @@ class Bussel(models.Model):
     # Meta Data ------------------------------
     status       = models.IntegerField(choices=STATUS, default=0)
     date_created = models.DateField(auto_now_add=True)
+
+    group_pic = models.URLField(null=True, max_length=400)
 
     def __unicode__(self):
         return self.name + " (" + self.leader.first_name + " " + self.leader.last_name + ")"
@@ -73,6 +80,17 @@ class Month(Func):
     function = 'EXTRACT'
     template = '%(function)s(MONTH from %(expressions)s)'
     output_field = models.IntegerField()
+
+class BussellMember(models.Model):
+    first_name = models.CharField(max_length=100)
+    other_names = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15, null=True)
+    date_of_birth = models.DateField()
+    date_joined = models.DateField()
+    gender = models.IntegerField(choices=GENDER, default=0)
+    church_member = models.BooleanField(default=False)
+    profile_pic = models.URLField(null=True, max_length=400)
+    bussell = models.ForeignKey(Bussel)
 
 # Generate unique xxxx-xxxx hex code for each bussel
 def get_hex_code():
