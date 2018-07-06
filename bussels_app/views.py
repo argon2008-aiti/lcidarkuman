@@ -145,7 +145,9 @@ def authenticate_bussel_request(request):
     password = request.GET["password"]
 
     if authenticate_bussel(code, password):
-        return HttpResponse(status=200)
+        bussell = Bussel.objects.get(code=code)
+        return JsonResponse(["bussell_id":bussell.id], safe=False)
+        #return HttpResponse(status=200)
     else:
         return HttpResponse(status=401)
 
