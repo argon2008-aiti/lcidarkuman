@@ -187,6 +187,19 @@ def change_user_password(request):
         'form': form
     })
 
+def update_bussell_profile(request):
+    pid = request.GET["bussell_id"]
+    profile_url = request.GET["profile"]
+    bussell = Bussel.objects.get(pk=pid)
+    bussell.group_pic = profile_url
+    bussell.save()
+    return HttpResponse(status=200)
+    
+def get_bussell_group_pic_url(request):
+    pid = request.GET["bussell_id"]
+    bussell = Bussel.objects.get(pk=pid)
+    return JsonResponse({"profile_url":bussell.group_pic}, status=200, safe=False)
+
 def update_bussel_location(request):
     code = request.GET["code"]
     lat  = request.GET["lat"]
