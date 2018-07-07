@@ -188,15 +188,15 @@ def change_user_password(request):
     })
 
 def update_bussell_profile(request):
-    pid = request.GET["bussell_id"]
-    profile_url = request.GET["profile"]
+    pid = request.POST["bussell_id"]
+    profile_url = request.POST["profile"]
     bussell = Bussel.objects.get(pk=pid)
     bussell.group_pic = profile_url
     bussell.save()
     return HttpResponse(status=200)
     
 def get_bussell_group_pic_url(request):
-    pid = request.GET["bussell_id"]
+    pid = request.POST["bussell_id"]
     bussell = Bussel.objects.get(pk=pid)
     return JsonResponse({"profile_url":bussell.group_pic}, status=200, safe=False)
 
