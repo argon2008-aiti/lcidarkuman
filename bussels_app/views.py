@@ -188,6 +188,7 @@ def change_user_password(request):
         'form': form
     })
 
+@csrf_exempt
 def update_bussell_profile(request):
     pid = request.POST["bussell_id"]
     profile_url = request.POST["profile"]
@@ -195,7 +196,8 @@ def update_bussell_profile(request):
     bussell.group_pic = profile_url
     bussell.save()
     return HttpResponse(status=200)
-    
+
+@csrf_exempt   
 def get_bussell_group_pic_url(request):
     pid = request.POST["bussell_id"]
     bussell = Bussel.objects.get(pk=pid)
@@ -409,6 +411,7 @@ def save_bussel_report(request):
 
 
 # this saves a bussell member
+@csrf_exempt
 def save_bussell_member(request):
     first_name = request.POST["first_name"]
     other_names = request.POST["other_names"]
