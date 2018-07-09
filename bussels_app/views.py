@@ -430,11 +430,15 @@ def save_bussell_member(request):
     bussell_member.phone = phone
     bussell_member.date_of_birth = date_of_birth
     bussell_member.date_joined = date_joined
-    bussell_member.gender = gender
-    bussell_member.church_member = church_member
-    bussell_member.bussell = bussell_id
+    bussell_member.gender = int(gender)
+    bussell_member.church_member = church_member=="True"
+    bussell_member.bussell = int(bussell_id)
     bussell_member.profile = profile
     bussell_member.save()
+    
+    if bussell_member.pk is not None:
+        return HttpResponse(status=200)
+    return HttpResponse(status=401)
 
 
 def export_bussels_list(request):
