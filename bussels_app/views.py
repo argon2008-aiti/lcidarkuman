@@ -428,8 +428,8 @@ def save_bussell_member(request):
     bussell_member.first_name = first_name
     bussell_member.other_names = other_names
     bussell_member.phone = phone
-    bussell_member.date_of_birth = date_of_birth
-    bussell_member.date_joined = date_joined
+    bussell_member.date_of_birth = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y").date()
+    bussell_member.date_joined = datetime.datetime.strptime(date_joined, "%d/%m/%Y").date()
     bussell_member.gender = int(gender)
     bussell_member.church_member = church_member=="True"
     bussell_member.bussell = int(bussell_id)
