@@ -432,7 +432,7 @@ def save_bussell_member(request):
     bussell_member.date_joined = datetime.datetime.strptime(date_joined, "%d/%m/%Y").date()
     bussell_member.gender = int(gender)
     bussell_member.church_member = church_member=="True"
-    bussell_member.bussell = int(bussell_id)
+    bussell_member.bussell = int(bussell)
     bussell_member.profile = profile
     bussell_member.save()
     
