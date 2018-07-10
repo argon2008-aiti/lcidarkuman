@@ -93,7 +93,7 @@ class BussellMember(models.Model):
     bussell = models.ForeignKey(Bussel)
     
     def __unicode__(self):
-        return self.bussell.name + " -> " self.first_name+ " "+self.other_names
+        return self.bussell.name + " -> " +self.first_name+ " "+self.other_names
 
 # Generate unique xxxx-xxxx hex code for each bussel
 def get_hex_code():
