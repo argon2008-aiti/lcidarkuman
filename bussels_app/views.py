@@ -437,7 +437,7 @@ def save_bussell_member(request):
     bussell_member.save()
     
     if bussell_member.pk is not None:
-        return HttpResponse(status=200)
+        return JsonResponse({"member_id": bussell_member.pk} , safe=False, status=200)
     return HttpResponse(status=401)
 
 
