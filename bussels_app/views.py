@@ -458,7 +458,7 @@ def get_all_bussell_members(request):
     except BussellMember.DoesNotExist:
         return JsonResponse(status=404)
     
-    return JsonResponse(members_list, safe=True, status=200)
+    return JsonResponse(members_list, safe=False, status=200)
 
 def export_bussels_list(request):
     export_type = request.GET["export_type"]
