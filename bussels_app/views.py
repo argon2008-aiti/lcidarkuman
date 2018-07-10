@@ -433,7 +433,7 @@ def save_bussell_member(request):
     bussell_member.gender = int(gender)
     bussell_member.church_member = church_member=="True"
     bussell_member.bussell = Bussel.objects.get(pk=int(bussell))
-    bussell_member.profile = profile
+    bussell_member.profile_pic = profile
     bussell_member.save()
     
     if bussell_member.pk is not None:
@@ -451,7 +451,7 @@ def get_all_bussell_members(request):
             member_dict = {}
             member_dict["name"] = member.first_name +" "+ member.other_names
             member_dict["phone"] = member.phone
-            member_dict["image"] = member.profile
+            member_dict["image"] = member.profile_pic
             
             members_list.append(member_dict)
     
