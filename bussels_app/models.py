@@ -50,7 +50,7 @@ class Bussel(models.Model):
     status       = models.IntegerField(choices=STATUS, default=0)
     date_created = models.DateField(auto_now_add=True)
 
-    group_pic = models.URLField(null=True, max_length=400)
+    group_pic = models.URLField(null=True, blank=True, max_length=400)
 
     def __unicode__(self):
         return self.name + " (" + self.leader.first_name + " " + self.leader.last_name + ")"
