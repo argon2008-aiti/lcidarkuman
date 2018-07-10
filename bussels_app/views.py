@@ -440,6 +440,25 @@ def save_bussell_member(request):
         return JsonResponse({"member_id": bussell_member.pk} , safe=False, status=200)
     return HttpResponse(status=401)
 
+def get_all_bussell_members(request):
+    bussell_id = request.GET["bussell_id"]
+    bussell = Bussel.objects.get(pk=bussell_id)
+    
+    try:
+        members = BussellMember.objects.filter(bussell=bussell)
+        members_list = []
+        for member in members:
+            member_dict = {}
+            member_dict["name"] = member.first_name +" "+ member.other_names
+            member_dict["phone"] = member.phone
+            member_dict["image"] = member.profile
+            
+            members_list.append(member_dict)
+    
+    except BussellMember.DoesNotExist:
+        return JsonResponse(status=404)
+    
+    return JsonResponse(members_list, safe=True, status=200)
 
 def export_bussels_list(request):
     export_type = request.GET["export_type"]
