@@ -91,6 +91,9 @@ class BussellMember(models.Model):
     church_member = models.BooleanField(default=False)
     profile_pic = models.URLField(null=True, max_length=400)
     bussell = models.ForeignKey(Bussel)
+    
+    def __unicode__(self):
+        return self.bussell.name + " -> " self.first_name+ " "+self.other_names
 
 # Generate unique xxxx-xxxx hex code for each bussel
 def get_hex_code():
