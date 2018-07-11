@@ -449,9 +449,11 @@ def get_all_bussell_members(request):
         members_list = []
         for member in members:
             member_dict = {}
-            member_dict["name"] = member.first_name +" "+ member.other_names
-            member_dict["phone"] = member.phone
-            member_dict["image"] = member.profile_pic
+            member_dict["id"]      = member.pk
+            member_dict["name"]    = member.first_name +" "+ member.other_names
+            member_dict["phone"]   = member.phone
+            #member_dict["address"] = member.address
+            member_dict["image"]   = member.profile_pic
             
             members_list.append(member_dict)
     
