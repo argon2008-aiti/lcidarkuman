@@ -104,7 +104,7 @@ class BussellMemberAttendance(models.Model):
     church_attendance = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return bussell_member.first_name + " " + str(bussell_attendance)
+        return self.bussell_member.first_name + " " + str(self.bussell_attendance)
 
 # Generate unique xxxx-xxxx hex code for each bussel
 def get_hex_code():
