@@ -50,7 +50,7 @@ class Bussel(models.Model):
     status       = models.IntegerField(choices=STATUS, default=0)
     date_created = models.DateField(auto_now_add=True)
 
-    group_pic = models.URLField(null=True, max_length=400)
+    group_pic = models.URLField(null=True, blank=True, max_length=400)
 
     def __unicode__(self):
         return self.name + " (" + self.leader.first_name + " " + self.leader.last_name + ")"
@@ -92,6 +92,9 @@ class BussellMember(models.Model):
     church_member = models.BooleanField(default=False)
     profile_pic = models.URLField(null=True, max_length=400)
     bussell = models.ForeignKey(Bussel)
+    
+    def __unicode__(self):
+        return self.bussell.name + " -> " +self.first_name+ " "+self.other_names
 
     def __unicode__(self):
         return self.first_name + " "+ self.other_names 

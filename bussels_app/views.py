@@ -145,7 +145,10 @@ def authenticate_bussel_request(request):
     password = request.GET["password"]
 
     if authenticate_bussel(code, password):
-        return HttpResponse(status=200)
+        bussell = Bussel.objects.get(code=code)
+        return JsonResponse({"bussell_id":bussell.id, "bussell_name":bussell.name, "bussell_profile":bussell.group_pic},
+                            safe=False, status=200)
+        #return HttpResponse(status=200)
     else:
         return HttpResponse(status=401)
 
@@ -184,6 +187,21 @@ def change_user_password(request):
     return render(request, 'registration/change_password.html', { 
         'form': form
     })
+
+@csrf_exempt
+def update_bussell_profile(request):
+    pid = request.POST["bussell_id"]
+    profile_url = request.POST["profile"]
+    bussell = Bussel.objects.get(pk=pid)
+    bussell.group_pic = profile_url
+    bussell.save()
+    return HttpResponse(status=200)
+
+@csrf_exempt   
+def get_bussell_group_pic_url(request):
+    pid = request.POST["bussell_id"]
+    bussell = Bussel.objects.get(pk=pid)
+    return JsonResponse({"profile_url":bussell.group_pic}, status=200, safe=False)
 
 def update_bussel_location(request):
     code = request.GET["code"]
@@ -393,6 +411,7 @@ def save_bussel_report(request):
 
 
 # this saves a bussell member
+@csrf_exempt
 def save_bussell_member(request):
     first_name = request.POST["first_name"]
     other_names = request.POST["other_names"]
@@ -409,14 +428,39 @@ def save_bussell_member(request):
     bussell_member.first_name = first_name
     bussell_member.other_names = other_names
     bussell_member.phone = phone
-    bussell_member.date_of_birth = date_of_birth
-    bussell_member.date_joined = date_joined
-    bussell_member.gender = gender
-    bussell_member.church_member = church_member
-    bussell_member.bussell = bussell_id
-    bussell_member.profile = profile
+    bussell_member.date_of_birth = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y").date()
+    bussell_member.date_joined = datetime.datetime.strptime(date_joined, "%d/%m/%Y").date()
+    bussell_member.gender = int(gender)
+    bussell_member.church_member = church_member=="True"
+    bussell_member.bussell = Bussel.objects.get(pk=int(bussell))
+    bussell_member.profile_pic = profile
     bussell_member.save()
+    
+    if bussell_member.pk is not None:
+        return JsonResponse({"member_id": bussell_member.pk} , safe=False, status=200)
+    return HttpResponse(status=401)
 
+def get_all_bussell_members(request):
+    bussell_id = request.GET["bussell_id"]
+    bussell = Bussel.objects.get(pk=bussell_id)
+    
+    try:
+        members = BussellMember.objects.filter(bussell=bussell)
+        members_list = []
+        for member in members:
+            member_dict = {}
+            member_dict["id"]      = member.pk
+            member_dict["name"]    = member.first_name +" "+ member.other_names
+            member_dict["phone"]   = member.phone
+            #member_dict["address"] = member.address
+            member_dict["image"]   = member.profile_pic
+            
+            members_list.append(member_dict)
+    
+    except BussellMember.DoesNotExist:
+        return JsonResponse(status=404)
+    
+    return JsonResponse(members_list, safe=False, status=200)
 
 def export_bussels_list(request):
     export_type = request.GET["export_type"]
