@@ -485,9 +485,10 @@ def get_all_bussell_members(request):
             member_dict["id"]      = member.pk
             member_dict["name"]    = member.first_name +" "+ member.other_names
             member_dict["phone"]   = member.phone
-            #member_dict["address"] = member.address
+            member_dict["address"] = member.address
             member_dict["image"]   = member.profile_pic
-            
+            member_dict["church_member"] = member.church_member
+            member_dict["gender"] = member.gender
             members_list.append(member_dict)
     
     except BussellMember.DoesNotExist:
