@@ -385,7 +385,7 @@ def save_bussel_report(request):
         report_date = datetime.date.today() 
         # An already submitted report
         if (report_date,) in bussel_report_dates:
-            report = BusselReport.objects.filter(bussel=bussel, date=report_date)
+            report = BusselReport.objects.get(bussel=bussel, date=report_date)
             report.topic=request.POST['topic']
             report.notes=request.POST['notes']
             report.time_started = request.POST['time_started']
