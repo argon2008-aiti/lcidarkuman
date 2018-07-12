@@ -412,7 +412,7 @@ def save_bussel_report(request):
         # A report on a day other than Saturday
         # excuse us if we are debugging
         debug = eval(request.POST.get("debug", "False"))
-        if report_date.weekday() != 5 and !debug:
+        if (report_date.weekday() != 5) and not debug:
             print "Reporting Window Closed"
             return HttpResponse(status=403)
 
@@ -431,8 +431,8 @@ def save_bussel_report(request):
             attendance_list = eval(request.POST["attendance_list"])
             for pk in attendance_list:
                 attendance = BussellMemberAttendance.objects.create(
-                    bussell_member = BussellMember.objects.get(pk=pk)
-                    bussell_report = report
+                    bussell_member = BussellMember.objects.get(pk=pk),
+                    bussell_report = report,
                     bussell_attendance = True
                 )
                 attendance.save()
