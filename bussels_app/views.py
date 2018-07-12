@@ -402,8 +402,8 @@ def save_bussel_report(request):
                 attendance_list = eval(request.POST["attendance_list"])
                 for pk in attendance_list:
                     attendance = BussellMemberAttendance.objects.create(
-                        bussell_member = BussellMember.objects.get(pk=pk)
-                        bussell_report = report
+                        bussell_member = BussellMember.objects.get(pk=pk),
+                        bussell_report = report,
                         bussell_attendance = True
                     )
                     attendance.save()
