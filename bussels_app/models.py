@@ -96,9 +96,6 @@ class BussellMember(models.Model):
     def __unicode__(self):
         return self.bussell.name + " -> " +self.first_name+ " "+self.other_names
 
-    def __unicode__(self):
-        return self.first_name + " "+ self.other_names 
-
 class BussellMemberAttendance(models.Model):
     bussell_member = models.ForeignKey(BussellMember)
     bussell_report = models.ForeignKey(BusselReport)

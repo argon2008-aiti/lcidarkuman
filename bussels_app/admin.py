@@ -10,6 +10,10 @@ class BusselReportAdmin(admin.ModelAdmin):
 class BussellMemberAdmin(admin.ModelAdmin):
     pass
 
+class BussellMemberAttendanceAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Bussel, BusselAdmin)
 admin.site.register(BusselReport, BusselReportAdmin)
 admin.site.register(BussellMember, BussellMemberAdmin)
+admin.site.register(BussellMemberAttendance, BussellMemberAttendanceAdmin)
