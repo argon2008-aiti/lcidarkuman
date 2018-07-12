@@ -1,5 +1,5 @@
 from django.contrib import admin
-from bussels_app.models import Bussel, BusselReport, BussellMember
+from bussels_app.models import Bussel, BusselReport, BussellMember, BussellMemberAttendance
 
 class BusselAdmin(admin.ModelAdmin):
     exclude = ('bussel_location', 'code')
