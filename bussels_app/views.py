@@ -397,7 +397,7 @@ def save_bussel_report(request):
             report.save()
 
             if(request.POST.get("attendance_list", None) is not None):
-                old_attendance = BussellMemberAttendance.objects.filter(report=report)
+                old_attendance = BussellMemberAttendance.objects.filter(bussell_report=report)
                 # clear previous attendance data
                 [attendance.delete for attendance in old_attendance]
                 attendance_list = eval(request.POST["attendance_list"])
