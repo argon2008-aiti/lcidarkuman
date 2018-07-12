@@ -85,12 +85,25 @@ class BussellMember(models.Model):
     first_name = models.CharField(max_length=100)
     other_names = models.CharField(max_length=100)
     phone = models.CharField(max_length=15, null=True)
+    address = models.CharField(max_length=100, null=True)
     date_of_birth = models.DateField()
     date_joined = models.DateField()
     gender = models.IntegerField(choices=GENDER, default=0)
     church_member = models.BooleanField(default=False)
     profile_pic = models.URLField(null=True, max_length=400)
     bussell = models.ForeignKey(Bussel)
+
+    def __unicode__(self):
+        return self.first_name + " "+ self.other_names 
+
+class BussellMemberAttendance(models.Model):
+    bussell_member = models.ForeignKey(BussellMember)
+    bussell_report = models.ForeignKey(BusselReport)
+    bussell_attendance = models.BooleanField(default=False)
+    church_attendance = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return bussell_member.first_name + " " + str(bussell_attendance)
 
 # Generate unique xxxx-xxxx hex code for each bussel
 def get_hex_code():
