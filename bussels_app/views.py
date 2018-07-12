@@ -385,11 +385,34 @@ def save_bussel_report(request):
         report_date = datetime.date.today() 
         # An already submitted report
         if (report_date,) in bussel_report_dates:
-            print "report available for this date"
-            return HttpResponse(status=409)
+            report = BusselReport.objects.filter(bussel=bussel, date=report_date)
+            report.topic=request.POST['topic']
+            report.time_started = request.POST['time_started']
+            report.time_ended = request.POST['time_ended']
+            report.bussel_attendance=request.POST['bussel_attendance']
+            report.num_souls_won=request.POST['num_souls_won']
+            report.num_first_timers=request.POST['num_first_timers']
+            report.offertory_given=request.POST['offertory']
+            report.save()
+
+            if(request.POST.get("attendance_list", None) is not None):
+                old_attendance = BussellMemberAttendance.objects.filter(report=report)
+                # clear previous attendance data
+                [attendance.delete for attendance in old_attendance]
+                attendance_list = eval(request.POST["attendance_list"])
+                for pk in attendance_list:
+                    attendance = BussellMemberAttendance.objects.create(
+                        bussell_member = BussellMember.objects.get(pk=pk)
+                        bussell_report = report
+                        bussell_attendance = True
+                    )
+                    attendance.save()
+            return HttpResponse(status=200)
 
         # A report on a day other than Saturday
-        if report_date.weekday() != 5:
+        # excuse us if we are debugging
+        debug = eval(request.POST.get("debug", "False"))
+        if report_date.weekday() != 5 and !debug:
             print "Reporting Window Closed"
             return HttpResponse(status=403)
 
@@ -404,6 +427,15 @@ def save_bussel_report(request):
                  offertory_given=request.POST['offertory'],
                  bussel=bussel
         )
+        if(request.POST.get("attendance_list", None) is not None):
+            attendance_list = eval(request.POST["attendance_list"])
+            for pk in attendance_list:
+                attendance = BussellMemberAttendance.objects.create(
+                    bussell_member = BussellMember.objects.get(pk=pk)
+                    bussell_report = report
+                    bussell_attendance = True
+                )
+                attendance.save()
         return HttpResponse(status=200)
     # Unsuccessful authentication
     else:
