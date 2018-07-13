@@ -454,7 +454,7 @@ def check_attendance_status(request):
     editable = bussell_report.date == datetime.date.today()
     bussell_attendance_view = attendance_for_bussell.count()!=0
     
-    deadline = datetime.datetime.combine(bussell_report.date, datetime.time(0,0,0)) + timedelta(hours=16)
+    deadline = datetime.datetime.combine(bussell_report.date, datetime.time(0,0,0)) + datetime.timedelta(hours=16)
     church_attendance_updatable = datetime.datetime.now()<deadline
     
     return JsonResponse({"editable": editable,
