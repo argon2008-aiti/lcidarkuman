@@ -449,7 +449,7 @@ def check_attendance_status(request):
     bussell_report_id = request.GET["report_id"]
     # get all available attendance for this bussell
     bussell_report = BusselReport.objects.get(pk=bussell_report_id)
-    attendance_for_bussell = BussellMemberAttendance.filter(bussell_report=bussell_report)
+    attendance_for_bussell = BussellMemberAttendance.objects.filter(bussell_report=bussell_report)
     
     editable = bussell_report.date == datetime.date.today()
     bussell_attendance_view = attendance_for_bussell.count()!=0
