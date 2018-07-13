@@ -442,6 +442,28 @@ def save_bussel_report(request):
     else:
         return HttpResponse(status=401)
 
+    
+# this checks if a bussell report has any BussellMemberAttendance object
+# attached to it. So that a button is provided in UI to view such list
+def check_attendance_status(request):
+    bussell_report_id = request.GET["report_id"]
+    # get all available attendance for this bussell
+    bussell_report = BusselReport.objects.get(pk=bussell_report_id)
+    attendance_for_bussell = BussellMemberAttendance.filter(bussell_report=bussell_report)
+    
+    editable = bussell_report.date == datetime.date.today()
+    bussell_attendance_view = attendance_for_bussell.count()!=0
+    
+    deadline = datetime.datetime.combine(bussell_report.date, datetime.time(0,0,0)) + timedelta(hours=16)
+    church_attendance_updatable = datetime.datetime.now()<deadline
+    
+    return JsonResponse({"editable": editable,
+                          "b_attendance_view": bussell_attendance_view, 
+                          "c_attendance_updatable": church_attendance_updatable},
+                         safe=False, status=200)
+    
+    
+    
 
 # this saves a bussell member
 @csrf_exempt
