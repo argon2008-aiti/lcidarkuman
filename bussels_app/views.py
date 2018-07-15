@@ -546,6 +546,8 @@ def save_bussell_member(request):
 
     profile = request.POST["profile"]
     bussell = request.POST["bussell_id"]
+    
+    print address
 
     bussell_member = BussellMember()
     bussell_member.first_name = first_name
