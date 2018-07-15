@@ -471,14 +471,18 @@ def get_members_attendance_for_report(request):
     response_list = []
     for member in bussell_members:
         member_object = {}
-        member = BussellMember.objects.get(pk=attendance.bussell_member.pk)
         attendance_for_report = BussellMemberAttendance.objects.filter(bussell_report=bussell_report, bussell_member=member)
+        attendance = attendance_for_report.first()
+       
+        member = BussellMember.objects.get(pk=attendance.bussell_member.pk)
+        
         member_object["first_name"] = member.first_name
         member_object["other_names"] = member.other_names
         member_object["phone"] = member.phone
         member_object["profile_pic"] = member.profile_pic
         member_object["is_church_member"] = member.church_member
-        attendance = attendance_for_report.first()
+       
+        
         
         if attendance is not None:
             member_object["bussell_attendance"] = attendance.bussell_attendance
