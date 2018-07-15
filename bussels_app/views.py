@@ -491,7 +491,47 @@ def get_members_attendance_for_report(request):
         response_list.append(member_object)
     
     return JsonResponse(response_list, safe=False, status=200)
+
+# this updates the church attendance of a particular bussell report for a particular bussell
+@csrf_exempt
+def update_church_attendance(request):
+    bussell_report_id    = request.POST["report_id"]
+    church_absence_list  = eval(request.POST["abscence_list"])
+    church_presence_list = eval(request.POST["presence_list"])
     
+    bussell_report = BusselReport.objects.get(pk=bussell_report_id)
+    
+    for member_id in church_presence_list:
+        
+        member = BusselMember.objects.get(pk=member_id)
+        try:
+            attendance = BussellMemberAttendance.objects.get(
+                bussell_report=bussell_report,
+                bussell_member=member)
+            attendance.church_attendance = True
+            attendance.save()
+            
+        except BussellMemberAttendance.DoesNotExist:
+            attendance = BussellMemberAttendance.objects.create(
+                bussell_member = member,
+                bussell_report = bussell_report,
+                bussell_attendance = False,
+                church_attendance = True)
+            attendance.save()
+            
+    for member_id in church_absence_list:
+        member = BusselMember.objects.get(pk=member_id)
+        try:
+            attendance = BussellMemberAttendance.objects.get(
+                bussell_report=bussell_report,
+                bussell_member=member)
+            if attendance.bussell_attendance == False:
+                attendance.delete()
+        except BussellMemberAttendance.DoesNotExist:
+            pass
+        
+    return HttpResponse(status=200)
+                
 # this saves a bussell member
 @csrf_exempt
 def save_bussell_member(request):
