@@ -465,30 +465,32 @@ def check_attendance_status(request):
 def get_members_attendance_for_report(request):
     bussell_report_id = request.GET["report_id"]
     bussell_report = BusselReport.objects.get(pk=bussell_report_id)
-    attendance_for_report = BussellMemberAttendance.objects.filter(bussell_report=bussell_report)
+    
+    bussell_members = BussellMember.objects.get.all()
     
     response_list = []
-    for attendance in attendance_for_report:
+    for member in bussell_members:
         member_object = {}
         member = BussellMember.objects.get(pk=attendance.bussell_member.pk)
+        attendance_for_report = BussellMemberAttendance.objects.filter(bussell_report=bussell_report, bussell_member=member)
         member_object["first_name"] = member.first_name
         member_object["other_names"] = member.other_names
         member_object["phone"] = member.phone
         member_object["profile_pic"] = member.profile_pic
         member_object["is_church_member"] = member.church_member
-        member_object["bussell_attendance"] = attendance.bussell_attendance
-        member_object["church_attendance"] = attendance.church_attendance
+        attendance = attendance_for_report.first()
+        
+        if attendance is not None:
+            member_object["bussell_attendance"] = attendance.bussell_attendance
+            member_object["church_attendance"] = attendance.church_attendance
+        else:
+            member_object["bussell_attendance"] = False
+            member_object["church_attendance"] = False
         
         response_list.append(member_object)
     
     return JsonResponse(response_list, safe=False, status=200)
-        
-        
     
-    
-    
-    
-
 # this saves a bussell member
 @csrf_exempt
 def save_bussell_member(request):
