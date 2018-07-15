@@ -470,7 +470,7 @@ def get_members_attendance_for_report(request):
     response_list = []
     for attendance in attendance_for_report:
         member_object = {}
-        member = BussellMember.objects.get(pk=attendance.bussell_member)
+        member = BussellMember.objects.get(pk=attendance.bussell_member.pk)
         member_object["first_name"] = member.first_name
         member_object["other_names"] = member.other_names
         member_object["phone"] = member.phone
