@@ -503,7 +503,7 @@ def update_church_attendance(request):
     
     for member_id in church_presence_list:
         
-        member = BusselMember.objects.get(pk=member_id)
+        member = BussellMember.objects.get(pk=member_id)
         try:
             attendance = BussellMemberAttendance.objects.get(
                 bussell_report=bussell_report,
@@ -520,7 +520,7 @@ def update_church_attendance(request):
             attendance.save()
             
     for member_id in church_absence_list:
-        member = BusselMember.objects.get(pk=member_id)
+        member = BussellMember.objects.get(pk=member_id)
         try:
             attendance = BussellMemberAttendance.objects.get(
                 bussell_report=bussell_report,
