@@ -461,6 +461,30 @@ def check_attendance_status(request):
                           "b_attendance_view": bussell_attendance_view, 
                           "c_attendance_updatable": church_attendance_updatable},
                          safe=False, status=200)
+
+def get_members_attendance_for_report(request):
+    bussell_report_id = request.GET["report_id"]
+    bussell_report = BusselReport.objects.get(pk=bussell_report_id)
+    attendance_for_report = BussellMemberAttendance.objects.filter(bussell_report=bussell_report)
+    
+    response_list = []
+    for attendance in attendance_for_report:
+        member_object = {}
+        member = BussellMember.objects.get(pk=attendance.bussell_member)
+        member_object("first_name") = member.first_name
+        member_object("other_names") = member.other_names
+        member_object("phone") = member.phone
+        member_object("profile_pic") = member.profile_pic
+        member_object("is_church_member") = member.church_member
+        member_object("bussell_attendance") = attendance.bussell_attendance
+        member_object("church_attendance") = attendance.church_attendance
+        
+        response_list.append(member_object)
+    
+    return JsonResponse(response_list, safe=False, status=200)
+        
+        
+    
     
     
     
