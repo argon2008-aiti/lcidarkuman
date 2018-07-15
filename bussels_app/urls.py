@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^member/save/$', save_bussell_member, name="bussel-member-save"),
     url(r'^members/get/all/$', get_all_bussell_members, name="bussel-members-all"),
     url(r'^report/attendance/all/$', get_members_attendance_for_report, name="bussell-report-attendance"),
+    url(r'^report/attendance/update/$', get_members_attendance_for_report, name="bussell-report-attendance"),
     url(r'^profile/save/$', update_bussell_profile, name="bussel-profile-save"),
     url(r'^profile/get/$', get_bussell_group_pic_url, name="bussel-profile-get"),
 ]
