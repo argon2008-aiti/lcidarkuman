@@ -540,6 +540,7 @@ def save_bussell_member(request):
     phone = request.POST["phone"]
     date_of_birth = request.POST["date_of_birth"]
     date_joined = request.POST["date_joined"]
+    address = request.POST["address"]
     gender = request.POST["gender"]
     church_member = request.POST["church_member"]
 
@@ -552,6 +553,7 @@ def save_bussell_member(request):
     bussell_member.phone = phone
     bussell_member.date_of_birth = datetime.datetime.strptime(date_of_birth, "%d/%m/%Y").date()
     bussell_member.date_joined = datetime.datetime.strptime(date_joined, "%d/%m/%Y").date()
+    bussell_member.address = address
     bussell_member.gender = int(gender)
     bussell_member.church_member = church_member=="True"
     bussell_member.bussell = Bussel.objects.get(pk=int(bussell))
