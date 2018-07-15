@@ -464,9 +464,10 @@ def check_attendance_status(request):
 
 def get_members_attendance_for_report(request):
     bussell_report_id = request.GET["report_id"]
+    
     bussell_report = BusselReport.objects.get(pk=bussell_report_id)
     
-    bussell_members = BussellMember.objects.all()
+    bussell_members = BussellMember.objects.get(pk=bussell_report.bussel.pk)
     
     response_list = []
     for member in bussell_members:
