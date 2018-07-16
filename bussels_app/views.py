@@ -540,6 +540,7 @@ def update_church_attendance(request):
             pass
     
     attendances = BussellMemberAttendance.objects.filter(bussell_report=bussell_report, church_attendance=True)
+    print attendances
     bussell_report.church_attendance = attendances.count()
     bussell_report.save()
     return HttpResponse(status=200)
