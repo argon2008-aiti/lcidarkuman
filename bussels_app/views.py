@@ -538,7 +538,10 @@ def update_church_attendance(request):
                 
         except BussellMemberAttendance.DoesNotExist:
             pass
-        
+    
+    attendances = BussellMemberAttendance.objects.filter(bussell_report=bussell_report, church_attendance=True)
+    bussell_report.church_attendance = attendances.count()
+    bussell_report.save()
     return HttpResponse(status=200)
                 
 # this saves a bussell member
