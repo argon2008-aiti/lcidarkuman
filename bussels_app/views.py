@@ -475,6 +475,7 @@ def get_members_attendance_for_report(request):
         attendance_for_report = BussellMemberAttendance.objects.filter(bussell_report=bussell_report, bussell_member=member)
         attendance = attendance_for_report.first()
         
+        member_object["id"] = member.pk
         member_object["first_name"] = member.first_name
         member_object["other_names"] = member.other_names
         member_object["phone"] = member.phone
