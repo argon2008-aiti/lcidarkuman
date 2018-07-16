@@ -496,8 +496,11 @@ def get_members_attendance_for_report(request):
 @csrf_exempt
 def update_church_attendance(request):
     bussell_report_id    = request.POST["report_id"]
-    church_absence_list  = eval(request.POST["abscence_list"])
+    church_absence_list  = eval(request.POST["absence_list"])
     church_presence_list = eval(request.POST["presence_list"])
+    
+    print church_absence_list
+    print church_presence_list
     
     bussell_report = BusselReport.objects.get(pk=bussell_report_id)
     
@@ -527,6 +530,11 @@ def update_church_attendance(request):
                 bussell_member=member)
             if attendance.bussell_attendance == False:
                 attendance.delete()
+                
+            else:
+                attendance.church_attendance = False
+                attendance.save()
+                
         except BussellMemberAttendance.DoesNotExist:
             pass
         
