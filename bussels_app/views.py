@@ -387,7 +387,7 @@ def save_bussel_report(request):
         if (report_date,) in bussel_report_dates:
             report = BusselReport.objects.get(bussel=bussel, date=report_date)
             report.topic=request.POST['topic']
-            #report.notes=request.POST['notes']
+            report.notes=request.POST['notes']
             report.time_started = request.POST['time_started']
             report.time_ended = request.POST['time_ended']
             report.bussel_attendance=request.POST['bussel_attendance']
@@ -422,7 +422,7 @@ def save_bussel_report(request):
                  time_started = request.POST['time_started'],
                  time_ended = request.POST['time_ended'],
                  date = report_date,
-                 #notes = request.POST['notes'],
+                 notes = request.POST['notes'],
                  bussel_attendance=request.POST['bussel_attendance'],
                  num_souls_won=request.POST['num_souls_won'],
                  num_first_timers=request.POST['num_first_timers'],
